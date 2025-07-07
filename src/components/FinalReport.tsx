@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
-import { FileText, Download, Share2, TrendingUp, TrendingDown, Users, CheckCircle, AlertTriangle, Target, Star, Quote, Eye, Lightbulb, Award, Zap, Image as ImageIcon } from "lucide-react";
+import { FileText, Download, Share2, TrendingUp, TrendingDown, Users, CheckCircle, AlertTriangle, Target, Star, Quote, Eye, Lightbulb, Award, Zap, Image as ImageIcon, DollarSign, Calculator, Percent, Euro } from "lucide-react";
 
 interface ExpertAnalysis {
   id: number;
@@ -37,7 +37,7 @@ const FinalReport = () => {
     npsScore: 68
   };
 
-  // Datos de mejoras con imágenes
+  // Datos de mejoras con imágenes y pruebas UX específicas
   const uxImprovements = [
     {
       area: "Proceso de Checkout",
@@ -45,10 +45,18 @@ const FinalReport = () => {
       after: "Checkout simplificado de 3 pasos con autocompletado",
       improvement: "+45% conversión",
       image: "https://images.pexels.com/photos/4968630/pexels-photo-4968630.jpeg?auto=compress&cs=tinysrgb&w=400",
+      uxTests: [
+        "Pruebas de Usabilidad Moderadas (n=24)",
+        "A/B Testing con 2,500 usuarios",
+        "Card Sorting para reorganización de campos",
+        "Eye-tracking para optimización visual",
+        "Pruebas de Accesibilidad WCAG 2.1"
+      ],
       metrics: {
         taskCompletion: "+23%",
         timeOnTask: "-40%",
-        errorRate: "-67%"
+        errorRate: "-67%",
+        userSatisfaction: "+52%"
       }
     },
     {
@@ -57,10 +65,18 @@ const FinalReport = () => {
       after: "Navegación simplificada con 5 categorías y mega-menú",
       improvement: "+28% engagement",
       image: "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=400",
+      uxTests: [
+        "Tree Testing para arquitectura de información",
+        "First Click Testing (n=180)",
+        "Pruebas de Navegación con Think-Aloud",
+        "Heatmap Analysis con Hotjar",
+        "Mobile Usability Testing"
+      ],
       metrics: {
         findabilityScore: "+35%",
         bounceRate: "-22%",
-        pageViews: "+18%"
+        pageViews: "+18%",
+        mobileUsability: "+41%"
       }
     },
     {
@@ -69,10 +85,18 @@ const FinalReport = () => {
       after: "Filtros prominentes con búsqueda inteligente",
       improvement: "+52% uso de filtros",
       image: "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=400",
+      uxTests: [
+        "Search Analytics y Query Analysis",
+        "Filtros A/B Testing (4 variantes)",
+        "User Journey Mapping",
+        "Prototype Testing con Figma",
+        "Comparative Usability Testing"
+      ],
       metrics: {
         searchSuccess: "+41%",
         filterUsage: "+52%",
-        productDiscovery: "+29%"
+        productDiscovery: "+29%",
+        zeroResults: "-38%"
       }
     }
   ];
@@ -169,19 +193,49 @@ const FinalReport = () => {
     }
   ];
 
-  // Datos de rentabilidad
+  // Datos de rentabilidad expandidos basados en jeffbaldwin.ca
   const profitabilityData = [
-    { metric: "Conversión", before: 2.3, after: 3.1, improvement: 34.8 },
-    { metric: "Valor Promedio Pedido", before: 85, after: 97, improvement: 14.1 },
-    { metric: "Tiempo en Checkout", before: 4.2, after: 2.1, improvement: 50.0 },
-    { metric: "Abandono de Carrito", before: 68.5, after: 45.2, improvement: 34.0 }
+    { metric: "Tasa de Conversión", before: 2.3, after: 3.1, improvement: 34.8, impact: "€425,000" },
+    { metric: "Valor Promedio Pedido", before: 85, after: 97, improvement: 14.1, impact: "€156,000" },
+    { metric: "Tiempo en Checkout", before: 4.2, after: 2.1, improvement: 50.0, impact: "€89,000" },
+    { metric: "Abandono de Carrito", before: 68.5, after: 45.2, improvement: 34.0, impact: "€312,000" },
+    { metric: "Retención de Clientes", before: 23.1, after: 31.8, improvement: 37.7, impact: "€278,000" },
+    { metric: "Tiempo de Carga", before: 3.8, after: 1.9, improvement: 50.0, impact: "€67,000" }
   ];
 
   const monthlyRevenue = [
-    { month: 'Ene', before: 125000, after: 168000 },
-    { month: 'Feb', before: 132000, after: 178000 },
-    { month: 'Mar', before: 128000, after: 185000 },
-    { month: 'Abr', before: 135000, after: 195000 }
+    { month: 'Ene', before: 125000, after: 168000, improvement: 34.4 },
+    { month: 'Feb', before: 132000, after: 178000, improvement: 34.8 },
+    { month: 'Mar', before: 128000, after: 185000, improvement: 44.5 },
+    { month: 'Abr', before: 135000, after: 195000, improvement: 44.4 },
+    { month: 'May', before: 142000, after: 208000, improvement: 46.5 },
+    { month: 'Jun', before: 138000, after: 201000, improvement: 45.7 }
+  ];
+
+  // ROI y análisis financiero detallado
+  const roiAnalysis = {
+    investmentCost: 89000,
+    annualReturn: 1327000,
+    roi: 1491,
+    paybackPeriod: "2.4 meses",
+    netPresentValue: 2156000,
+    breakEvenPoint: "68 días",
+    costPerImprovement: 7417
+  };
+
+  // Análisis de costos vs beneficios
+  const costBenefitData = [
+    { category: "Inversión UX Research", cost: 25000, benefit: 425000, ratio: 17.0 },
+    { category: "Rediseño UI/UX", cost: 35000, benefit: 312000, ratio: 8.9 },
+    { category: "Testing & Validación", cost: 18000, benefit: 278000, ratio: 15.4 },
+    { category: "Implementación", cost: 11000, benefit: 312000, ratio: 28.4 }
+  ];
+
+  // Proyección de ingresos a 3 años
+  const revenueProjection = [
+    { year: "Año 1", conservative: 1327000, optimistic: 1589000, actual: 1456000 },
+    { year: "Año 2", conservative: 1725000, optimistic: 2134000, actual: null },
+    { year: "Año 3", conservative: 2241000, optimistic: 2868000, actual: null }
   ];
 
   const handleExport = (format: string) => {
@@ -283,8 +337,8 @@ const FinalReport = () => {
                 <div className="text-sm text-gray-400">NPS Score</div>
               </div>
               <div className="text-center p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
-                <div className="text-2xl font-bold text-yellow-400">€2.1M</div>
-                <div className="text-sm text-gray-400">Impacto Anual Estimado</div>
+                <div className="text-2xl font-bold text-yellow-400">€1.33M</div>
+                <div className="text-sm text-gray-400">Retorno Anual</div>
               </div>
             </div>
           </CardContent>
@@ -299,7 +353,7 @@ const FinalReport = () => {
             <TabsTrigger value="recommendations">Recomendaciones</TabsTrigger>
           </TabsList>
 
-          {/* Mejoras UX con Imágenes */}
+          {/* Mejoras UX con Pruebas Específicas */}
           <TabsContent value="improvements" className="space-y-6">
             <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
               <CardHeader>
@@ -308,7 +362,7 @@ const FinalReport = () => {
                   Mejoras de UX Implementadas
                 </CardTitle>
                 <CardDescription className="text-gray-400">
-                  Comparativa visual y métricas de las mejoras implementadas
+                  Comparativa visual, métricas y metodologías UX utilizadas
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -334,6 +388,22 @@ const FinalReport = () => {
                             <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
                               <div className="text-green-300 text-sm font-medium mb-1">Después:</div>
                               <div className="text-gray-300">{improvement.after}</div>
+                            </div>
+                          </div>
+
+                          {/* Pruebas UX Realizadas */}
+                          <div className="mt-4">
+                            <h4 className="text-sm font-medium text-blue-400 mb-2 flex items-center gap-2">
+                              <Eye className="w-4 h-4" />
+                              Pruebas UX Realizadas:
+                            </h4>
+                            <div className="space-y-1">
+                              {improvement.uxTests.map((test, idx) => (
+                                <div key={idx} className="text-sm text-gray-300 flex items-start gap-2">
+                                  <CheckCircle className="w-3 h-3 text-blue-400 mt-1 flex-shrink-0" />
+                                  {test}
+                                </div>
+                              ))}
                             </div>
                           </div>
 
@@ -535,14 +605,48 @@ const FinalReport = () => {
             </Card>
           </TabsContent>
 
-          {/* Análisis de Rentabilidad */}
+          {/* Análisis de Rentabilidad Expandido */}
           <TabsContent value="profitability" className="space-y-6">
+            {/* ROI Overview */}
+            <Card className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 border-green-500/30 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <DollarSign className="w-5 h-5 text-green-400" />
+                  Resumen de Rentabilidad
+                </CardTitle>
+                <CardDescription className="text-gray-300">
+                  Análisis completo del retorno de inversión y impacto financiero
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="text-center p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
+                    <div className="text-2xl font-bold text-green-400">{roiAnalysis.roi}%</div>
+                    <div className="text-sm text-gray-300">ROI</div>
+                  </div>
+                  <div className="text-center p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
+                    <div className="text-2xl font-bold text-blue-400">€{(roiAnalysis.annualReturn / 1000).toFixed(0)}K</div>
+                    <div className="text-sm text-gray-300">Retorno Anual</div>
+                  </div>
+                  <div className="text-center p-4 bg-purple-500/20 border border-purple-500/30 rounded-lg">
+                    <div className="text-2xl font-bold text-purple-400">{roiAnalysis.paybackPeriod}</div>
+                    <div className="text-sm text-gray-300">Payback Period</div>
+                  </div>
+                  <div className="text-center p-4 bg-yellow-500/20 border border-yellow-500/30 rounded-lg">
+                    <div className="text-2xl font-bold text-yellow-400">€{(roiAnalysis.netPresentValue / 1000).toFixed(0)}K</div>
+                    <div className="text-sm text-gray-300">NPV (3 años)</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Métricas de Mejora Detalladas */}
               <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-green-400" />
-                    Métricas de Mejora
+                    Métricas de Mejora e Impacto
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -551,13 +655,18 @@ const FinalReport = () => {
                       <div key={index} className="p-4 bg-white/5 border border-white/10 rounded-lg">
                         <div className="flex justify-between items-center mb-2">
                           <span className="font-medium text-white">{item.metric}</span>
-                          <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
-                            +{item.improvement}%
-                          </Badge>
+                          <div className="flex items-center gap-2">
+                            <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
+                              +{item.improvement}%
+                            </Badge>
+                            <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
+                              {item.impact}
+                            </Badge>
+                          </div>
                         </div>
                         <div className="flex justify-between text-sm text-gray-400">
-                          <span>Antes: {item.before}{item.metric.includes('Tiempo') ? 'min' : item.metric.includes('Valor') ? '€' : '%'}</span>
-                          <span>Después: {item.after}{item.metric.includes('Tiempo') ? 'min' : item.metric.includes('Valor') ? '€' : '%'}</span>
+                          <span>Antes: {item.before}{item.metric.includes('Tiempo') ? 's' : item.metric.includes('Valor') ? '€' : '%'}</span>
+                          <span>Después: {item.after}{item.metric.includes('Tiempo') ? 's' : item.metric.includes('Valor') ? '€' : '%'}</span>
                         </div>
                       </div>
                     ))}
@@ -565,31 +674,102 @@ const FinalReport = () => {
                 </CardContent>
               </Card>
 
+              {/* Análisis Costo-Beneficio */}
               <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
                 <CardHeader>
-                  <CardTitle className="text-white">Impacto en Ingresos</CardTitle>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Calculator className="w-5 h-5 text-blue-400" />
+                    Análisis Costo-Beneficio
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={monthlyRevenue}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                      <XAxis dataKey="month" stroke="#9CA3AF" />
-                      <YAxis stroke="#9CA3AF" />
-                      <Tooltip 
-                        contentStyle={{ 
-                          backgroundColor: 'rgba(0,0,0,0.8)', 
-                          border: '1px solid rgba(255,255,255,0.2)',
-                          borderRadius: '8px',
-                          color: 'white'
-                        }} 
-                      />
-                      <Bar dataKey="before" fill="#EF4444" name="Antes" />
-                      <Bar dataKey="after" fill="#10B981" name="Después" />
-                    </BarChart>
-                  </ResponsiveContainer>
+                  <div className="space-y-4">
+                    {costBenefitData.map((item, index) => (
+                      <div key={index} className="p-4 bg-white/5 border border-white/10 rounded-lg">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="font-medium text-white text-sm">{item.category}</span>
+                          <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30">
+                            {item.ratio}:1
+                          </Badge>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-red-300">Costo: €{(item.cost / 1000).toFixed(0)}K</span>
+                          <span className="text-green-300">Beneficio: €{(item.benefit / 1000).toFixed(0)}K</span>
+                        </div>
+                        <div className="w-full bg-gray-700 rounded-full h-2 mt-2">
+                          <div
+                            className="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full"
+                            style={{ width: `${Math.min((item.ratio / 30) * 100, 100)}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
             </div>
+
+            {/* Impacto en Ingresos Mensuales */}
+            <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Euro className="w-5 h-5 text-yellow-400" />
+                  Evolución de Ingresos Mensuales
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={monthlyRevenue}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                    <XAxis dataKey="month" stroke="#9CA3AF" />
+                    <YAxis stroke="#9CA3AF" />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'rgba(0,0,0,0.8)', 
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        borderRadius: '8px',
+                        color: 'white'
+                      }} 
+                    />
+                    <Bar dataKey="before" fill="#EF4444" name="Antes" />
+                    <Bar dataKey="after" fill="#10B981" name="Después" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+
+            {/* Proyección de Ingresos a 3 Años */}
+            <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-purple-400" />
+                  Proyección de Ingresos (3 años)
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Estimaciones conservadoras vs optimistas basadas en tendencias actuales
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={revenueProjection}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                    <XAxis dataKey="year" stroke="#9CA3AF" />
+                    <YAxis stroke="#9CA3AF" />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'rgba(0,0,0,0.8)', 
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        borderRadius: '8px',
+                        color: 'white'
+                      }} 
+                    />
+                    <Line type="monotone" dataKey="conservative" stroke="#8B5CF6" name="Conservador" strokeWidth={2} />
+                    <Line type="monotone" dataKey="optimistic" stroke="#10B981" name="Optimista" strokeWidth={2} />
+                    <Line type="monotone" dataKey="actual" stroke="#F59E0B" name="Real" strokeWidth={3} strokeDasharray="5 5" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Recomendaciones Finales */}
