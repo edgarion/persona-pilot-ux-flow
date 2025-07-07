@@ -130,8 +130,8 @@ const Analytics = () => {
               </SelectContent>
             </Select>
             <Button variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
-              <TrendingUp className="w-4 h-4 mr-2" />
-              Dashboard en Vivo
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Dashboard en Tiempo Real
             </Button>
             <Button variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
               Exportar Reporte

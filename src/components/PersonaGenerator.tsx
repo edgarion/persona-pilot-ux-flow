@@ -209,7 +209,7 @@ const PersonaGenerator = () => {
               <Button
                 onClick={generatePersonas}
                 disabled={!canGenerate || isGenerating}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-105"
+                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 rounded-xl transition-all duration-300 transform hover:scale-105"
               >
                 {isGenerating ? (
                   <>
@@ -260,7 +260,7 @@ const PersonaGenerator = () => {
                       <Badge className="px-3 py-1 bg-blue-500/20 text-blue-300 border-blue-500/30">
                         {generatedPersonas.length} personas generadas
                       </Badge>
-                      <Button size="sm" variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+                      <Button className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
                         <Download className="w-4 h-4 mr-2" />
                         Exportar Todas
                       </Button>

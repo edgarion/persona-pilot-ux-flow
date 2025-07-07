@@ -175,7 +175,7 @@ const DocumentationUploader = () => {
               <Button
                 onClick={analyzeDocuments}
                 disabled={uploadedFiles.length === 0 || isAnalyzing}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-xl"
+                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl"
               >
                 {isAnalyzing ? (
                   <>
@@ -276,6 +276,7 @@ const DocumentationUploader = () => {
 
                   <div className="pt-4 border-t border-white/10">
                     <Button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl">
+                    <Button className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
                       <CheckCircle className="w-4 h-4 mr-2" />
                       Implementar Recomendaciones
                     </Button>
