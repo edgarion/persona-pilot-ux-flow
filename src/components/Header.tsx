@@ -75,89 +75,89 @@ const Header = ({ onLogin }: HeaderProps) => {
                   Iniciar Sesión
                 </Button>
               </DialogTrigger>
-            <DialogContent className="bg-gray-900 border-gray-700 text-white">
-              <DialogHeader>
-                <DialogTitle className="text-white text-center">Iniciar Sesión</DialogTitle>
-                <DialogDescription className="text-gray-400 text-center">
-                  Accede a tu plataforma de pruebas UX
-                </DialogDescription>
-              </DialogHeader>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-gray-200">Email</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder="tu@email.com"
-                      className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20"
-                      required
-                    />
+              <DialogContent className="bg-gray-900 border-gray-700 text-white">
+                <DialogHeader>
+                  <DialogTitle className="text-white text-center">Iniciar Sesión</DialogTitle>
+                  <DialogDescription className="text-gray-400 text-center">
+                    Accede a tu plataforma de pruebas UX
+                  </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-gray-200">Email</Label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="tu@email.com"
+                        className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20"
+                        required
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="password" className="text-gray-200">Contraseña</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <Input
-                      id="password"
-                      name="password"
-                      type={showPassword ? "text" : "password"}
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      placeholder="••••••••"
-                      className="pl-10 pr-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20"
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  <div className="space-y-2">
+                    <Label htmlFor="password" className="text-gray-200">Contraseña</Label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                      <Input
+                        id="password"
+                        name="password"
+                        type={showPassword ? "text" : "password"}
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        placeholder="••••••••"
+                        className="pl-10 pr-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20"
+                        required
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                      >
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black font-medium py-3 text-base transition-all duration-300 transform hover:scale-[1.02] rounded-xl"
+                  >
+                    Iniciar Sesión
+                  </Button>
+
+                  <div className="text-center space-y-2">
+                    <button type="button" className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
+                      ¿Olvidaste tu contraseña?
                     </button>
+                    <div className="text-gray-400 text-sm">
+                      ¿No tienes cuenta?{" "}
+                      <button type="button" className="text-blue-400 hover:text-blue-300 transition-colors">
+                        Regístrate aquí
+                      </button>
+                    </div>
                   </div>
+                </form>
+
+                <div className="mt-4 text-center">
+                  <Button
+                    onClick={() => {
+                      onLogin();
+                      setIsLoginOpen(false);
+                    }}
+                    variant="outline"
+                    className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl"
+                  >
+                    Acceso Demo
+                  </Button>
                 </div>
-
-                <Button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black font-medium py-3 text-base transition-all duration-300 transform hover:scale-[1.02] rounded-xl"
-                >
-                  Iniciar Sesión
-                </Button>
-
-                <div className="text-center space-y-2">
-                  <button type="button" className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
-                    ¿Olvidaste tu contraseña?
-                  </button>
-                  <div className="text-gray-400 text-sm">
-                    ¿No tienes cuenta?{" "}
-                    <button type="button" className="text-blue-400 hover:text-blue-300 transition-colors">
-                      Regístrate aquí
-                    </button>
-                  </div>
-                </div>
-              </form>
-
-              <div className="mt-4 text-center">
-                <Button
-                  onClick={() => {
-                    onLogin();
-                    setIsLoginOpen(false);
-                  }}
-                  variant="outline"
-                  className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl"
-                >
-                  Acceso Demo
-                </Button>
-              </div>
-            </DialogContent>
-          </Dialog>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
 
@@ -176,8 +176,6 @@ const Header = ({ onLogin }: HeaderProps) => {
             </nav>
           </div>
         )}
-        </div>
-      </div>
     </header>
   );
 };
