@@ -5,7 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Sparkles, ArrowRight, Brain, Users, Target, Clock, BarChart3, Lightbulb, CheckCircle2, Zap, Wand2 } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Sparkles, ArrowRight, Brain, Users, Target, Clock, BarChart3, Lightbulb, CheckCircle2, Zap, Wand2, Upload, FileText, Plus, Folder } from "lucide-react";
 
 interface AnalysisResult {
   methodologies: string[];
@@ -17,10 +20,68 @@ interface AnalysisResult {
   steps: string[];
 }
 
+interface DocumentItem {
+  id: number;
+  name: string;
+  type: string;
+  status: "Analizado" | "Procesando" | "Error";
+  insights: string[];
+  tags: string[];
+  uploadDate: string;
+  size: string;
+}
+
 const ProjectCreator = () => {
   const [projectDescription, setProjectDescription] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
+  const [isDocDialogOpen, setIsDocDialogOpen] = useState(false);
+  const [selectedDocs, setSelectedDocs] = useState<number[]>([]);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+
+  // Mock data de documentos ya analizados
+  const availableDocs: DocumentItem[] = [
+    {
+      id: 1,
+      name: "Wireframes E-commerce v2.0",
+      type: "Wireframes",
+      status: "Analizado",
+      insights: ["Checkout complejo", "Navegación móvil mejorable", "Filtros poco visibles"],
+      tags: ["E-commerce", "Mobile", "Checkout"],
+      uploadDate: "2024-01-15",
+      size: "2.3 MB"
+    },
+    {
+      id: 2,
+      name: "User Stories Dashboard",
+      type: "Especificaciones",
+      status: "Analizado",
+      insights: ["Funcionalidades claras", "Casos de uso bien definidos", "Falta accesibilidad"],
+      tags: ["Dashboard", "User Stories", "Funcionalidades"],
+      uploadDate: "2024-01-12",
+      size: "856 KB"
+    },
+    {
+      id: 3,
+      name: "Prototipo Figma App Móvil",
+      type: "Prototipo",
+      status: "Analizado",
+      insights: ["Diseño moderno", "Interacciones fluidas", "Onboarding extenso"],
+      tags: ["Mobile", "Figma", "Prototipo", "Onboarding"],
+      uploadDate: "2024-01-10",
+      size: "4.1 MB"
+    },
+    {
+      id: 4,
+      name: "Análisis Competencia",
+      type: "Investigación",
+      status: "Analizado",
+      insights: ["Benchmarks identificados", "Oportunidades de mejora", "Tendencias del mercado"],
+      tags: ["Competencia", "Benchmarking", "Mercado"],
+      uploadDate: "2024-01-08",
+      size: "1.2 MB"
+    }
+  ];
 
   const examplePrompts = [
     "I'm redesigning an e-commerce checkout flow for millennials who abandon their carts frequently",
@@ -84,6 +145,32 @@ const ProjectCreator = () => {
     setProjectDescription("");
   };
 
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
+    setUploadedFiles(prev => [...prev, ...files]);
+  };
+
+  const removeFile = (index: number) => {
+    setUploadedFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleDocSelection = (docId: number, checked: boolean) => {
+    if (checked) {
+      setSelectedDocs(prev => [...prev, docId]);
+    } else {
+      setSelectedDocs(prev => prev.filter(id => id !== docId));
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Analizado": return "bg-emerald-500/20 text-emerald-300 border-emerald-500/30";
+      case "Procesando": return "bg-blue-500/20 text-blue-300 border-blue-500/30";
+      case "Error": return "bg-red-500/20 text-red-300 border-red-500/30";
+      default: return "bg-gray-500/20 text-gray-300 border-gray-500/30";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Animated Background */}
@@ -137,6 +224,158 @@ const ProjectCreator = () => {
                     className="mt-3 bg-white/5 border-white/20 text-white placeholder:text-gray-400 min-h-[120px] text-base leading-relaxed focus:border-blue-400 focus:ring-blue-400/20"
                     rows={6}
                   />
+                </div>
+
+                {/* Documentación Section */}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-gray-200 text-base font-medium">
+                      Documentación del Proyecto
+                    </Label>
+                    <Dialog open={isDocDialogOpen} onOpenChange={setIsDocDialogOpen}>
+                      <DialogTrigger asChild>
+                        <Button variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+                          <Folder className="w-4 h-4 mr-2" />
+                          Gestionar Documentos
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900 border-gray-700 text-white">
+                        <DialogHeader>
+                          <DialogTitle className="text-white">Añadir Documentación al Proyecto</DialogTitle>
+                          <DialogDescription className="text-gray-400">
+                            Selecciona documentos ya analizados o sube nuevos archivos
+                          </DialogDescription>
+                        </DialogHeader>
+                        
+                        <div className="space-y-6">
+                          {/* Documentos ya analizados */}
+                          <div>
+                            <h4 className="font-medium text-white mb-3">Documentos Analizados Disponibles</h4>
+                            <div className="grid gap-3 max-h-60 overflow-y-auto">
+                              {availableDocs.map((doc) => (
+                                <div key={doc.id} className="flex items-start gap-3 p-3 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
+                                  <Checkbox
+                                    id={`doc-${doc.id}`}
+                                    checked={selectedDocs.includes(doc.id)}
+                                    onCheckedChange={(checked) => handleDocSelection(doc.id, !!checked)}
+                                    className="border-white/20 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600 mt-1"
+                                  />
+                                  <div className="flex-1">
+                                    <div className="flex items-center gap-2 mb-1">
+                                      <FileText className="w-4 h-4 text-gray-400" />
+                                      <span className="font-medium text-white">{doc.name}</span>
+                                      <Badge className={getStatusColor(doc.status)}>{doc.status}</Badge>
+                                    </div>
+                                    <p className="text-sm text-gray-400 mb-2">{doc.type} • {doc.size} • {new Date(doc.uploadDate).toLocaleDateString()}</p>
+                                    <div className="flex flex-wrap gap-1 mb-2">
+                                      {doc.tags.map((tag, idx) => (
+                                        <Badge key={idx} className="text-xs bg-white/10 text-gray-300 border-white/20">
+                                          {tag}
+                                        </Badge>
+                                      ))}
+                                    </div>
+                                    <div className="text-xs text-gray-500">
+                                      <strong>Insights:</strong> {doc.insights.join(", ")}
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Subir nuevos documentos */}
+                          <div>
+                            <h4 className="font-medium text-white mb-3">Subir Nuevos Documentos</h4>
+                            <div className="border-2 border-dashed border-white/20 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                              <input
+                                type="file"
+                                multiple
+                                accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.figma"
+                                onChange={handleFileUpload}
+                                className="hidden"
+                                id="new-file-upload"
+                              />
+                              <label htmlFor="new-file-upload" className="cursor-pointer">
+                                <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                                <p className="text-sm text-gray-400">
+                                  Arrastra archivos aquí o <span className="text-blue-400 underline">selecciona archivos</span>
+                                </p>
+                                <p className="text-xs text-gray-500 mt-1">
+                                  PDF, DOC, PNG, JPG, Figma (Max 10MB cada uno)
+                                </p>
+                              </label>
+                            </div>
+
+                            {uploadedFiles.length > 0 && (
+                              <div className="mt-4">
+                                <Label className="text-gray-200">Archivos para Subir ({uploadedFiles.length})</Label>
+                                <div className="space-y-2 mt-2">
+                                  {uploadedFiles.map((file, index) => (
+                                    <div key={index} className="flex items-center justify-between p-2 bg-white/5 rounded border border-white/10">
+                                      <div className="flex items-center gap-2">
+                                        <FileText className="w-4 h-4 text-gray-400" />
+                                        <span className="text-sm text-gray-300">{file.name}</span>
+                                        <Badge className="text-xs bg-white/10 text-gray-300 border-white/20">
+                                          {(file.size / 1024 / 1024).toFixed(1)}MB
+                                        </Badge>
+                                      </div>
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => removeFile(index)}
+                                        className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                                      >
+                                        Eliminar
+                                      </Button>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="flex gap-2">
+                            <Button 
+                              onClick={() => setIsDocDialogOpen(false)}
+                              className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl"
+                            >
+                              Confirmar Selección ({selectedDocs.length + uploadedFiles.length})
+                            </Button>
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+
+                  {/* Resumen de documentos seleccionados */}
+                  {(selectedDocs.length > 0 || uploadedFiles.length > 0) && (
+                    <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                      <h4 className="font-medium text-blue-300 mb-2">Documentación Incluida</h4>
+                      <div className="space-y-2">
+                        {selectedDocs.map(docId => {
+                          const doc = availableDocs.find(d => d.id === docId);
+                          return doc ? (
+                            <div key={docId} className="flex items-center gap-2 text-sm">
+                              <FileText className="w-4 h-4 text-blue-400" />
+                              <span className="text-blue-200">{doc.name}</span>
+                              <Badge className="text-xs bg-blue-500/20 text-blue-300 border-blue-500/30">
+                                {doc.type}
+                              </Badge>
+                            </div>
+                          ) : null;
+                        })}
+                        {uploadedFiles.map((file, idx) => (
+                          <div key={idx} className="flex items-center gap-2 text-sm">
+                            <Upload className="w-4 h-4 text-green-400" />
+                            <span className="text-green-200">{file.name}</span>
+                            <Badge className="text-xs bg-green-500/20 text-green-300 border-green-500/30">
+                              Nuevo
+                            </Badge>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
                 
                 <Button
