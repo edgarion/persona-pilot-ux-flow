@@ -142,7 +142,7 @@ const AuthWrapper = ({ children }: AuthWrapperProps) => {
 
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium py-3 text-base transition-all duration-300 transform hover:scale-[1.02] rounded-xl"
+                  className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black font-medium py-3 text-base transition-all duration-300 transform hover:scale-[1.02] rounded-xl"
                 >
                   {isLogin ? "Iniciar Sesión" : "Crear Cuenta"}
                   <ArrowRight className="w-4 h-4 ml-2" />

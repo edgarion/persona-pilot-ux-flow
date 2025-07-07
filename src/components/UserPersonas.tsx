@@ -119,7 +119,7 @@ const UserPersonas = () => {
           </div>
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-105">
+              <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 rounded-xl transition-all duration-300 transform hover:scale-105">
                 <Plus className="w-4 h-4 mr-2" />
                 Nueva Persona
               </Button>
@@ -184,7 +184,7 @@ const UserPersonas = () => {
                     </Select>
                   </div>
                 </div>
-                <Button onClick={handleCreatePersona} className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-xl">
+                <Button onClick={handleCreatePersona} className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
                   Crear Persona
                 </Button>
               </div>
@@ -230,7 +230,7 @@ const UserPersonas = () => {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center">
                       <User className="w-6 h-6 text-white" />
                     </div>
                     <div>
@@ -249,7 +249,7 @@ const UserPersonas = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">{persona.category}</Badge>
+                  <Badge className="bg-yellow-500/20 text-yellow-300 border-yellow-500/30">{persona.category}</Badge>
                   <span className="text-sm text-gray-400">{persona.age} años</span>
                 </div>
                 

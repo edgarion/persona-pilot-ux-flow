@@ -175,7 +175,7 @@ const DocumentationUploader = () => {
               <Button
                 onClick={analyzeDocuments}
                 disabled={uploadedFiles.length === 0 || isAnalyzing}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-xl"
+                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl"
               >
                 {isAnalyzing ? (
                   <>
