@@ -432,7 +432,6 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
                         <div className="font-semibold text-white">{testimonial.name}</div>
                         <div className="text-sm text-gray-400">{testimonial.role}</div>
                       </div>
-                    </div>
                   </CardContent>
                 </Card>
               ))}
