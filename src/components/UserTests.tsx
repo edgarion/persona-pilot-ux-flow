@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Plus, Search, Filter, Play, Pause, BarChart3, TestTube, Users, Clock, Target, HelpCircle, UserPlus, UserCheck } from "lucide-react";
+import { Plus, Search, Filter, Play, Pause, BarChart3, TestTube, Users, Clock, Target, HelpCircle, UserPlus, UserCheck, MessageCircle, Quote, Lightbulb, TrendingUp } from "lucide-react";
 
 interface UserTest {
   id: number;
@@ -25,6 +25,14 @@ interface UserTest {
   focusGroupSize?: number;
   isRecruiting?: boolean;
   recruitmentStatus?: string;
+  insights?: string[];
+  quotes?: Array<{
+    participant: string;
+    quote: string;
+    context: string;
+  }>;
+  reflections?: string[];
+  keyFindings?: string[];
 }
 
 const UserTests = () => {
@@ -69,6 +77,60 @@ const UserTests = () => {
       createdDate: "2024-01-20",
       isRecruiting: true,
       recruitmentStatus: "Buscando 6 participantes más"
+    },
+    {
+      id: 4,
+      name: "Focus Group Rediseño Homepage",
+      description: "Sesión de focus group para evaluar propuestas de rediseño de la página principal",
+      type: "Focus Group",
+      status: "Completada",
+      selectedPersonas: ["Compradores Millennials", "Profesionales Tech", "Padres Ocupados"],
+      tasks: ["Evaluar propuestas de diseño", "Discutir navegación principal", "Feedback sobre contenido"],
+      completion: 100,
+      participants: 8,
+      focusGroupSize: 8,
+      createdDate: "2024-01-05",
+      isRecruiting: false,
+      insights: [
+        "Los usuarios prefieren navegación simplificada",
+        "El contenido visual es más atractivo que el texto",
+        "La búsqueda debe ser más prominente",
+        "Los testimonios generan más confianza"
+      ],
+      quotes: [
+        {
+          participant: "María, 32, Marketing Manager",
+          quote: "Me encanta que todo esté tan organizado, pero siento que hay demasiadas opciones en el menú principal",
+          context: "Evaluando la navegación principal"
+        },
+        {
+          participant: "Carlos, 28, Desarrollador",
+          quote: "La búsqueda debería estar más visible. Siempre es lo primero que busco cuando entro a un sitio",
+          context: "Discutiendo funcionalidades principales"
+        },
+        {
+          participant: "Ana, 35, Madre de familia",
+          quote: "Los testimonios me dan mucha confianza. Si veo que otras personas han tenido buenas experiencias, me animo a probar",
+          context: "Hablando sobre elementos de confianza"
+        },
+        {
+          participant: "Luis, 29, Freelancer",
+          quote: "El diseño se ve moderno, pero necesito encontrar la información rápido. No tengo tiempo para explorar",
+          context: "Feedback sobre usabilidad"
+        }
+      ],
+      reflections: [
+        "Los participantes valoran la simplicidad por encima de la funcionalidad completa",
+        "Existe una clara diferencia generacional en las expectativas de navegación",
+        "La confianza es un factor crítico que influye en las decisiones de los usuarios",
+        "Los usuarios móviles tienen patrones de comportamiento diferentes a los de escritorio"
+      ],
+      keyFindings: [
+        "Reducir opciones del menú principal de 8 a 5 elementos",
+        "Hacer la búsqueda 40% más prominente en la interfaz",
+        "Añadir sección de testimonios en homepage",
+        "Implementar navegación adaptativa según dispositivo"
+      ]
     }
   ]);
 
@@ -557,15 +619,113 @@ const UserTests = () => {
                   {test.status === "Completada" && (
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <Button size="sm" className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
-                          <BarChart3 className="w-4 h-4 mr-2" />
-                          Ver Resultados
-                        </Button>
+                        <div className="flex gap-2 w-full">
+                          <Button size="sm" className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
+                            <BarChart3 className="w-4 h-4 mr-2" />
+                            Resultados
+                          </Button>
+                          {test.type === "Focus Group" && test.insights && (
+                            <Button size="sm" className="flex-1 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl">
+                              <MessageCircle className="w-4 h-4 mr-2" />
+                              Insights
+                            </Button>
+                          )}
+                        </div>
                       </TooltipTrigger>
                       <TooltipContent className="bg-gray-900 border-gray-700 text-white">
-                        <p>Analizar resultados y generar reportes</p>
+                        <p>Ver análisis completo y insights del focus group</p>
                       </TooltipContent>
                     </Tooltip>
+                  )}
+
+                  {/* Focus Group Insights Section */}
+                  {test.type === "Focus Group" && test.status === "Completada" && test.insights && (
+                    <div className="mt-4 space-y-4 pt-4 border-t border-white/10">
+                      {/* Key Insights */}
+                      <div>
+                        <h5 className="font-medium text-blue-400 mb-2 flex items-center gap-2">
+                          <Lightbulb className="w-4 h-4" />
+                          Insights Principales
+                        </h5>
+                        <div className="space-y-1">
+                          {test.insights.slice(0, 2).map((insight, idx) => (
+                            <div key={idx} className="text-sm text-gray-300 flex items-start gap-2">
+                              <TrendingUp className="w-3 h-3 text-blue-400 mt-1 flex-shrink-0" />
+                              {insight}
+                            </div>
+                          ))}
+                          {test.insights.length > 2 && (
+                            <div className="text-xs text-blue-400 cursor-pointer hover:text-blue-300">
+                              Ver {test.insights.length - 2} insights más...
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Featured Quote */}
+                      {test.quotes && test.quotes.length > 0 && (
+                        <div>
+                          <h5 className="font-medium text-purple-400 mb-2 flex items-center gap-2">
+                            <Quote className="w-4 h-4" />
+                            Quote Destacado
+                          </h5>
+                          <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
+                            <blockquote className="text-sm text-purple-200 italic mb-2">
+                              "{test.quotes[0].quote}"
+                            </blockquote>
+                            <div className="text-xs text-purple-300">
+                              — {test.quotes[0].participant}
+                            </div>
+                            <div className="text-xs text-purple-400 mt-1">
+                              {test.quotes[0].context}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Key Findings */}
+                      {test.keyFindings && test.keyFindings.length > 0 && (
+                        <div>
+                          <h5 className="font-medium text-green-400 mb-2 flex items-center gap-2">
+                            <Target className="w-4 h-4" />
+                            Hallazgos Clave
+                          </h5>
+                          <div className="space-y-1">
+                            {test.keyFindings.slice(0, 2).map((finding, idx) => (
+                              <div key={idx} className="text-sm text-gray-300 flex items-start gap-2">
+                                <div className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                                {finding}
+                              </div>
+                            ))}
+                            {test.keyFindings.length > 2 && (
+                              <div className="text-xs text-green-400 cursor-pointer hover:text-green-300">
+                                Ver {test.keyFindings.length - 2} hallazgos más...
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Reflection */}
+                      {test.reflections && test.reflections.length > 0 && (
+                        <div>
+                          <h5 className="font-medium text-amber-400 mb-2 flex items-center gap-2">
+                            <MessageCircle className="w-4 h-4" />
+                            Reflexión del Moderador
+                          </h5>
+                          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
+                            <p className="text-sm text-amber-200">
+                              {test.reflections[0]}
+                            </p>
+                            {test.reflections.length > 1 && (
+                              <div className="text-xs text-amber-400 mt-2 cursor-pointer hover:text-amber-300">
+                                Ver más reflexiones...
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   )}
                 </div>
               </CardContent>
