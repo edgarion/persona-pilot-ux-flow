@@ -1,84 +1,69 @@
 import { useState } from "react";
-import Header from "./Header";
-import LandingPage from "./LandingPage";
+import { Button } from "./ui/button";
+import { Card, CardContent } from "./ui/card";
+import { Eye, EyeOff, ArrowRight } from "lucide-react";
 
-interface AuthWrapperProps {
-  children: React.ReactNode;
+interface AuthenticatedNavProps {
+  activeTab?: string;
+  onTabChange?: (tab: string) => void;
+  onLogout?: () => void;
 }
 
-const AuthWrapper = ({ children }: AuthWrapperProps) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+const AuthenticatedNav = ({ activeTab, onTabChange, onLogout }: AuthenticatedNavProps) => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
+  const handleTabClick = (tab: string) => {
+    if (onTabChange) {
+      onTabChange(tab);
+    }
   };
 
-  const handleGetStarted = () => {
-    setIsAuthenticated(true);
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    }
   };
-
-  if (isAuthenticated) {
-    return <>{children}</>;
-  }
 
   return (
-                      required
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </div>
-
-                <Button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium py-3 text-base transition-all duration-300 transform hover:scale-[1.02] rounded-xl"
-                >
-                  {isLogin ? "Iniciar Sesión" : "Crear Cuenta"}
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </form>
-
-              <div className="mt-6 text-center">
-                <button
-                  onClick={() => setIsLogin(!isLogin)}
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
-                >
-                  {isLogin 
-                    ? "¿No tienes cuenta? Regístrate aquí" 
-                    : "¿Ya tienes cuenta? Inicia sesión"
-                  }
-                </button>
-              </div>
-
-              {isLogin && (
-                <div className="mt-4 text-center">
-                  <button className="text-blue-400 hover:text-blue-300 transition-colors text-sm">
-                    ¿Olvidaste tu contraseña?
-                  </button>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Demo Access */}
-          <div className="mt-6 text-center">
+    <nav className="bg-gray-900 border-b border-gray-800 px-6 py-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-8">
+          <h1 className="text-xl font-bold text-white">Dashboard</h1>
+          <div className="flex space-x-4">
             <Button
-              onClick={() => setIsAuthenticated(true)}
-              variant="outline"
-              className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl"
+              variant={activeTab === "overview" ? "default" : "ghost"}
+              onClick={() => handleTabClick("overview")}
+              className="text-gray-300 hover:text-white"
             >
-              Acceso Demo
+              Overview
+            </Button>
+            <Button
+              variant={activeTab === "projects" ? "default" : "ghost"}
+              onClick={() => handleTabClick("projects")}
+              className="text-gray-300 hover:text-white"
+            >
+              Projects
+            </Button>
+            <Button
+              variant={activeTab === "analytics" ? "default" : "ghost"}
+              onClick={() => handleTabClick("analytics")}
+              className="text-gray-300 hover:text-white"
+            >
+              Analytics
             </Button>
           </div>
         </div>
+        <Button
+          onClick={handleLogout}
+          variant="outline"
+          className="bg-transparent border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
+        >
+          Logout
+        </Button>
       </div>
-    </div>
+    </nav>
   );
 };
 
-export default AuthWrapper;
+export default AuthenticatedNav;
