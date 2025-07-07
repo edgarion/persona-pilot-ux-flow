@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Search, Filter, Edit, User, Wand2, Zap, Download, Brain, Target } from "lucide-react";
+import { Plus, Search, Filter, Edit, User, Wand2, Zap, Download, Brain, Target, TestTube, MessageSquare } from "lucide-react";
 
 interface UserPersona {
   id: number;
@@ -467,6 +467,26 @@ const UnifiedPersonas = () => {
                         </div>
                       </div>
                     </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-2 pt-2 border-t border-white/10">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="flex-1 bg-green-500/10 border-green-500/20 text-green-300 hover:bg-green-500/20 hover:text-green-200 rounded-xl"
+                      >
+                        <TestTube className="w-4 h-4 mr-1" />
+                        Añadir a Prueba
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        className="flex-1 bg-blue-500/10 border-blue-500/20 text-blue-300 hover:bg-blue-500/20 hover:text-blue-200 rounded-xl"
+                      >
+                        <MessageSquare className="w-4 h-4 mr-1" />
+                        Entrevista
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
@@ -678,6 +698,16 @@ const UnifiedPersonas = () => {
 
                                 <div className="flex justify-between items-center pt-2 border-t border-white/10">
                                   <Badge className="bg-white/10 text-gray-300 border-white/20">{persona.techLevel}</Badge>
+                                  <div className="flex gap-1">
+                                    <Button 
+                                      size="sm" 
+                                      onClick={() => addGeneratedPersona(persona)}
+                                      className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl"
+                                    >
+                                      <Plus className="w-4 h-4 mr-1" />
+                                      Añadir
+                                    </Button>
+                                  </div>
                                 </div>
                               </CardContent>
                             </Card>
