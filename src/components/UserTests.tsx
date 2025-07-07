@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Plus, Search, Filter, Play, Pause, BarChart3, TestTube, Users, Clock, Target, HelpCircle, UserPlus } from "lucide-react";
+import { Plus, Search, Filter, Play, Pause, BarChart3, TestTube, Users, Clock, Target, HelpCircle, UserPlus, UserCheck } from "lucide-react";
 
 interface UserTest {
   id: number;
@@ -476,6 +476,18 @@ const UserTests = () => {
                     </p>
                   </div>
                 )}
+
+                {/* Assign Saved Personas Button */}
+                <div className="pt-4 border-t border-white/10">
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    className="w-full bg-blue-500/10 border-blue-500/20 text-blue-300 hover:bg-blue-500/20 hover:text-blue-200 rounded-xl"
+                  >
+                    <UserCheck className="w-4 h-4 mr-2" />
+                    Asignar Personas Guardadas
+                  </Button>
+                </div>
 
                 {/* Actions */}
                 <div className="flex gap-2 pt-2">
