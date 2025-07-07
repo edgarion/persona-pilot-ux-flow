@@ -37,13 +37,7 @@ const FixedNavigation = ({ activeTab, onTabChange, onLogout }: FixedNavigationPr
       id: "personas",
       label: "Personas",
       icon: Users,
-      tooltip: "Gestionar user personas existentes"
-    },
-    {
-      id: "persona-generator",
-      label: "Generador",
-      icon: Wand2,
-      tooltip: "Generar nuevas personas automáticamente"
+      tooltip: "Gestionar y generar user personas"
     },
     {
       id: "tests",

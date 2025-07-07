@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Plus, Search, Filter, Play, Pause, BarChart3, TestTube, Users, Clock, Target, HelpCircle } from "lucide-react";
+import { Plus, Search, Filter, Play, Pause, BarChart3, TestTube, Users, Clock, Target, HelpCircle, UserPlus } from "lucide-react";
 
 interface UserTest {
   id: number;
@@ -23,6 +23,8 @@ interface UserTest {
   participants: number;
   createdDate: string;
   focusGroupSize?: number;
+  isRecruiting?: boolean;
+  recruitmentStatus?: string;
 }
 
 const UserTests = () => {
@@ -37,7 +39,8 @@ const UserTests = () => {
       tasks: ["Encontrar producto específico", "Completar proceso de compra", "Usar filtros de búsqueda"],
       completion: 75,
       participants: 12,
-      createdDate: "2024-01-15"
+      createdDate: "2024-01-15",
+      isRecruiting: false
     },
     {
       id: 2,
@@ -50,7 +53,8 @@ const UserTests = () => {
       completion: 100,
       participants: 8,
       focusGroupSize: 8,
-      createdDate: "2024-01-10"
+      createdDate: "2024-01-10",
+      isRecruiting: false
     },
     {
       id: 3,
@@ -62,7 +66,9 @@ const UserTests = () => {
       tasks: ["Registro de cuenta", "Tutorial inicial", "Primera configuración"],
       completion: 0,
       participants: 0,
-      createdDate: "2024-01-20"
+      createdDate: "2024-01-20",
+      isRecruiting: true,
+      recruitmentStatus: "Buscando 6 participantes más"
     }
   ]);
 
@@ -199,7 +205,7 @@ const UserTests = () => {
                         <HelpCircle className="w-4 h-4 text-gray-400" />
                       </TooltipTrigger>
                       <TooltipContent className="bg-gray-900 border-gray-700 text-white max-w-sm">
-                        <p>Focus Group: Sesión grupal de discusión con 6-12 participantes para obtener feedback cualitativo</p>
+                        <p>Focus Group: Sesión grupal de discusión con 6-12 participantes para obtener feedback cualitativo. Ideal para explorar percepciones, actitudes y motivaciones.</p>
                       </TooltipContent>
                     </Tooltip>
                   </div>
@@ -222,7 +228,18 @@ const UserTests = () => {
 
                 {newTest.type === "Focus Group" && (
                   <div>
-                    <Label htmlFor="focusGroupSize" className="text-gray-200">Tamaño del Focus Group</Label>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Label htmlFor="focusGroupSize" className="text-gray-200">Tamaño del Focus Group</Label>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <HelpCircle className="w-4 h-4 text-gray-400" />
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-gray-900 border-gray-700 text-white max-w-sm">
+                          <p>6-8 participantes: Ideal para discusiones profundas<br/>
+                          10-12 participantes: Mejor para obtener diversidad de opiniones</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
                     <Select
                       value={newTest.focusGroupSize?.toString()}
                       onValueChange={(value) => setNewTest({...newTest, focusGroupSize: parseInt(value)})}
@@ -254,13 +271,13 @@ const UserTests = () => {
 
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Label className="text-gray-200">Seleccionar User Personas</Label>
+                    <Label className="text-gray-200">Seleccionar User Personas (Obligatorio)</Label>
                     <Tooltip>
                       <TooltipTrigger>
                         <HelpCircle className="w-4 h-4 text-gray-400" />
                       </TooltipTrigger>
                       <TooltipContent className="bg-gray-900 border-gray-700 text-white max-w-sm">
-                        <p>Selecciona las personas que mejor representen a tu audiencia objetivo para esta prueba</p>
+                        <p>Selecciona las personas que mejor representen a tu audiencia objetivo. Para Focus Groups, recomendamos 2-3 personas diferentes para obtener perspectivas variadas.</p>
                       </TooltipContent>
                     </Tooltip>
                   </div>
@@ -281,6 +298,14 @@ const UserTests = () => {
                   </div>
                   {newTest.selectedPersonas?.length === 0 && (
                     <p className="text-sm text-red-400 mt-1">Selecciona al menos una persona</p>
+                  )}
+                  {newTest.type === "Focus Group" && newTest.selectedPersonas && newTest.selectedPersonas.length > 0 && (
+                    <div className="mt-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                      <p className="text-sm text-blue-300">
+                        <Users className="w-4 h-4 inline mr-1" />
+                        Focus Group configurado: {newTest.focusGroupSize || 6} participantes representando {newTest.selectedPersonas.length} persona(s)
+                      </p>
+                    </div>
                   )}
                 </div>
 
@@ -347,7 +372,13 @@ const UserTests = () => {
                       <Badge className={getStatusColor(test.status)}>{test.status}</Badge>
                       {test.focusGroupSize && (
                         <Badge className="bg-yellow-500/20 text-yellow-300 border-yellow-500/30">
-                          {test.focusGroupSize} participantes
+                          Focus Group: {test.focusGroupSize}p
+                        </Badge>
+                      )}
+                      {test.isRecruiting && (
+                        <Badge className="bg-orange-500/20 text-orange-300 border-orange-500/30 animate-pulse">
+                          <UserPlus className="w-3 h-3 mr-1" />
+                          Reclutando
                         </Badge>
                       )}
                     </div>
@@ -410,16 +441,45 @@ const UserTests = () => {
                 {/* Stats */}
                 <div className="flex justify-between items-center pt-2 border-t border-white/10">
                   <div className="text-sm text-gray-400">
-                    <span className="font-medium text-white">{test.participants}</span> participantes
+                    <span className="font-medium text-white">{test.participants}</span> 
+                    {test.focusGroupSize ? ` / ${test.focusGroupSize}` : ""} participantes
                   </div>
-                  <div className="text-sm text-gray-500">
-                    Creada: {new Date(test.createdDate).toLocaleDateString()}
-                  </div>
+                  {test.isRecruiting && test.recruitmentStatus && (
+                    <div className="text-xs text-orange-300">
+                      {test.recruitmentStatus}
+                    </div>
+                  )}
+                  {!test.isRecruiting && (
+                    <div className="text-sm text-gray-500">
+                      Creada: {new Date(test.createdDate).toLocaleDateString()}
+                    </div>
+                  )}
                 </div>
+
+                {/* Recruitment Status for Focus Groups */}
+                {test.type === "Focus Group" && test.isRecruiting && (
+                  <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-orange-300">Estado de Reclutamiento</span>
+                      <Badge className="bg-orange-500/20 text-orange-300 border-orange-500/30">
+                        {test.participants}/{test.focusGroupSize}
+                      </Badge>
+                    </div>
+                    <div className="w-full bg-orange-500/20 rounded-full h-2 mb-2">
+                      <div
+                        className="bg-orange-500 h-2 rounded-full transition-all"
+                        style={{ width: `${(test.participants / (test.focusGroupSize || 1)) * 100}%` }}
+                      />
+                    </div>
+                    <p className="text-xs text-orange-200">
+                      Personas objetivo: {test.selectedPersonas.join(", ")}
+                    </p>
+                  </div>
+                )}
 
                 {/* Actions */}
                 <div className="flex gap-2 pt-2">
-                  {test.status === "Planificada" && (
+                  {test.status === "Planificada" && !test.isRecruiting && (
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button size="sm" className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl">
@@ -431,6 +491,31 @@ const UserTests = () => {
                         <p>Comenzar la ejecución de la prueba</p>
                       </TooltipContent>
                     </Tooltip>
+                  )}
+                  {test.status === "Planificada" && test.isRecruiting && (
+                    <>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button size="sm" className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 rounded-xl">
+                            <UserPlus className="w-4 h-4 mr-2" />
+                            Gestionar Participantes
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-gray-900 border-gray-700 text-white">
+                          <p>Gestionar reclutamiento y selección de participantes</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button size="sm" variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+                            <Play className="w-4 h-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-gray-900 border-gray-700 text-white">
+                          <p>Iniciar con participantes actuales</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </>
                   )}
                   {test.status === "En progreso" && (
                     <>

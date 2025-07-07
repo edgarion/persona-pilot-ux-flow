@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import UserPersonas from "@/components/UserPersonas";
+import UnifiedPersonas from "@/components/UnifiedPersonas";
 import UserTests from "@/components/UserTests";
 import Analytics from "@/components/Analytics";
 import ProjectCreator from "@/components/ProjectCreator";
-import PersonaGenerator from "@/components/PersonaGenerator";
 import DocumentationUploader from "@/components/DocumentationUploader";
 import DashboardContent from "@/components/DashboardContent";
 import FixedNavigation from "@/components/FixedNavigation";
@@ -26,11 +25,7 @@ const Index = () => {
       ],
       personas: [
         { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
-        { label: "User Personas", href: "#" }
-      ],
-      "persona-generator": [
-        { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
-        { label: "Generador de Personas", href: "#" }
+        { label: "Personas", href: "#" }
       ],
       tests: [
         { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
@@ -87,11 +82,7 @@ const Index = () => {
               </TabsContent>
 
               <TabsContent value="personas">
-                <UserPersonas />
-              </TabsContent>
-
-              <TabsContent value="persona-generator">
-                <PersonaGenerator />
+                <UnifiedPersonas />
               </TabsContent>
 
               <TabsContent value="tests">
