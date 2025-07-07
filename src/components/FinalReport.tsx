@@ -144,7 +144,7 @@ const FinalReport = () => {
       expert: "Dr. Elena Rodríguez",
       role: "Senior UX Researcher",
       company: "Design Systems Lab",
-      avatar: "ER",
+      avatar: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop",
       specialization: "Psicología Cognitiva y UX",
       analysis: "El rediseño demuestra una comprensión profunda de los principios de usabilidad. La reducción de la carga cognitiva en el checkout es ejemplar, aplicando correctamente la Ley de Hick para minimizar las decisiones del usuario. La implementación de progressive disclosure en la navegación muestra madurez en el diseño de experiencias.",
       recommendations: [
@@ -170,7 +170,7 @@ const FinalReport = () => {
       expert: "Marco Santini",
       role: "Lead UI Designer",
       company: "Digital Craft Studio",
-      avatar: "MS",
+      avatar: "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop",
       specialization: "Sistemas de Diseño y UI",
       analysis: "Desde la perspectiva visual, el rediseño logra un equilibrio excepcional entre funcionalidad y estética. El sistema de colores mejora significativamente la jerarquía visual, y la tipografía optimizada aumenta la legibilidad en un 23%. La consistencia del design system es notable, creando una experiencia cohesiva que refuerza la confianza del usuario.",
       recommendations: [
@@ -519,8 +519,12 @@ const FinalReport = () => {
                     <div key={expert.id} className="border border-white/10 rounded-lg p-6 bg-white/5">
                       {/* Header del experto */}
                       <div className="flex items-start gap-4 mb-6">
-                        <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                          {expert.avatar}
+                        <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-purple-500/30">
+                          <img 
+                            src={expert.avatar} 
+                            alt={expert.expert}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
