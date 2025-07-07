@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Sparkles, User, Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { Sparkles, User, Eye, EyeOff, Mail, Lock, Menu, X } from "lucide-react";
+import LanguageSelector from "./LanguageSelector";
 
 interface HeaderProps {
   onLogin: () => void;
@@ -11,6 +12,7 @@ interface HeaderProps {
 
 const Header = ({ onLogin }: HeaderProps) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -39,30 +41,45 @@ const Header = ({ onLogin }: HeaderProps) => {
             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-white">UX Testing Hub</span>
+            <span className="text-xl font-bold text-white">Hub de Testing UX</span>
           </div>
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a>
+            <a href="#features" className="text-gray-300 hover:text-white transition-colors">Características</a>
             <a href="#tutorials" className="text-gray-300 hover:text-white transition-colors">Tutoriales</a>
-            <a href="#pricing" className="text-gray-300 hover:text-white transition-colors">Precios</a>
+            <a href="#pricing" className="text-gray-300 hover:text-white transition-colors">Preus</a>
             <a href="#contact" className="text-gray-300 hover:text-white transition-colors">Contacto</a>
           </nav>
 
-          {/* Login Button */}
-          <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="bg-white/5 border-white/20 text-white hover:bg-white/10 rounded-xl">
-                <User className="w-4 h-4 mr-2" />
-                Iniciar Sesión
-              </Button>
-            </DialogTrigger>
+          {/* Right Section */}
+          <div className="flex items-center gap-4">
+            {/* Language Selector */}
+            <LanguageSelector />
+
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="md:hidden text-gray-300 hover:text-white hover:bg-white/10"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </Button>
+
+            {/* Login Button */}
+            <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
+              <DialogTrigger asChild>
+                <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black font-medium rounded-xl hidden md:flex">
+                  <User className="w-4 h-4 mr-2" />
+                  Iniciar Sesión
+                </Button>
+              </DialogTrigger>
             <DialogContent className="bg-gray-900 border-gray-700 text-white">
               <DialogHeader>
                 <DialogTitle className="text-white text-center">Iniciar Sesión</DialogTitle>
                 <DialogDescription className="text-gray-400 text-center">
-                  Accede a tu plataforma de testing UX
+                  Accede a tu plataforma de pruebas UX
                 </DialogDescription>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -109,7 +126,7 @@ const Header = ({ onLogin }: HeaderProps) => {
 
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium py-3 text-base transition-all duration-300 transform hover:scale-[1.02] rounded-xl"
+                  className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black font-medium py-3 text-base transition-all duration-300 transform hover:scale-[1.02] rounded-xl"
                 >
                   Iniciar Sesión
                 </Button>
@@ -141,6 +158,24 @@ const Header = ({ onLogin }: HeaderProps) => {
               </div>
             </DialogContent>
           </Dialog>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden mt-4 pb-4 border-t border-white/10">
+            <nav className="flex flex-col gap-4 mt-4">
+              <a href="#features" className="text-gray-300 hover:text-white transition-colors">Características</a>
+              <a href="#tutorials" className="text-gray-300 hover:text-white transition-colors">Tutoriales</a>
+              <a href="#pricing" className="text-gray-300 hover:text-white transition-colors">Precios</a>
+              <a href="#contact" className="text-gray-300 hover:text-white transition-colors">Contacto</a>
+              <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black font-medium rounded-xl mt-2">
+                <User className="w-4 h-4 mr-2" />
+                Iniciar Sesión
+              </Button>
+            </nav>
+          </div>
+        )}
         </div>
       </div>
     </header>

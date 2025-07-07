@@ -52,37 +52,37 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
   const features = [
     {
       icon: Brain,
-      title: "AI-Powered Analysis",
+      title: "Análisis Impulsado por IA",
       description: "Análisis inteligente de comportamiento de usuarios con IA avanzada que identifica patrones y oportunidades de mejora automáticamente.",
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: Zap,
-      title: "Real-time Testing",
+      title: "Pruebas en Tiempo Real",
       description: "Pruebas en tiempo real con feedback instantáneo y métricas en vivo para tomar decisiones rápidas y efectivas.",
       color: "from-purple-500 to-pink-500"
     },
     {
       icon: Target,
-      title: "Precision Targeting",
+      title: "Segmentación Precisa",
       description: "Segmentación precisa de usuarios basada en personas detalladas y comportamientos específicos.",
       color: "from-emerald-500 to-teal-500"
     },
     {
       icon: Users,
-      title: "User Personas",
+      title: "Personas de Usuario",
       description: "Crea y gestiona personas de usuario detalladas con arquetipos psicológicos y datos demográficos.",
       color: "from-orange-500 to-red-500"
     },
     {
       icon: TestTube,
-      title: "Advanced Testing",
+      title: "Pruebas Avanzadas",
       description: "Suite completa de herramientas de testing: A/B testing, usabilidad, card sorting y más.",
       color: "from-indigo-500 to-purple-500"
     },
     {
       icon: BarChart3,
-      title: "Analytics Dashboard",
+      title: "Panel de Análisis",
       description: "Dashboard completo con métricas avanzadas, reportes automáticos y insights accionables.",
       color: "from-green-500 to-emerald-500"
     }
@@ -149,11 +149,11 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
           <div className="container mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-8 animate-fade-in">
               <Sparkles className="w-4 h-4 text-blue-400" />
-              <span className="text-sm text-gray-300">Next-Gen UX Testing Platform</span>
+              <span className="text-sm text-gray-300">Plataforma de Testing UX de Nueva Generación</span>
             </div>
             
             <h1 className="text-6xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent animate-fade-in-up">
-              Revoluciona tu UX Testing
+              Revoluciona tus Pruebas UX
             </h1>
             
             <p className="text-xl md:text-2xl text-gray-400 max-w-4xl mx-auto leading-relaxed mb-12 animate-fade-in-up delay-200">
@@ -165,7 +165,7 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
                 <DialogTrigger asChild>
                   <Button 
                     size="lg" 
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25"
+                    className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/25"
                   >
                     <Wand2 className="w-5 h-5 mr-2" />
                     Crear Proyecto con IA
@@ -179,7 +179,7 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
                       Crear Proyecto con IA
                     </DialogTitle>
                     <DialogDescription className="text-gray-400">
-                      Describe tu proyecto y sube documentación para que nuestra IA genere un plan de testing personalizado
+                      Describe tu proyecto y sube documentación para que nuestra IA genere un plan de pruebas personalizado
                     </DialogDescription>
                   </DialogHeader>
                   
@@ -192,7 +192,7 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
                         id="prompt"
                         value={promptText}
                         onChange={(e) => setPromptText(e.target.value)}
-                        placeholder="Ejemplo: Estoy rediseñando el proceso de checkout de mi e-commerce. Los usuarios abandonan en un 70% y necesito identificar los puntos de fricción principales. Mi audiencia son millennials tech-savvy que valoran la rapidez..."
+                        placeholder="Ejemplo: Estoy rediseñando el proceso de compra de mi e-commerce. Los usuarios abandonan en un 70% y necesito identificar los puntos de fricción principales. Mi audiencia son millennials tech-savvy que valoran la rapidez..."
                         className="mt-3 bg-white/5 border-white/20 text-white placeholder:text-gray-400 min-h-[120px] text-base leading-relaxed focus:border-blue-400 focus:ring-blue-400/20"
                         rows={6}
                       />
@@ -251,10 +251,10 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
                     <Button
                       onClick={handleCreatePrompt}
                       disabled={!promptText.trim()}
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-medium py-4 text-lg transition-all duration-300 transform hover:scale-[1.02] rounded-xl"
+                      className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black font-medium py-4 text-lg transition-all duration-300 transform hover:scale-[1.02] rounded-xl"
                     >
                       <Sparkles className="w-5 h-5 mr-2" />
-                      Generar Plan de Testing con IA
+                      Generar Plan de Pruebas con IA
                     </Button>
                   </div>
                 </DialogContent>
@@ -296,7 +296,7 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
                 Características Avanzadas
               </h2>
               <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-                Todo lo que necesitas para llevar tu UX testing al siguiente nivel
+                Todo lo que necesitas para llevar tus pruebas UX al siguiente nivel
               </p>
             </div>
 
@@ -436,7 +436,7 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
               <Button 
                 onClick={onGetStarted}
                 size="lg" 
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25"
+                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/25"
               >
                 <CheckCircle className="w-5 h-5 mr-2" />
                 Comenzar Gratis

@@ -16,7 +16,7 @@ const Index = () => {
 
   const stats = [
     {
-      title: "User Personas",
+      title: "Personas de Usuario",
       value: "12",
       description: "Personas activas",
       icon: Users,
@@ -68,17 +68,17 @@ const Index = () => {
   const features = [
     {
       icon: Sparkles,
-      title: "AI-Powered Analysis",
+      title: "Análisis Impulsado por IA",
       description: "Análisis inteligente de comportamiento de usuarios con IA avanzada"
     },
     {
       icon: Zap,
-      title: "Real-time Testing",
+      title: "Pruebas en Tiempo Real",
       description: "Pruebas en tiempo real con feedback instantáneo y métricas en vivo"
     },
     {
       icon: Target,
-      title: "Precision Targeting",
+      title: "Segmentación Precisa",
       description: "Segmentación precisa de usuarios basada en personas detalladas"
     }
   ];
@@ -99,10 +99,10 @@ const Index = () => {
           <div className="mb-16 text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-6 animate-fade-in">
               <Sparkles className="w-4 h-4 text-blue-400" />
-              <span className="text-sm text-gray-300">Next-Gen UX Testing Platform</span>
+              <span className="text-sm text-gray-300">Plataforma de Testing UX de Nueva Generación</span>
             </div>
             <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent animate-fade-in-up">
-              UX Testing Hub
+              Hub de Testing UX
             </h1>
             <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed animate-fade-in-up delay-200">
               Plataforma completa para gestionar personas, pruebas UX y análisis de usuario con inteligencia artificial
@@ -112,7 +112,7 @@ const Index = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8 animate-fade-in-up delay-400">
               <Button 
                 size="lg" 
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25"
+                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/25"
               >
                 Comenzar Ahora
                 <ArrowRight className="w-5 h-5 ml-2" />
@@ -241,7 +241,7 @@ const Index = () => {
                   </div>
                   <Button 
                     size="sm" 
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-105"
+                    className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 rounded-xl transition-all duration-300 transform hover:scale-105"
                   >
                     <Plus className="w-4 h-4 mr-2" />
                     Nueva Prueba
