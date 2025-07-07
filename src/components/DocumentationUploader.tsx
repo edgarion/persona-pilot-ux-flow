@@ -276,7 +276,6 @@ const DocumentationUploader = () => {
 
                   <div className="pt-4 border-t border-white/10">
                     <Button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl">
-                    <Button className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
                       <CheckCircle className="w-4 h-4 mr-2" />
                       Implementar Recomendaciones
                     </Button>
