@@ -176,6 +176,7 @@ const Header = ({ onLogin }: HeaderProps) => {
             </nav>
           </div>
         )}
+      </div>
     </header>
   );
 };
