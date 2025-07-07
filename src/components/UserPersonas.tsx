@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -101,248 +100,231 @@ const UserPersonas = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-3xl font-bold text-slate-800">User Personas</h2>
-          <p className="text-slate-600 mt-1">Gestiona tus arquetipos de usuarios</p>
-        </div>
-        <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              <Plus className="w-4 h-4 mr-2" />
-              Nueva Persona
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>Crear Nueva User Persona</DialogTitle>
-              <DialogDescription>
-                Define las características de tu nuevo arquetipo de usuario
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="name">Nombre</Label>
-                  <Input
-                    id="name"
-                    value={newPersona.name || ""}
-                    onChange={(e) => setNewPersona({...newPersona, name: e.target.value})}
-                    placeholder="Ej: Ana García"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="age">Rango de Edad</Label>
-                  <Input
-                    id="age"
-                    value={newPersona.age || ""}
-                    onChange={(e) => setNewPersona({...newPersona, age: e.target.value})}
-                    placeholder="Ej: 28-35"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="occupation">Ocupación</Label>
-                  <Input
-                    id="occupation"
-                    value={newPersona.occupation || ""}
-                    onChange={(e) => setNewPersona({...newPersona, occupation: e.target.value})}
-                    placeholder="Ej: Marketing Manager"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="category">Categoría</Label>
-                  <Select
-                    value={newPersona.category}
-                    onValueChange={(value) => setNewPersona({...newPersona, category: value})}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecciona categoría" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category} value={category}>
-                          {category}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div>
-                <Label htmlFor="demographics">Demografía</Label>
-                <Input
-                  id="demographics"
-                  value={newPersona.demographics || ""}
-                  onChange={(e) => setNewPersona({...newPersona, demographics: e.target.value})}
-                  placeholder="Ej: Millennial urbana, ingresos medios-altos"
-                />
-              </div>
-              <div>
-                <Label htmlFor="techLevel">Nivel Tecnológico</Label>
-                <Select
-                  value={newPersona.techLevel}
-                  onValueChange={(value) => setNewPersona({...newPersona, techLevel: value})}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecciona nivel" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Básico">Básico</SelectItem>
-                    <SelectItem value="Intermedio">Intermedio</SelectItem>
-                    <SelectItem value="Avanzado">Avanzado</SelectItem>
-                    <SelectItem value="Nativo digital">Nativo digital</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="description">Descripción</Label>
-                <Textarea
-                  id="description"
-                  value={newPersona.description || ""}
-                  onChange={(e) => setNewPersona({...newPersona, description: e.target.value})}
-                  placeholder="Breve descripción de la persona..."
-                />
-              </div>
-              <Button onClick={handleCreatePersona} className="w-full">
-                Crear Persona
+    <div className="min-h-screen bg-black text-white">
+      {/* Animated Background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 space-y-8">
+        {/* Header */}
+        <div className="flex justify-between items-center animate-fade-in">
+          <div>
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+              User Personas
+            </h2>
+            <p className="text-gray-400 mt-2 text-lg">Gestiona tus arquetipos de usuarios</p>
+          </div>
+          <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-105">
+                <Plus className="w-4 h-4 mr-2" />
+                Nueva Persona
               </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      </div>
-
-      {/* Filters */}
-      <div className="flex gap-4 items-center">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
-          <Input
-            placeholder="Buscar personas..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Select value={filterCategory} onValueChange={setFilterCategory}>
-          <SelectTrigger className="w-48">
-            <Filter className="w-4 h-4 mr-2" />
-            <SelectValue placeholder="Filtrar por categoría" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Todas las categorías</SelectItem>
-            {categories.map((category) => (
-              <SelectItem key={category} value={category}>
-                {category}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Personas Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredPersonas.map((persona) => (
-          <Card key={persona.id} className="hover:shadow-lg transition-shadow group">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                    <User className="w-6 h-6 text-blue-600" />
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-gray-900 border-gray-700 text-white">
+              <DialogHeader>
+                <DialogTitle className="text-white">Crear Nueva User Persona</DialogTitle>
+                <DialogDescription className="text-gray-400">
+                  Define las características de tu nuevo arquetipo de usuario
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="name" className="text-gray-200">Nombre</Label>
+                    <Input
+                      id="name"
+                      value={newPersona.name || ""}
+                      onChange={(e) => setNewPersona({...newPersona, name: e.target.value})}
+                      placeholder="Ej: Ana García"
+                      className="bg-white/5 border-white/20 text-white placeholder:text-gray-400"
+                    />
                   </div>
                   <div>
-                    <CardTitle className="text-lg">{persona.name}</CardTitle>
-                    <CardDescription>{persona.occupation}</CardDescription>
+                    <Label htmlFor="age" className="text-gray-200">Rango de Edad</Label>
+                    <Input
+                      id="age"
+                      value={newPersona.age || ""}
+                      onChange={(e) => setNewPersona({...newPersona, age: e.target.value})}
+                      placeholder="Ej: 28-35"
+                      className="bg-white/5 border-white/20 text-white placeholder:text-gray-400"
+                    />
                   </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <Edit className="w-4 h-4" />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="occupation" className="text-gray-200">Ocupación</Label>
+                    <Input
+                      id="occupation"
+                      value={newPersona.occupation || ""}
+                      onChange={(e) => setNewPersona({...newPersona, occupation: e.target.value})}
+                      placeholder="Ej: Marketing Manager"
+                      className="bg-white/5 border-white/20 text-white placeholder:text-gray-400"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="category" className="text-gray-200">Categoría</Label>
+                    <Select
+                      value={newPersona.category}
+                      onValueChange={(value) => setNewPersona({...newPersona, category: value})}
+                    >
+                      <SelectTrigger className="bg-white/5 border-white/20 text-white">
+                        <SelectValue placeholder="Selecciona categoría" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 border-gray-700">
+                        {categories.map((category) => (
+                          <SelectItem key={category} value={category} className="text-white hover:bg-gray-700">
+                            {category}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <Button onClick={handleCreatePersona} className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-xl">
+                  Crear Persona
                 </Button>
               </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <Badge variant="secondary">{persona.category}</Badge>
-                <span className="text-sm text-slate-600">{persona.age} años</span>
-              </div>
-              
-              <p className="text-sm text-slate-600">{persona.description}</p>
-              
-              <div className="space-y-2">
-                <div>
-                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
-                    Demografía
-                  </span>
-                  <p className="text-sm text-slate-700">{persona.demographics}</p>
+            </DialogContent>
+          </Dialog>
+        </div>
+
+        {/* Filters */}
+        <div className="flex gap-4 items-center animate-fade-in-up delay-200">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Input
+              placeholder="Buscar personas..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20"
+            />
+          </div>
+          <Select value={filterCategory} onValueChange={setFilterCategory}>
+            <SelectTrigger className="w-48 bg-white/5 border-white/20 text-white">
+              <Filter className="w-4 h-4 mr-2" />
+              <SelectValue placeholder="Filtrar por categoría" />
+            </SelectTrigger>
+            <SelectContent className="bg-gray-800 border-gray-700">
+              <SelectItem value="all" className="text-white hover:bg-gray-700">Todas las categorías</SelectItem>
+              {categories.map((category) => (
+                <SelectItem key={category} value={category} className="text-white hover:bg-gray-700">
+                  {category}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Personas Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredPersonas.map((persona, index) => (
+            <Card 
+              key={persona.id} 
+              className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10 group animate-fade-in-up"
+              style={{ animationDelay: `${300 + index * 100}ms` }}
+            >
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                      <User className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-lg text-white">{persona.name}</CardTitle>
+                      <CardDescription className="text-gray-400">{persona.occupation}</CardDescription>
+                    </div>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-white"
+                  >
+                    <Edit className="w-4 h-4" />
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">{persona.category}</Badge>
+                  <span className="text-sm text-gray-400">{persona.age} años</span>
                 </div>
                 
-                <div>
-                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
-                    Nivel Tech
-                  </span>
-                  <Badge variant="outline" className="ml-2">{persona.techLevel}</Badge>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <div>
-                  <span className="text-xs font-medium text-green-600 uppercase tracking-wide">
-                    Objetivos
-                  </span>
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {persona.goals.slice(0, 2).map((goal, idx) => (
-                      <Badge key={idx} variant="secondary" className="text-xs">
-                        {goal}
-                      </Badge>
-                    ))}
-                    {persona.goals.length > 2 && (
-                      <Badge variant="secondary" className="text-xs">
-                        +{persona.goals.length - 2}
-                      </Badge>
-                    )}
+                <p className="text-sm text-gray-300">{persona.description}</p>
+                
+                <div className="space-y-2">
+                  <div>
+                    <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">
+                      Demografía
+                    </span>
+                    <p className="text-sm text-gray-300">{persona.demographics}</p>
+                  </div>
+                  
+                  <div>
+                    <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">
+                      Nivel Tech
+                    </span>
+                    <Badge className="ml-2 bg-white/10 text-gray-300 border-white/20">{persona.techLevel}</Badge>
                   </div>
                 </div>
 
-                <div>
-                  <span className="text-xs font-medium text-red-600 uppercase tracking-wide">
-                    Frustraciones
-                  </span>
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {persona.frustrations.slice(0, 2).map((frustration, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs">
-                        {frustration}
-                      </Badge>
-                    ))}
-                    {persona.frustrations.length > 2 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{persona.frustrations.length - 2}
-                      </Badge>
-                    )}
+                <div className="space-y-2">
+                  <div>
+                    <span className="text-xs font-medium text-green-400 uppercase tracking-wide">
+                      Objetivos
+                    </span>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {persona.goals.slice(0, 2).map((goal, idx) => (
+                        <Badge key={idx} className="text-xs bg-green-500/20 text-green-300 border-green-500/30">
+                          {goal}
+                        </Badge>
+                      ))}
+                      {persona.goals.length > 2 && (
+                        <Badge className="text-xs bg-green-500/20 text-green-300 border-green-500/30">
+                          +{persona.goals.length - 2}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="text-xs font-medium text-red-400 uppercase tracking-wide">
+                      Frustraciones
+                    </span>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {persona.frustrations.slice(0, 2).map((frustration, idx) => (
+                        <Badge key={idx} className="text-xs bg-red-500/20 text-red-300 border-red-500/30">
+                          {frustration}
+                        </Badge>
+                      ))}
+                      {persona.frustrations.length > 2 && (
+                        <Badge className="text-xs bg-red-500/20 text-red-300 border-red-500/30">
+                          +{persona.frustrations.length - 2}
+                        </Badge>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {filteredPersonas.length === 0 && (
-        <div className="text-center py-12">
-          <User className="w-12 h-12 text-slate-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-slate-600 mb-2">
-            No se encontraron personas
-          </h3>
-          <p className="text-slate-500">
-            Intenta ajustar tus filtros o crear una nueva persona
-          </p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      )}
+
+        {filteredPersonas.length === 0 && (
+          <div className="text-center py-12 animate-fade-in">
+            <User className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-400 mb-2">
+              No se encontraron personas
+            </h3>
+            <p className="text-gray-500">
+              Intenta ajustar tus filtros o crear una nueva persona
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

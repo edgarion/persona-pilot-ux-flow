@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -121,218 +120,230 @@ const PersonaGenerator = () => {
   const canGenerate = selectedIndustry && selectedArchetypes.length > 0 && selectedDemographics.length > 0;
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-slate-800 mb-2">
-          Generador de User Personas
-        </h2>
-        <p className="text-slate-600">
-          Genera user personas automáticamente basadas en arquetipos psicológicos y demografía
-        </p>
+    <div className="min-h-screen bg-black text-white">
+      {/* Animated Background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Configuration Panel */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Brain className="w-5 h-5 text-purple-600" />
-              Configuración
-            </CardTitle>
-            <CardDescription>
-              Selecciona los parámetros para generar personas
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div>
-              <Label htmlFor="industry">Industria</Label>
-              <Select value={selectedIndustry} onValueChange={setSelectedIndustry}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecciona industria" />
-                </SelectTrigger>
-                <SelectContent>
-                  {industries.map((industry) => (
-                    <SelectItem key={industry} value={industry}>
-                      {industry}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 space-y-8">
+        {/* Header */}
+        <div className="text-center mb-8 animate-fade-in">
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-2">
+            Generador de User Personas
+          </h2>
+          <p className="text-gray-400 text-lg">
+            Genera user personas automáticamente basadas en arquetipos psicológicos y demografía
+          </p>
+        </div>
 
-            <div>
-              <Label>Arquetipos de Jung (selecciona 1-3)</Label>
-              <div className="grid grid-cols-1 gap-2 mt-2 max-h-48 overflow-y-auto">
-                {archetypes.map((archetype) => (
-                  <div key={archetype} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={archetype}
-                      checked={selectedArchetypes.includes(archetype)}
-                      onCheckedChange={(checked) => handleArchetypeChange(archetype, !!checked)}
-                    />
-                    <Label htmlFor={archetype} className="text-sm">
-                      {archetype}
-                    </Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <Label>Demografía (selecciona 1-3)</Label>
-              <div className="grid grid-cols-1 gap-2 mt-2 max-h-48 overflow-y-auto">
-                {demographics.map((demo) => (
-                  <div key={demo} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={demo}
-                      checked={selectedDemographics.includes(demo)}
-                      onCheckedChange={(checked) => handleDemographicChange(demo, !!checked)}
-                    />
-                    <Label htmlFor={demo} className="text-sm">
-                      {demo}
-                    </Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <Button
-              onClick={generatePersonas}
-              disabled={!canGenerate || isGenerating}
-              className="w-full bg-purple-600 hover:bg-purple-700"
-            >
-              {isGenerating ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                  Generando...
-                </>
-              ) : (
-                <>
-                  <Zap className="w-4 h-4 mr-2" />
-                  Generar Personas
-                </>
-              )}
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Generated Personas */}
-        <div className="lg:col-span-2">
-          <Card>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Configuration Panel */}
+          <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-200">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-blue-600" />
-                Personas Generadas
+              <CardTitle className="text-white flex items-center gap-2">
+                <Brain className="w-5 h-5 text-purple-400" />
+                Configuración
               </CardTitle>
-              <CardDescription>
-                User personas basadas en tus parámetros seleccionados
+              <CardDescription className="text-gray-400">
+                Selecciona los parámetros para generar personas
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              {!isGenerating && generatedPersonas.length === 0 && (
-                <div className="text-center py-12 text-slate-500">
-                  <User className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                  <p>Configura los parámetros y genera personas</p>
-                </div>
-              )}
-
-              {isGenerating && (
-                <div className="text-center py-12">
-                  <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4" />
-                  <p className="text-slate-600">Generando user personas...</p>
-                  <p className="text-sm text-slate-500 mt-1">Analizando arquetipos y demografía</p>
-                </div>
-              )}
-
-              {generatedPersonas.length > 0 && (
-                <div className="space-y-6">
-                  <div className="flex justify-between items-center">
-                    <Badge variant="secondary" className="px-3 py-1">
-                      {generatedPersonas.length} personas generadas
-                    </Badge>
-                    <Button size="sm" variant="outline">
-                      <Download className="w-4 h-4 mr-2" />
-                      Exportar Todas
-                    </Button>
-                  </div>
-
-                  <div className="space-y-4">
-                    {generatedPersonas.map((persona, index) => (
-                      <Card key={index} className="border-l-4 border-l-purple-500">
-                        <CardHeader>
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <CardTitle className="text-lg">{persona.name}</CardTitle>
-                              <CardDescription>{persona.occupation} • {persona.age} años</CardDescription>
-                            </div>
-                            <Badge variant="outline">{persona.category}</Badge>
-                          </div>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                          <p className="text-sm text-slate-700">{persona.description}</p>
-                          
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                              <h5 className="font-medium text-green-700 mb-2">Objetivos</h5>
-                              <div className="space-y-1">
-                                {persona.goals.slice(0, 2).map((goal, idx) => (
-                                  <div key={idx} className="text-sm text-slate-600 flex items-center gap-2">
-                                    <Target className="w-3 h-3 text-green-600" />
-                                    {goal}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                            
-                            <div>
-                              <h5 className="font-medium text-red-700 mb-2">Frustraciones</h5>
-                              <div className="space-y-1">
-                                {persona.frustrations.slice(0, 2).map((frustration, idx) => (
-                                  <div key={idx} className="text-sm text-slate-600 flex items-center gap-2">
-                                    <div className="w-3 h-3 bg-red-500 rounded-full" />
-                                    {frustration}
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-
-                          <div>
-                            <h5 className="font-medium text-blue-700 mb-2">Comportamientos</h5>
-                            <div className="flex flex-wrap gap-1">
-                              {persona.behaviors.map((behavior, idx) => (
-                                <Badge key={idx} variant="secondary" className="text-xs">
-                                  {behavior}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-
-                          <div>
-                            <h5 className="font-medium text-purple-700 mb-2">Canales Preferidos</h5>
-                            <div className="flex flex-wrap gap-1">
-                              {persona.preferredChannels.map((channel, idx) => (
-                                <Badge key={idx} variant="outline" className="text-xs">
-                                  {channel}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-
-                          <div className="flex justify-between items-center pt-2 border-t">
-                            <Badge>{persona.techLevel}</Badge>
-                            <Button size="sm" variant="outline">
-                              Usar en Proyecto
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
+            <CardContent className="space-y-6">
+              <div>
+                <Label htmlFor="industry" className="text-gray-200">Industria</Label>
+                <Select value={selectedIndustry} onValueChange={setSelectedIndustry}>
+                  <SelectTrigger className="bg-white/5 border-white/20 text-white">
+                    <SelectValue placeholder="Selecciona industria" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-gray-800 border-gray-700">
+                    {industries.map((industry) => (
+                      <SelectItem key={industry} value={industry} className="text-white hover:bg-gray-700">
+                        {industry}
+                      </SelectItem>
                     ))}
-                  </div>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label className="text-gray-200">Arquetipos de Jung (selecciona 1-3)</Label>
+                <div className="grid grid-cols-1 gap-2 mt-2 max-h-48 overflow-y-auto">
+                  {archetypes.map((archetype) => (
+                    <div key={archetype} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={archetype}
+                        checked={selectedArchetypes.includes(archetype)}
+                        onCheckedChange={(checked) => handleArchetypeChange(archetype, !!checked)}
+                        className="border-white/20 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+                      />
+                      <Label htmlFor={archetype} className="text-sm text-gray-300">
+                        {archetype}
+                      </Label>
+                    </div>
+                  ))}
                 </div>
-              )}
+              </div>
+
+              <div>
+                <Label className="text-gray-200">Demografía (selecciona 1-3)</Label>
+                <div className="grid grid-cols-1 gap-2 mt-2 max-h-48 overflow-y-auto">
+                  {demographics.map((demo) => (
+                    <div key={demo} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={demo}
+                        checked={selectedDemographics.includes(demo)}
+                        onCheckedChange={(checked) => handleDemographicChange(demo, !!checked)}
+                        className="border-white/20 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+                      />
+                      <Label htmlFor={demo} className="text-sm text-gray-300">
+                        {demo}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <Button
+                onClick={generatePersonas}
+                disabled={!canGenerate || isGenerating}
+                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-105"
+              >
+                {isGenerating ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                    Generando...
+                  </>
+                ) : (
+                  <>
+                    <Zap className="w-4 h-4 mr-2" />
+                    Generar Personas
+                  </>
+                )}
+              </Button>
             </CardContent>
           </Card>
+
+          {/* Generated Personas */}
+          <div className="lg:col-span-2">
+            <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-300">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Users className="w-5 h-5 text-blue-400" />
+                  Personas Generadas
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  User personas basadas en tus parámetros seleccionados
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {!isGenerating && generatedPersonas.length === 0 && (
+                  <div className="text-center py-12 text-gray-500">
+                    <User className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+                    <p>Configura los parámetros y genera personas</p>
+                  </div>
+                )}
+
+                {isGenerating && (
+                  <div className="text-center py-12">
+                    <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4" />
+                    <p className="text-gray-400">Generando user personas...</p>
+                    <p className="text-sm text-gray-500 mt-1">Analizando arquetipos y demografía</p>
+                  </div>
+                )}
+
+                {generatedPersonas.length > 0 && (
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-center">
+                      <Badge className="px-3 py-1 bg-blue-500/20 text-blue-300 border-blue-500/30">
+                        {generatedPersonas.length} personas generadas
+                      </Badge>
+                      <Button size="sm" variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+                        <Download className="w-4 h-4 mr-2" />
+                        Exportar Todas
+                      </Button>
+                    </div>
+
+                    <div className="space-y-4">
+                      {generatedPersonas.map((persona, index) => (
+                        <Card key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 border-l-4 border-l-purple-500 hover:bg-white/10 transition-all duration-300">
+                          <CardHeader>
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <CardTitle className="text-lg text-white">{persona.name}</CardTitle>
+                                <CardDescription className="text-gray-400">{persona.occupation} • {persona.age} años</CardDescription>
+                              </div>
+                              <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30">{persona.category}</Badge>
+                            </div>
+                          </CardHeader>
+                          <CardContent className="space-y-4">
+                            <p className="text-sm text-gray-300">{persona.description}</p>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <h5 className="font-medium text-green-400 mb-2">Objetivos</h5>
+                                <div className="space-y-1">
+                                  {persona.goals.slice(0, 2).map((goal, idx) => (
+                                    <div key={idx} className="text-sm text-gray-300 flex items-center gap-2">
+                                      <Target className="w-3 h-3 text-green-400" />
+                                      {goal}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-medium text-red-400 mb-2">Frustraciones</h5>
+                                <div className="space-y-1">
+                                  {persona.frustrations.slice(0, 2).map((frustration, idx) => (
+                                    <div key={idx} className="text-sm text-gray-300 flex items-center gap-2">
+                                      <div className="w-3 h-3 bg-red-500 rounded-full" />
+                                      {frustration}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div>
+                              <h5 className="font-medium text-blue-400 mb-2">Comportamientos</h5>
+                              <div className="flex flex-wrap gap-1">
+                                {persona.behaviors.map((behavior, idx) => (
+                                  <Badge key={idx} className="text-xs bg-blue-500/20 text-blue-300 border-blue-500/30">
+                                    {behavior}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div>
+                              <h5 className="font-medium text-purple-400 mb-2">Canales Preferidos</h5>
+                              <div className="flex flex-wrap gap-1">
+                                {persona.preferredChannels.map((channel, idx) => (
+                                  <Badge key={idx} className="text-xs bg-white/10 text-gray-300 border-white/20">
+                                    {channel}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div className="flex justify-between items-center pt-2 border-t border-white/10">
+                              <Badge className="bg-white/10 text-gray-300 border-white/20">{persona.techLevel}</Badge>
+                              <Button size="sm" variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+                                Usar en Proyecto
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>

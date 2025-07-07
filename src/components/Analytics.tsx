@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -33,30 +32,6 @@ const Analytics = () => {
     { test: 'Search Feature', satisfaction: 3.5, nps: 35, completion: 76 }
   ];
 
-  const timeToCompleteData = [
-    { test: 'Login Flow', tiempo: 2.5, objetivo: 3.0, status: 'good' },
-    { test: 'Checkout', tiempo: 8.2, objetivo: 6.0, status: 'warning' },
-    { test: 'Búsqueda', tiempo: 1.8, objetivo: 2.0, status: 'good' },
-    { test: 'Onboarding', tiempo: 12.5, objetivo: 10.0, status: 'critical' },
-    { test: 'Navegación', tiempo: 3.2, objetivo: 4.0, status: 'good' }
-  ];
-
-  const heatmapData = [
-    { feature: 'Navegación', desktop: 95, mobile: 78, tablet: 85 },
-    { feature: 'Búsqueda', desktop: 88, mobile: 92, tablet: 89 },
-    { feature: 'Checkout', desktop: 76, mobile: 65, tablet: 70 },
-    { feature: 'Perfil', desktop: 91, mobile: 88, tablet: 90 },
-    { feature: 'Soporte', desktop: 67, mobile: 72, tablet: 68 }
-  ];
-
-  const conversionFunnelData = [
-    { step: 'Landing', visitors: 10000, conversion: 100 },
-    { step: 'Registro', visitors: 6500, conversion: 65 },
-    { step: 'Onboarding', visitors: 4875, conversion: 75 },
-    { step: 'Primera Acción', visitors: 3412, conversion: 70 },
-    { step: 'Conversión Final', visitors: 2059, conversion: 60 }
-  ];
-
   const insights = [
     {
       title: "Mejor Rendimiento",
@@ -64,7 +39,7 @@ const Analytics = () => {
       trend: "up",
       value: "+8%",
       icon: TrendingUp,
-      color: "text-green-600",
+      color: "text-green-400",
       priority: "positive"
     },
     {
@@ -73,7 +48,7 @@ const Analytics = () => {
       trend: "down", 
       value: "-15%",
       icon: AlertTriangle,
-      color: "text-red-600",
+      color: "text-red-400",
       priority: "critical"
     },
     {
@@ -82,7 +57,7 @@ const Analytics = () => {
       trend: "up",
       value: "+12%",
       icon: Users,
-      color: "text-blue-600",
+      color: "text-blue-400",
       priority: "info"
     },
     {
@@ -91,7 +66,7 @@ const Analytics = () => {
       trend: "up",
       value: "+5 pts",
       icon: Target,
-      color: "text-purple-600",
+      color: "text-purple-400",
       priority: "positive"
     }
   ];
@@ -120,307 +95,209 @@ const Analytics = () => {
       impact: "38% abandono en onboarding",
       recommendation: "Reducir pasos a máximo 4 y hacer opcionales los avanzados",
       status: "in-progress"
-    },
-    {
-      test: "Search Feature",
-      finding: "Resultados poco relevantes en primeras posiciones",
-      severity: "Media",
-      impact: "Usuarios hacen 3.2 búsquedas en promedio",
-      recommendation: "Mejorar algoritmo de relevancia y añadir filtros inteligentes",
-      status: "pending"
     }
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Header with enhanced controls */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-3xl font-bold text-slate-800">Analytics Dashboard</h2>
-          <p className="text-slate-600 mt-1">Análisis completo de tus pruebas UX y comportamiento de usuarios</p>
-        </div>
-        <div className="flex gap-2">
-          <Select defaultValue="last-3-months">
-            <SelectTrigger className="w-48">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="last-week">Última semana</SelectItem>
-              <SelectItem value="last-month">Último mes</SelectItem>
-              <SelectItem value="last-3-months">Últimos 3 meses</SelectItem>
-              <SelectItem value="last-6-months">Últimos 6 meses</SelectItem>
-              <SelectItem value="last-year">Último año</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button variant="outline">
-            <TrendingUp className="w-4 h-4 mr-2" />
-            Dashboard en Vivo
-          </Button>
-          <Button variant="outline">
-            Exportar Reporte
-          </Button>
-        </div>
+    <div className="min-h-screen bg-black text-white">
+      {/* Animated Background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
-      {/* Enhanced Key Insights Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {insights.map((insight, index) => (
-          <Card key={index} className={`hover:shadow-md transition-shadow ${
-            insight.priority === 'critical' ? 'border-red-200 bg-red-50' :
-            insight.priority === 'positive' ? 'border-green-200 bg-green-50' :
-            'hover:border-blue-200'
-          }`}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                {insight.title}
-              </CardTitle>
-              <insight.icon className={`h-5 w-5 ${insight.color}`} />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 space-y-8">
+        {/* Header with enhanced controls */}
+        <div className="flex justify-between items-center animate-fade-in">
+          <div>
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+              Analytics Dashboard
+            </h2>
+            <p className="text-gray-400 mt-2 text-lg">Análisis completo de tus pruebas UX y comportamiento de usuarios</p>
+          </div>
+          <div className="flex gap-2">
+            <Select defaultValue="last-3-months">
+              <SelectTrigger className="w-48 bg-white/5 border-white/20 text-white">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-gray-800 border-gray-700">
+                <SelectItem value="last-week" className="text-white hover:bg-gray-700">Última semana</SelectItem>
+                <SelectItem value="last-month" className="text-white hover:bg-gray-700">Último mes</SelectItem>
+                <SelectItem value="last-3-months" className="text-white hover:bg-gray-700">Últimos 3 meses</SelectItem>
+                <SelectItem value="last-6-months" className="text-white hover:bg-gray-700">Últimos 6 meses</SelectItem>
+                <SelectItem value="last-year" className="text-white hover:bg-gray-700">Último año</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+              <TrendingUp className="w-4 h-4 mr-2" />
+              Dashboard en Vivo
+            </Button>
+            <Button variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+              Exportar Reporte
+            </Button>
+          </div>
+        </div>
+
+        {/* Enhanced Key Insights Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {insights.map((insight, index) => (
+            <Card 
+              key={index} 
+              className={`bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10 animate-fade-in-up ${
+                insight.priority === 'critical' ? 'border-red-500/30 bg-red-500/5' :
+                insight.priority === 'positive' ? 'border-green-500/30 bg-green-500/5' :
+                'hover:border-blue-500/30'
+              }`}
+              style={{ animationDelay: `${200 + index * 100}ms` }}
+            >
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium text-gray-300">
+                  {insight.title}
+                </CardTitle>
+                <insight.icon className={`h-5 w-5 ${insight.color}`} />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold mb-1 text-white">{insight.value}</div>
+                <p className="text-sm text-gray-400">{insight.description}</p>
+                {insight.priority === 'critical' && (
+                  <Badge className="mt-2 text-xs bg-red-500/20 text-red-300 border-red-500/30">
+                    Acción Requerida
+                  </Badge>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Enhanced Charts Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Test Completion Trends */}
+          <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-300">
+            <CardHeader>
+              <CardTitle className="text-white">Evolución de Pruebas y Participación</CardTitle>
+              <CardDescription className="text-gray-400">Pruebas completadas vs. participantes por mes</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold mb-1">{insight.value}</div>
-              <p className="text-sm text-slate-600">{insight.description}</p>
-              {insight.priority === 'critical' && (
-                <Badge variant="destructive" className="mt-2 text-xs">
-                  Acción Requerida
-                </Badge>
-              )}
+              <ResponsiveContainer width="100%" height={300}>
+                <AreaChart data={testCompletionData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                  <XAxis dataKey="month" stroke="#9CA3AF" />
+                  <YAxis yAxisId="tests" orientation="left" stroke="#9CA3AF" />
+                  <YAxis yAxisId="participants" orientation="right" stroke="#9CA3AF" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(0,0,0,0.8)', 
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      borderRadius: '8px',
+                      color: 'white'
+                    }} 
+                  />
+                  <Area 
+                    yAxisId="tests"
+                    type="monotone" 
+                    dataKey="completadas" 
+                    stackId="1"
+                    stroke="#3B82F6" 
+                    fill="#3B82F6" 
+                    fillOpacity={0.6}
+                    name="Completadas"
+                  />
+                  <Area 
+                    yAxisId="tests"
+                    type="monotone" 
+                    dataKey="enProgreso" 
+                    stackId="1"
+                    stroke="#8B5CF6" 
+                    fill="#8B5CF6" 
+                    fillOpacity={0.6}
+                    name="En Progreso"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
-        ))}
-      </div>
 
-      {/* Enhanced Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Test Completion Trends with Participants */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Evolución de Pruebas y Participación</CardTitle>
-            <CardDescription>Pruebas completadas vs. participantes por mes</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <AreaChart data={testCompletionData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis yAxisId="tests" orientation="left" />
-                <YAxis yAxisId="participants" orientation="right" />
-                <Tooltip />
-                <Area 
-                  yAxisId="tests"
-                  type="monotone" 
-                  dataKey="completadas" 
-                  stackId="1"
-                  stroke="#3B82F6" 
-                  fill="#3B82F6" 
-                  fillOpacity={0.6}
-                  name="Completadas"
-                />
-                <Area 
-                  yAxisId="tests"
-                  type="monotone" 
-                  dataKey="enProgreso" 
-                  stackId="1"
-                  stroke="#8B5CF6" 
-                  fill="#8B5CF6" 
-                  fillOpacity={0.6}
-                  name="En Progreso"
-                />
-                <Line 
-                  yAxisId="participants"
-                  type="monotone" 
-                  dataKey="participantes" 
-                  stroke="#F59E0B" 
-                  strokeWidth={3}
-                  name="Participantes"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
+          {/* User Satisfaction & NPS */}
+          <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-400">
+            <CardHeader>
+              <CardTitle className="text-white">Satisfacción y NPS por Prueba</CardTitle>
+              <CardDescription className="text-gray-400">Puntuación de satisfacción y Net Promoter Score</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={userSatisfactionData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                  <XAxis dataKey="test" stroke="#9CA3AF" />
+                  <YAxis yAxisId="satisfaction" orientation="left" domain={[0, 5]} stroke="#9CA3AF" />
+                  <YAxis yAxisId="nps" orientation="right" domain={[0, 100]} stroke="#9CA3AF" />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(0,0,0,0.8)', 
+                      border: '1px solid rgba(255,255,255,0.2)',
+                      borderRadius: '8px',
+                      color: 'white'
+                    }} 
+                  />
+                  <Bar yAxisId="satisfaction" dataKey="satisfaction" fill="#10B981" name="Satisfacción (1-5)" />
+                  <Bar yAxisId="nps" dataKey="nps" fill="#3B82F6" name="NPS" />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
 
-        {/* User Satisfaction & NPS */}
-        <Card>
+        {/* Enhanced Recent Findings */}
+        <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-500">
           <CardHeader>
-            <CardTitle>Satisfacción y NPS por Prueba</CardTitle>
-            <CardDescription>Puntuación de satisfacción y Net Promoter Score</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={userSatisfactionData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="test" />
-                <YAxis yAxisId="satisfaction" orientation="left" domain={[0, 5]} />
-                <YAxis yAxisId="nps" orientation="right" domain={[0, 100]} />
-                <Tooltip />
-                <Bar yAxisId="satisfaction" dataKey="satisfaction" fill="#10B981" name="Satisfacción (1-5)" />
-                <Bar yAxisId="nps" dataKey="nps" fill="#3B82F6" name="NPS" />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Performance Metrics */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Time to Complete Analysis */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Tiempo de Completado vs. Objetivo</CardTitle>
-            <CardDescription>Análisis de eficiencia en tareas clave (minutos)</CardDescription>
+            <CardTitle className="text-white">Hallazgos y Recomendaciones</CardTitle>
+            <CardDescription className="text-gray-400">Insights detallados con estado de implementación</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {timeToCompleteData.map((item, index) => (
-                <div key={index} className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="font-medium">{item.test}</span>
+              {recentFindings.map((finding, index) => (
+                <div key={index} className={`border-l-4 pl-4 py-3 rounded-r-lg bg-white/5 ${
+                  finding.severity === "Crítica" ? 'border-red-500' :
+                  finding.severity === "Alta" ? 'border-orange-500' :
+                  finding.severity === "Positivo" ? 'border-green-500' :
+                  'border-blue-500'
+                }`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-medium text-white">{finding.test}</h4>
                     <div className="flex items-center gap-2">
                       <Badge 
-                        variant={
-                          item.status === 'good' ? 'default' :
-                          item.status === 'warning' ? 'secondary' : 'destructive'
+                        className={
+                          finding.severity === "Crítica" ? "bg-red-500/20 text-red-300 border-red-500/30" :
+                          finding.severity === "Alta" ? "bg-orange-500/20 text-orange-300 border-orange-500/30" :
+                          finding.severity === "Positivo" ? "bg-green-500/20 text-green-300 border-green-500/30" : 
+                          "bg-blue-500/20 text-blue-300 border-blue-500/30"
                         }
                       >
-                        {item.tiempo}min
+                        {finding.severity}
                       </Badge>
-                      <span className="text-sm text-slate-500">obj: {item.objetivo}min</span>
+                      <Badge 
+                        className={
+                          finding.status === "implemented" ? "bg-green-500/20 text-green-300 border-green-500/30" :
+                          finding.status === "in-progress" ? "bg-blue-500/20 text-blue-300 border-blue-500/30" : 
+                          "bg-gray-500/20 text-gray-300 border-gray-500/30"
+                        }
+                      >
+                        {finding.status === "implemented" ? "Implementado" :
+                         finding.status === "in-progress" ? "En Progreso" : "Pendiente"}
+                      </Badge>
                     </div>
                   </div>
-                  <div className="relative">
-                    <div className="w-full bg-slate-200 rounded-full h-3">
-                      <div
-                        className={`h-3 rounded-full transition-all ${
-                          item.status === 'good' ? 'bg-green-500' :
-                          item.status === 'warning' ? 'bg-yellow-500' : 'bg-red-500'
-                        }`}
-                        style={{ width: `${Math.min((item.tiempo / item.objetivo) * 100, 100)}%` }}
-                      />
-                    </div>
-                    <div 
-                      className="absolute top-0 w-1 h-3 bg-slate-600"
-                      style={{ left: '100%', transform: 'translateX(-1px)' }}
-                    />
-                  </div>
+                  <p className="text-sm text-gray-300 mb-2">{finding.finding}</p>
+                  <p className="text-xs text-gray-400 mb-2 font-medium">Impacto: {finding.impact}</p>
+                  <p className="text-xs text-blue-300 bg-blue-500/10 p-2 rounded border border-blue-500/20">
+                    <strong>Recomendación:</strong> {finding.recommendation}
+                  </p>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
-
-        {/* Device Performance Heatmap */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Rendimiento por Dispositivo</CardTitle>
-            <CardDescription>Puntuación de usabilidad por característica y dispositivo</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <RadarChart data={heatmapData}>
-                <PolarGrid />
-                <PolarAngleAxis dataKey="feature" />
-                <PolarRadiusAxis angle={0} domain={[0, 100]} />
-                <Radar name="Desktop" dataKey="desktop" stroke="#3B82F6" fill="#3B82F6" fillOpacity={0.1} />
-                <Radar name="Mobile" dataKey="mobile" stroke="#F59E0B" fill="#F59E0B" fillOpacity={0.1} />
-                <Radar name="Tablet" dataKey="tablet" stroke="#10B981" fill="#10B981" fillOpacity={0.1} />
-                <Tooltip />
-              </RadarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
       </div>
-
-      {/* Conversion Funnel */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Embudo de Conversión</CardTitle>
-          <CardDescription>Análisis de abandono en cada paso del proceso</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {conversionFunnelData.map((step, index) => (
-              <div key={index} className="relative">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold ${
-                      step.conversion >= 70 ? 'bg-green-500' :
-                      step.conversion >= 50 ? 'bg-yellow-500' : 'bg-red-500'
-                    }`}>
-                      {index + 1}
-                    </div>
-                    <span className="font-medium">{step.step}</span>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-bold">{step.visitors.toLocaleString()}</div>
-                    <div className="text-sm text-slate-500">{step.conversion}% conversión</div>
-                  </div>
-                </div>
-                <div className="ml-11">
-                  <div className="w-full bg-slate-200 rounded-full h-2">
-                    <div
-                      className="bg-blue-600 h-2 rounded-full transition-all"
-                      style={{ width: `${step.conversion}%` }}
-                    />
-                  </div>
-                  {index < conversionFunnelData.length - 1 && (
-                    <div className="text-xs text-red-600 mt-1">
-                      -{((conversionFunnelData[index].visitors - conversionFunnelData[index + 1].visitors) / conversionFunnelData[index].visitors * 100).toFixed(1)}% abandono
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Enhanced Recent Findings */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Hallazgos y Recomendaciones</CardTitle>
-          <CardDescription>Insights detallados con estado de implementación</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {recentFindings.map((finding, index) => (
-              <div key={index} className={`border-l-4 pl-4 py-3 rounded-r-lg ${
-                finding.severity === "Crítica" ? 'border-red-500 bg-red-50' :
-                finding.severity === "Alta" ? 'border-orange-500 bg-orange-50' :
-                finding.severity === "Positivo" ? 'border-green-500 bg-green-50' :
-                'border-blue-500 bg-blue-50'
-              }`}>
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-medium">{finding.test}</h4>
-                  <div className="flex items-center gap-2">
-                    <Badge 
-                      variant={
-                        finding.severity === "Crítica" ? "destructive" :
-                        finding.severity === "Alta" ? "destructive" :
-                        finding.severity === "Positivo" ? "default" : "secondary"
-                      }
-                    >
-                      {finding.severity}
-                    </Badge>
-                    <Badge 
-                      variant={
-                        finding.status === "implemented" ? "default" :
-                        finding.status === "in-progress" ? "secondary" : "outline"
-                      }
-                    >
-                      {finding.status === "implemented" ? "Implementado" :
-                       finding.status === "in-progress" ? "En Progreso" : "Pendiente"}
-                    </Badge>
-                  </div>
-                </div>
-                <p className="text-sm text-slate-700 mb-2">{finding.finding}</p>
-                <p className="text-xs text-slate-600 mb-2 font-medium">Impacto: {finding.impact}</p>
-                <p className="text-xs text-blue-700 bg-blue-100 p-2 rounded">
-                  <strong>Recomendación:</strong> {finding.recommendation}
-                </p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 };
