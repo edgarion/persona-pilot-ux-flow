@@ -41,6 +41,7 @@ interface ProjectPersona {
   goals: string[];
   frustrations: string[];
   techLevel: string;
+  avatar?: string;
 }
 
 const ProjectCreator = () => {
@@ -690,8 +691,18 @@ const ProjectCreator = () => {
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
-                                <div className="w-8 h-8 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center">
-                                  <Users className="w-4 h-4 text-white" />
+                                <div className="w-8 h-8 rounded-full overflow-hidden border border-yellow-500/30">
+                                  {persona.avatar ? (
+                                    <img 
+                                      src={persona.avatar} 
+                                      alt={persona.name}
+                                      className="w-full h-full object-cover"
+                                    />
+                                  ) : (
+                                    <div className="w-full h-full bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center justify-center">
+                                      <Users className="w-4 h-4 text-white" />
+                                    </div>
+                                  )}
                                 </div>
                                 <div>
                                   <h4 className="font-medium text-white">{persona.name}</h4>
