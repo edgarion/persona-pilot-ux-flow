@@ -140,7 +140,11 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
         <section className="pt-32 pb-20 px-6">
           <div className="container mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-8">
-              <Sparkles className="w-4 h-4 text-yellow-400" />
+              <img 
+                src="/b.png" 
+                alt="UX Pathia Logo" 
+                className="w-4 h-4 object-contain"
+              />
               <span className="text-sm text-gray-300">Plataforma de Testing UX de Nueva Generación</span>
             </div>
             
