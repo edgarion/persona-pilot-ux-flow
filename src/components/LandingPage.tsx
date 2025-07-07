@@ -73,37 +73,43 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
       icon: Brain,
       title: "Análisis con IA",
       description: "Análisis inteligente de comportamiento de usuarios con IA avanzada",
-      color: "from-blue-500 to-cyan-500"
+      color: "from-blue-500 to-cyan-500",
+      image: "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       icon: Zap,
       title: "Pruebas en Tiempo Real",
       description: "Pruebas en tiempo real con feedback instantáneo y métricas en vivo",
-      color: "from-purple-500 to-pink-500"
+      color: "from-purple-500 to-pink-500",
+      image: "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       icon: Target,
       title: "Segmentación Precisa",
       description: "Segmentación precisa de usuarios basada en personas detalladas",
-      color: "from-emerald-500 to-teal-500"
+      color: "from-emerald-500 to-teal-500",
+      image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       icon: Users,
       title: "Personas de Usuario",
       description: "Crea y gestiona personas de usuario detalladas con arquetipos psicológicos",
-      color: "from-orange-500 to-red-500"
+      color: "from-orange-500 to-red-500",
+      image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       icon: TestTube,
       title: "Pruebas Avanzadas",
       description: "Suite completa de herramientas: A/B testing, usabilidad, card sorting",
-      color: "from-indigo-500 to-purple-500"
+      color: "from-indigo-500 to-purple-500",
+      image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       icon: BarChart3,
       title: "Panel de Análisis",
       description: "Dashboard completo con métricas avanzadas y reportes automáticos",
-      color: "from-green-500 to-emerald-500"
+      color: "from-green-500 to-emerald-500",
+      image: "https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&w=800"
     }
   ];
 
@@ -354,24 +360,37 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {features.map((feature, index) => (
-                <Card 
+                <div 
                   key={index}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 group"
+                  className="group hover:scale-[1.02] transition-all duration-500"
                 >
-                  <CardHeader>
-                    <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center mb-4`}>
-                      <feature.icon className="w-6 h-6 text-white" />
+                  {/* Large evocative image */}
+                  <div className="relative mb-6 overflow-hidden rounded-2xl">
+                    <img 
+                      src={feature.image} 
+                      alt={feature.title}
+                      className="w-full h-80 object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                        <feature.icon className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-2">{feature.title}</h3>
                     </div>
-                    <CardTitle className="text-xl text-white">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-gray-400 leading-relaxed">
-                      {feature.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
+                  </div>
+                  
+                  {/* Content */}
+                  <Card className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 -mt-8 relative z-10 mx-4">
+                    <CardContent className="p-6">
+                      <p className="text-gray-300 leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </Card>
+                </div>
               ))}
             </div>
           </div>
