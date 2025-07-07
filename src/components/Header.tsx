@@ -46,6 +46,7 @@ const Header = ({ onLogin }: HeaderProps) => {
 
           {/* Right Section */}
           <div className="flex items-center gap-4">
+            <LanguageSelector />
             {/* Login Button */}
             <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
               <DialogTrigger asChild>

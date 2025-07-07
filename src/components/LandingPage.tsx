@@ -9,9 +9,6 @@ import { Badge } from "@/components/ui/badge";
 import { 
   Sparkles, 
   ArrowRight, 
-  Zap, 
-  Target, 
-  BarChart3, 
   Users, 
   TestTube, 
   FileText,
@@ -22,8 +19,12 @@ import {
   Brain,
   Wand2,
   Mail,
-  Bell
+  Bell,
+  Zap,
+  Target,
+  BarChart3
 } from "lucide-react";
+import LanguageSelector from "./LanguageSelector";
 
 interface LandingPageProps {
   onGetStarted: () => void;
