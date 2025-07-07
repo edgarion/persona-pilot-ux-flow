@@ -388,7 +388,7 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
                       <p className="text-gray-300 leading-relaxed">
                         {feature.description}
                       </p>
-                    </div>
+                    </CardContent>
                   </Card>
                 </div>
               ))}
