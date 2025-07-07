@@ -6,6 +6,7 @@ import Analytics from "@/components/Analytics";
 import ProjectCreator from "@/components/ProjectCreator";
 import DocumentationUploader from "@/components/DocumentationUploader";
 import DashboardContent from "@/components/DashboardContent";
+import FinalReport from "@/components/FinalReport";
 import FixedNavigation from "@/components/FixedNavigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
@@ -38,6 +39,10 @@ const Index = () => {
       analytics: [
         { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
         { label: "Analytics", href: "#" }
+      ]
+      "final-report": [
+        { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
+        { label: "Informe Final", href: "#" }
       ]
     };
     return paths[activeTab as keyof typeof paths] || paths.dashboard;
@@ -95,6 +100,10 @@ const Index = () => {
 
               <TabsContent value="analytics">
                 <Analytics />
+              </TabsContent>
+
+              <TabsContent value="final-report">
+                <FinalReport />
               </TabsContent>
             </Tabs>
           </div>

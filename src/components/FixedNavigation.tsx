@@ -56,6 +56,12 @@ const FixedNavigation = ({ activeTab, onTabChange, onLogout }: FixedNavigationPr
       label: "Analytics",
       icon: BarChart3,
       tooltip: "Ver métricas y resultados detallados"
+    },
+    {
+      id: "final-report",
+      label: "Informe Final",
+      icon: FileText,
+      tooltip: "Ver métricas y resultados detallados"
     }
   ];
 

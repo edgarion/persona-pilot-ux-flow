@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"; 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, AreaChart, Area, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ScatterChart, Scatter } from 'recharts';
 import { TrendingUp, TrendingDown, Users, TestTube, CheckCircle, Clock, AlertTriangle, Target, Zap, BarChart3, Award, FileText, Lightbulb, ArrowRight, Star, ThumbsUp, ThumbsDown, DollarSign, ShoppingCart, Smartphone, Eye, Image } from "lucide-react";
 
@@ -98,6 +98,26 @@ const Analytics = () => {
       status: "in-progress"
     }
   ];
+
+  const handleGenerateFinalReport = () => {
+    // Crear un nuevo tab o modal para el informe final
+    console.log("Generando informe final...");
+    // Aquí se podría abrir un modal o navegar a una nueva página
+    // Por ahora, mostraremos un mensaje
+    alert("Funcionalidad de Informe Final próximamente disponible");
+  };
+
+  const handleExportData = () => {
+    // Exportar datos de analytics
+    const analyticsData = {
+      testCompletionData,
+      personaUsageData,
+      userSatisfactionData,
+      insights,
+      recentFindings
+    };
+    console.log("Exportando datos:", analyticsData);
+  };
 
   // Datos del informe final completo - Estudio E-commerce
   const finalReportData = {
@@ -575,6 +595,13 @@ const Analytics = () => {
                 <Button variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
                   Exportar Reporte
                 </Button>
+                <Button 
+                  onClick={handleGenerateFinalReport}
+                  className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl"
+                >
+                  <BarChart3 className="w-4 h-4 mr-2" />
+                  Generar Informe Final
+                </Button>
               </div>
             </div>
 
@@ -736,6 +763,17 @@ const Analytics = () => {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Quick Actions */}
+            <div className="flex justify-center gap-4 pt-8">
+              <Button onClick={handleExportData} variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+                Exportar Datos
+              </Button>
+              <Button onClick={handleGenerateFinalReport} className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
+                <BarChart3 className="w-4 h-4 mr-2" />
+                Crear Informe Final Completo
+              </Button>
+            </div>
           </TabsContent>
 
           {/* Final Report Tab */}
