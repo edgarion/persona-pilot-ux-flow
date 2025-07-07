@@ -184,7 +184,6 @@ const UserPersonas = () => {
                     </Select>
                   </div>
                 </div>
-                <Button onClick={handleCreatePersona} className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-xl">
                 <Button onClick={handleCreatePersona} className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
                   Crear Persona
                 </Button>
