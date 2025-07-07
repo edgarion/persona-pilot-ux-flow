@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Sparkles, ArrowRight, Brain, Users, Target, Clock, BarChart3, Lightbulb, CheckCircle2, Zap, Wand2, Upload, FileText, Plus, Folder } from "lucide-react";
+import { Sparkles, ArrowRight, Brain, Users, Target, Clock, BarChart3, Lightbulb, CheckCircle2, Zap, Wand2, Upload, FileText, Plus, Folder, UserPlus, Trash2 } from "lucide-react";
 
 interface AnalysisResult {
   methodologies: string[];
@@ -31,6 +31,18 @@ interface DocumentItem {
   size: string;
 }
 
+interface ProjectPersona {
+  id: number;
+  name: string;
+  age: string;
+  occupation: string;
+  category: string;
+  description: string;
+  goals: string[];
+  frustrations: string[];
+  techLevel: string;
+}
+
 const ProjectCreator = () => {
   const [projectDescription, setProjectDescription] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -38,6 +50,12 @@ const ProjectCreator = () => {
   const [isDocDialogOpen, setIsDocDialogOpen] = useState(false);
   const [selectedDocs, setSelectedDocs] = useState<number[]>([]);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [isPersonaDialogOpen, setIsPersonaDialogOpen] = useState(false);
+  const [projectPersonas, setProjectPersonas] = useState<ProjectPersona[]>([]);
+  const [newPersona, setNewPersona] = useState<Partial<ProjectPersona>>({
+    goals: [],
+    frustrations: []
+  });
 
   // Mock data de documentos ya analizados
   const availableDocs: DocumentItem[] = [
@@ -82,6 +100,9 @@ const ProjectCreator = () => {
       size: "1.2 MB"
     }
   ];
+
+  const categories = ["Profesionales Tech", "Padres Ocupados", "Compradores Millennials", "Emprendedores", "Usuarios Novatos", "Power Users"];
+  const techLevels = ["Principiante", "Intermedio", "Avanzado", "Experto"];
 
   const examplePrompts = [
     "I'm redesigning an e-commerce checkout flow for millennials who abandon their carts frequently",
@@ -169,6 +190,61 @@ const ProjectCreator = () => {
       case "Error": return "bg-red-500/20 text-red-300 border-red-500/30";
       default: return "bg-gray-500/20 text-gray-300 border-gray-500/30";
     }
+  };
+
+  const handleCreatePersona = () => {
+    if (newPersona.name && newPersona.occupation && newPersona.category && projectPersonas.length < 10) {
+      const persona: ProjectPersona = {
+        id: projectPersonas.length + 1,
+        name: newPersona.name || "",
+        age: newPersona.age || "",
+        occupation: newPersona.occupation || "",
+        category: newPersona.category || "",
+        description: newPersona.description || "",
+        goals: newPersona.goals || [],
+        frustrations: newPersona.frustrations || [],
+        techLevel: newPersona.techLevel || ""
+      };
+      setProjectPersonas([...projectPersonas, persona]);
+      setNewPersona({ goals: [], frustrations: [] });
+      setIsPersonaDialogOpen(false);
+    }
+  };
+
+  const removePersona = (id: number) => {
+    setProjectPersonas(prev => prev.filter(p => p.id !== id));
+  };
+
+  const addGoal = (goal: string) => {
+    if (goal.trim() && newPersona.goals && newPersona.goals.length < 5) {
+      setNewPersona({
+        ...newPersona,
+        goals: [...(newPersona.goals || []), goal.trim()]
+      });
+    }
+  };
+
+  const addFrustration = (frustration: string) => {
+    if (frustration.trim() && newPersona.frustrations && newPersona.frustrations.length < 5) {
+      setNewPersona({
+        ...newPersona,
+        frustrations: [...(newPersona.frustrations || []), frustration.trim()]
+      });
+    }
+  };
+
+  const removeGoal = (index: number) => {
+    setNewPersona({
+      ...newPersona,
+      goals: newPersona.goals?.filter((_, i) => i !== index) || []
+    });
+  };
+
+  const removeFrustration = (index: number) => {
+    setNewPersona({
+      ...newPersona,
+      frustrations: newPersona.frustrations?.filter((_, i) => i !== index) || []
+    });
   };
 
   return (
@@ -374,6 +450,314 @@ const ProjectCreator = () => {
                           </div>
                         ))}
                       </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* User Personas Section */}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label className="text-gray-200 text-base font-medium">
+                        User Personas del Proyecto
+                      </Label>
+                      <p className="text-sm text-gray-400 mt-1">
+                        Crea hasta 10 personas específicas para este proyecto
+                      </p>
+                    </div>
+                    <Dialog open={isPersonaDialogOpen} onOpenChange={setIsPersonaDialogOpen}>
+                      <DialogTrigger asChild>
+                        <Button 
+                          variant="outline" 
+                          className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl"
+                          disabled={projectPersonas.length >= 10}
+                        >
+                          <UserPlus className="w-4 h-4 mr-2" />
+                          Crear Persona ({projectPersonas.length}/10)
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-gray-900 border-gray-700 text-white">
+                        <DialogHeader>
+                          <DialogTitle className="text-white">Crear User Persona para el Proyecto</DialogTitle>
+                          <DialogDescription className="text-gray-400">
+                            Define una persona específica que represente a tu audiencia objetivo
+                          </DialogDescription>
+                        </DialogHeader>
+                        
+                        <div className="space-y-6">
+                          {/* Información básica */}
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label htmlFor="persona-name" className="text-gray-200">Nombre</Label>
+                              <Input
+                                id="persona-name"
+                                value={newPersona.name || ""}
+                                onChange={(e) => setNewPersona({...newPersona, name: e.target.value})}
+                                placeholder="Ej: María González"
+                                className="bg-white/5 border-white/20 text-white placeholder:text-gray-400"
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor="persona-age" className="text-gray-200">Rango de Edad</Label>
+                              <Input
+                                id="persona-age"
+                                value={newPersona.age || ""}
+                                onChange={(e) => setNewPersona({...newPersona, age: e.target.value})}
+                                placeholder="Ej: 28-35"
+                                className="bg-white/5 border-white/20 text-white placeholder:text-gray-400"
+                              />
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label htmlFor="persona-occupation" className="text-gray-200">Ocupación</Label>
+                              <Input
+                                id="persona-occupation"
+                                value={newPersona.occupation || ""}
+                                onChange={(e) => setNewPersona({...newPersona, occupation: e.target.value})}
+                                placeholder="Ej: Marketing Manager"
+                                className="bg-white/5 border-white/20 text-white placeholder:text-gray-400"
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor="persona-category" className="text-gray-200">Categoría</Label>
+                              <Select
+                                value={newPersona.category}
+                                onValueChange={(value) => setNewPersona({...newPersona, category: value})}
+                              >
+                                <SelectTrigger className="bg-white/5 border-white/20 text-white">
+                                  <SelectValue placeholder="Selecciona categoría" />
+                                </SelectTrigger>
+                                <SelectContent className="bg-gray-800 border-gray-700">
+                                  {categories.map((category) => (
+                                    <SelectItem key={category} value={category} className="text-white hover:bg-gray-700">
+                                      {category}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label htmlFor="persona-tech" className="text-gray-200">Nivel Tecnológico</Label>
+                              <Select
+                                value={newPersona.techLevel}
+                                onValueChange={(value) => setNewPersona({...newPersona, techLevel: value})}
+                              >
+                                <SelectTrigger className="bg-white/5 border-white/20 text-white">
+                                  <SelectValue placeholder="Nivel tech" />
+                                </SelectTrigger>
+                                <SelectContent className="bg-gray-800 border-gray-700">
+                                  {techLevels.map((level) => (
+                                    <SelectItem key={level} value={level} className="text-white hover:bg-gray-700">
+                                      {level}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <div>
+                              <Label htmlFor="persona-description" className="text-gray-200">Descripción Breve</Label>
+                              <Input
+                                id="persona-description"
+                                value={newPersona.description || ""}
+                                onChange={(e) => setNewPersona({...newPersona, description: e.target.value})}
+                                placeholder="Descripción en una línea"
+                                className="bg-white/5 border-white/20 text-white placeholder:text-gray-400"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Objetivos */}
+                          <div>
+                            <Label className="text-gray-200">Objetivos Principales (máx. 5)</Label>
+                            <div className="flex gap-2 mt-2">
+                              <Input
+                                placeholder="Añadir objetivo..."
+                                onKeyPress={(e) => {
+                                  if (e.key === 'Enter') {
+                                    addGoal(e.currentTarget.value);
+                                    e.currentTarget.value = '';
+                                  }
+                                }}
+                                className="bg-white/5 border-white/20 text-white placeholder:text-gray-400"
+                              />
+                              <Button
+                                type="button"
+                                onClick={(e) => {
+                                  const input = e.currentTarget.parentElement?.querySelector('input');
+                                  if (input) {
+                                    addGoal(input.value);
+                                    input.value = '';
+                                  }
+                                }}
+                                className="bg-green-600 hover:bg-green-500 rounded-xl"
+                              >
+                                <Plus className="w-4 h-4" />
+                              </Button>
+                            </div>
+                            <div className="flex flex-wrap gap-2 mt-2">
+                              {newPersona.goals?.map((goal, idx) => (
+                                <Badge key={idx} className="bg-green-500/20 text-green-300 border-green-500/30 pr-1">
+                                  {goal}
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => removeGoal(idx)}
+                                    className="ml-1 h-4 w-4 p-0 hover:bg-red-500/20"
+                                  >
+                                    <Trash2 className="w-3 h-3" />
+                                  </Button>
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Frustraciones */}
+                          <div>
+                            <Label className="text-gray-200">Frustraciones Principales (máx. 5)</Label>
+                            <div className="flex gap-2 mt-2">
+                              <Input
+                                placeholder="Añadir frustración..."
+                                onKeyPress={(e) => {
+                                  if (e.key === 'Enter') {
+                                    addFrustration(e.currentTarget.value);
+                                    e.currentTarget.value = '';
+                                  }
+                                }}
+                                className="bg-white/5 border-white/20 text-white placeholder:text-gray-400"
+                              />
+                              <Button
+                                type="button"
+                                onClick={(e) => {
+                                  const input = e.currentTarget.parentElement?.querySelector('input');
+                                  if (input) {
+                                    addFrustration(input.value);
+                                    input.value = '';
+                                  }
+                                }}
+                                className="bg-red-600 hover:bg-red-500 rounded-xl"
+                              >
+                                <Plus className="w-4 h-4" />
+                              </Button>
+                            </div>
+                            <div className="flex flex-wrap gap-2 mt-2">
+                              {newPersona.frustrations?.map((frustration, idx) => (
+                                <Badge key={idx} className="bg-red-500/20 text-red-300 border-red-500/30 pr-1">
+                                  {frustration}
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => removeFrustration(idx)}
+                                    className="ml-1 h-4 w-4 p-0 hover:bg-red-500/20"
+                                  >
+                                    <Trash2 className="w-3 h-3" />
+                                  </Button>
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="flex gap-2">
+                            <Button 
+                              onClick={() => setIsPersonaDialogOpen(false)}
+                              variant="outline"
+                              className="flex-1 bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl"
+                            >
+                              Cancelar
+                            </Button>
+                            <Button 
+                              onClick={handleCreatePersona}
+                              className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl"
+                              disabled={!newPersona.name || !newPersona.occupation || !newPersona.category}
+                            >
+                              Crear Persona
+                            </Button>
+                          </div>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+
+                  {/* Lista de personas creadas */}
+                  {projectPersonas.length > 0 && (
+                    <div className="space-y-3">
+                      {projectPersonas.map((persona) => (
+                        <div key={persona.id} className="p-4 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <div className="w-8 h-8 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center">
+                                  <Users className="w-4 h-4 text-white" />
+                                </div>
+                                <div>
+                                  <h4 className="font-medium text-white">{persona.name}</h4>
+                                  <p className="text-sm text-gray-400">{persona.occupation} • {persona.age} años</p>
+                                </div>
+                                <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
+                                  {persona.category}
+                                </Badge>
+                              </div>
+                              <p className="text-sm text-gray-300 mb-2">{persona.description}</p>
+                              <div className="flex gap-4">
+                                <div>
+                                  <span className="text-xs text-green-400 font-medium">Objetivos:</span>
+                                  <div className="flex flex-wrap gap-1 mt-1">
+                                    {persona.goals.slice(0, 2).map((goal, idx) => (
+                                      <Badge key={idx} className="text-xs bg-green-500/20 text-green-300 border-green-500/30">
+                                        {goal}
+                                      </Badge>
+                                    ))}
+                                    {persona.goals.length > 2 && (
+                                      <Badge className="text-xs bg-green-500/20 text-green-300 border-green-500/30">
+                                        +{persona.goals.length - 2}
+                                      </Badge>
+                                    )}
+                                  </div>
+                                </div>
+                                <div>
+                                  <span className="text-xs text-red-400 font-medium">Frustraciones:</span>
+                                  <div className="flex flex-wrap gap-1 mt-1">
+                                    {persona.frustrations.slice(0, 2).map((frustration, idx) => (
+                                      <Badge key={idx} className="text-xs bg-red-500/20 text-red-300 border-red-500/30">
+                                        {frustration}
+                                      </Badge>
+                                    ))}
+                                    {persona.frustrations.length > 2 && (
+                                      <Badge className="text-xs bg-red-500/20 text-red-300 border-red-500/30">
+                                        +{persona.frustrations.length - 2}
+                                      </Badge>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              onClick={() => removePersona(persona.id)}
+                              className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {projectPersonas.length === 0 && (
+                    <div className="p-6 border-2 border-dashed border-white/20 rounded-lg text-center">
+                      <Users className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                      <p className="text-gray-400 text-sm">
+                        Crea personas específicas para este proyecto
+                      </p>
+                      <p className="text-gray-500 text-xs mt-1">
+                        Las personas ayudarán a la IA a generar recomendaciones más precisas
+                      </p>
                     </div>
                   )}
                 </div>
