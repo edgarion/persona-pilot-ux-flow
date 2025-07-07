@@ -20,7 +20,9 @@ import {
   CheckCircle,
   Star,
   Brain,
-  Wand2
+  Wand2,
+  Mail,
+  Bell
 } from "lucide-react";
 
 interface LandingPageProps {
@@ -29,8 +31,11 @@ interface LandingPageProps {
 
 const LandingPage = ({ onGetStarted }: LandingPageProps) => {
   const [isPromptDialogOpen, setIsPromptDialogOpen] = useState(false);
+  const [isWhitelistDialogOpen, setIsWhitelistDialogOpen] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [promptText, setPromptText] = useState("");
+  const [whitelistEmail, setWhitelistEmail] = useState("");
+  const [whitelistSubmitted, setWhitelistSubmitted] = useState(false);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
@@ -42,73 +47,62 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
   };
 
   const handleCreatePrompt = () => {
-    // Aquí se procesaría el prompt y los archivos
     console.log("Prompt:", promptText);
     console.log("Files:", uploadedFiles);
     setIsPromptDialogOpen(false);
     onGetStarted();
   };
 
+  const handleWhitelistSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (whitelistEmail.trim()) {
+      // Aquí se enviaría el email a la whitelist
+      console.log("Email añadido a whitelist:", whitelistEmail);
+      setWhitelistSubmitted(true);
+      setTimeout(() => {
+        setIsWhitelistDialogOpen(false);
+        setWhitelistSubmitted(false);
+        setWhitelistEmail("");
+      }, 2000);
+    }
+  };
+
   const features = [
     {
       icon: Brain,
-      title: "Análisis Impulsado por IA",
-      description: "Análisis inteligente de comportamiento de usuarios con IA avanzada que identifica patrones y oportunidades de mejora automáticamente.",
+      title: "Análisis con IA",
+      description: "Análisis inteligente de comportamiento de usuarios con IA avanzada",
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: Zap,
       title: "Pruebas en Tiempo Real",
-      description: "Pruebas en tiempo real con feedback instantáneo y métricas en vivo para tomar decisiones rápidas y efectivas.",
+      description: "Pruebas en tiempo real con feedback instantáneo y métricas en vivo",
       color: "from-purple-500 to-pink-500"
     },
     {
       icon: Target,
       title: "Segmentación Precisa",
-      description: "Segmentación precisa de usuarios basada en personas detalladas y comportamientos específicos.",
+      description: "Segmentación precisa de usuarios basada en personas detalladas",
       color: "from-emerald-500 to-teal-500"
     },
     {
       icon: Users,
       title: "Personas de Usuario",
-      description: "Crea y gestiona personas de usuario detalladas con arquetipos psicológicos y datos demográficos.",
+      description: "Crea y gestiona personas de usuario detalladas con arquetipos psicológicos",
       color: "from-orange-500 to-red-500"
     },
     {
       icon: TestTube,
       title: "Pruebas Avanzadas",
-      description: "Suite completa de herramientas de testing: A/B testing, usabilidad, card sorting y más.",
+      description: "Suite completa de herramientas: A/B testing, usabilidad, card sorting",
       color: "from-indigo-500 to-purple-500"
     },
     {
       icon: BarChart3,
       title: "Panel de Análisis",
-      description: "Dashboard completo con métricas avanzadas, reportes automáticos y insights accionables.",
+      description: "Dashboard completo con métricas avanzadas y reportes automáticos",
       color: "from-green-500 to-emerald-500"
-    }
-  ];
-
-  const tutorials = [
-    {
-      title: "Primeros Pasos",
-      description: "Aprende a configurar tu primer proyecto y crear user personas",
-      duration: "5 min",
-      level: "Principiante",
-      image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400"
-    },
-    {
-      title: "Creación de Pruebas UX",
-      description: "Guía completa para diseñar y ejecutar pruebas de usabilidad efectivas",
-      duration: "12 min",
-      level: "Intermedio",
-      image: "https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=400"
-    },
-    {
-      title: "Análisis Avanzado",
-      description: "Interpreta datos y genera insights accionables con IA",
-      duration: "8 min",
-      level: "Avanzado",
-      image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=400"
     }
   ];
 
@@ -135,37 +129,34 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Animated Background */}
+      {/* Fondo simplificado */}
       <div className="fixed inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]"></div>
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse delay-2000"></div>
       </div>
 
       <div className="relative z-10">
         {/* Hero Section */}
         <section className="pt-32 pb-20 px-6">
           <div className="container mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-8 animate-fade-in">
-              <Sparkles className="w-4 h-4 text-blue-400" />
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-8">
+              <Sparkles className="w-4 h-4 text-yellow-400" />
               <span className="text-sm text-gray-300">Plataforma de Testing UX de Nueva Generación</span>
             </div>
             
-            <h1 className="text-6xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent animate-fade-in-up">
+            <h1 className="text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-white via-yellow-100 to-orange-100 bg-clip-text text-transparent">
               Revoluciona tus Pruebas UX
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-400 max-w-4xl mx-auto leading-relaxed mb-12 animate-fade-in-up delay-200">
+            <p className="text-xl md:text-2xl text-gray-400 max-w-4xl mx-auto leading-relaxed mb-12">
               Plataforma completa impulsada por IA para gestionar personas, ejecutar pruebas UX avanzadas y obtener insights accionables que transformarán tu producto.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16 animate-fade-in-up delay-400">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
               <Dialog open={isPromptDialogOpen} onOpenChange={setIsPromptDialogOpen}>
                 <DialogTrigger asChild>
                   <Button 
                     size="lg" 
-                    className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/25"
+                    className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105"
                   >
                     <Wand2 className="w-5 h-5 mr-2" />
                     Crear Proyecto con IA
@@ -175,7 +166,7 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-gray-900 border-gray-700 text-white">
                   <DialogHeader>
                     <DialogTitle className="text-white flex items-center gap-2">
-                      <Brain className="w-5 h-5 text-blue-400" />
+                      <Brain className="w-5 h-5 text-yellow-400" />
                       Crear Proyecto con IA
                     </DialogTitle>
                     <DialogDescription className="text-gray-400">
@@ -192,15 +183,15 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
                         id="prompt"
                         value={promptText}
                         onChange={(e) => setPromptText(e.target.value)}
-                        placeholder="Ejemplo: Estoy rediseñando el proceso de compra de mi e-commerce. Los usuarios abandonan en un 70% y necesito identificar los puntos de fricción principales. Mi audiencia son millennials tech-savvy que valoran la rapidez..."
-                        className="mt-3 bg-white/5 border-white/20 text-white placeholder:text-gray-400 min-h-[120px] text-base leading-relaxed focus:border-blue-400 focus:ring-blue-400/20"
+                        placeholder="Ejemplo: Estoy rediseñando el proceso de compra de mi e-commerce. Los usuarios abandonan en un 70% y necesito identificar los puntos de fricción principales..."
+                        className="mt-3 bg-white/5 border-white/20 text-white placeholder:text-gray-400 min-h-[120px] text-base leading-relaxed focus:border-yellow-400 focus:ring-yellow-400/20"
                         rows={6}
                       />
                     </div>
 
                     <div>
                       <Label className="text-gray-200 text-base font-medium">Documentación (Opcional)</Label>
-                      <div className="mt-2 border-2 border-dashed border-white/20 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                      <div className="mt-2 border-2 border-dashed border-white/20 rounded-lg p-6 text-center hover:border-yellow-400 transition-colors">
                         <input
                           type="file"
                           multiple
@@ -212,10 +203,10 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
                         <label htmlFor="file-upload" className="cursor-pointer">
                           <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                           <p className="text-sm text-gray-400">
-                            Arrastra archivos aquí o <span className="text-blue-400 underline">selecciona archivos</span>
+                            Arrastra archivos aquí o <span className="text-yellow-400 underline">selecciona archivos</span>
                           </p>
                           <p className="text-xs text-gray-500 mt-1">
-                            Wireframes, especificaciones, user stories, etc. (Max 10MB cada uno)
+                            Wireframes, especificaciones, user stories, etc.
                           </p>
                         </label>
                       </div>
@@ -268,10 +259,68 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
                 <Play className="w-5 h-5 mr-2" />
                 Ver Demo
               </Button>
+
+              <Dialog open={isWhitelistDialogOpen} onOpenChange={setIsWhitelistDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button 
+                    size="lg" 
+                    variant="outline"
+                    className="border-yellow-500/50 text-yellow-400 hover:bg-yellow-500/10 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105"
+                  >
+                    <Bell className="w-5 h-5 mr-2" />
+                    Únete a la Whitelist
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-gray-900 border-gray-700 text-white">
+                  <DialogHeader>
+                    <DialogTitle className="text-white flex items-center gap-2">
+                      <Bell className="w-5 h-5 text-yellow-400" />
+                      Únete a la Whitelist
+                    </DialogTitle>
+                    <DialogDescription className="text-gray-400">
+                      Sé el primero en acceder cuando lancemos la plataforma completa
+                    </DialogDescription>
+                  </DialogHeader>
+                  
+                  {!whitelistSubmitted ? (
+                    <form onSubmit={handleWhitelistSubmit} className="space-y-6">
+                      <div>
+                        <Label htmlFor="whitelist-email" className="text-gray-200">Email</Label>
+                        <div className="relative mt-2">
+                          <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                          <Input
+                            id="whitelist-email"
+                            type="email"
+                            value={whitelistEmail}
+                            onChange={(e) => setWhitelistEmail(e.target.value)}
+                            placeholder="tu@email.com"
+                            className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-yellow-400 focus:ring-yellow-400/20"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <Button
+                        type="submit"
+                        className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black font-medium py-3 text-base transition-all duration-300 transform hover:scale-[1.02] rounded-xl"
+                      >
+                        <Bell className="w-4 h-4 mr-2" />
+                        Añadir a Whitelist
+                      </Button>
+                    </form>
+                  ) : (
+                    <div className="text-center py-8">
+                      <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
+                      <h3 className="text-xl font-semibold text-white mb-2">¡Listo!</h3>
+                      <p className="text-gray-400">Te notificaremos cuando esté disponible</p>
+                    </div>
+                  )}
+                </DialogContent>
+              </Dialog>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto animate-fade-in-up delay-600">
+            {/* Stats simplificadas */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               <div className="text-center">
                 <div className="text-4xl font-bold text-white mb-2">10,000+</div>
                 <div className="text-gray-400">Pruebas Ejecutadas</div>
@@ -288,12 +337,12 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
           </div>
         </section>
 
-        {/* Features Section */}
+        {/* Features Section simplificada */}
         <section id="features" className="py-20 px-6">
           <div className="container mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
-                Características Avanzadas
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-yellow-100 to-orange-100 bg-clip-text text-transparent">
+                Características Principales
               </h2>
               <p className="text-xl text-gray-400 max-w-3xl mx-auto">
                 Todo lo que necesitas para llevar tus pruebas UX al siguiente nivel
@@ -304,11 +353,10 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
               {features.map((feature, index) => (
                 <Card 
                   key={index}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10 group animate-fade-in-up"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 group"
                 >
                   <CardHeader>
-                    <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`w-12 h-12 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center mb-4`}>
                       <feature.icon className="w-6 h-6 text-white" />
                     </div>
                     <CardTitle className="text-xl text-white">{feature.title}</CardTitle>
@@ -324,75 +372,20 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
           </div>
         </section>
 
-        {/* Tutorials Section */}
-        <section id="tutorials" className="py-20 px-6 bg-white/5">
-          <div className="container mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
-                Aprende con Nuestros Tutoriales
-              </h2>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-                Domina la plataforma con guías paso a paso y casos de uso reales
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {tutorials.map((tutorial, index) => (
-                <Card 
-                  key={index}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10 group overflow-hidden animate-fade-in-up"
-                  style={{ animationDelay: `${index * 150}ms` }}
-                >
-                  <div className="aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 relative overflow-hidden">
-                    <img 
-                      src={tutorial.image} 
-                      alt={tutorial.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                      <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        <Play className="w-6 h-6 text-white ml-1" />
-                      </div>
-                    </div>
-                  </div>
-                  <CardHeader>
-                    <div className="flex items-center justify-between mb-2">
-                      <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
-                        {tutorial.level}
-                      </Badge>
-                      <span className="text-sm text-gray-400">{tutorial.duration}</span>
-                    </div>
-                    <CardTitle className="text-lg text-white">{tutorial.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-gray-400">
-                      {tutorial.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
+        {/* Testimonials simplificados */}
         <section className="py-20 px-6">
           <div className="container mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-yellow-100 to-orange-100 bg-clip-text text-transparent">
                 Lo que Dicen Nuestros Usuarios
               </h2>
-              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-                Testimonios reales de profesionales que han transformado su proceso de UX testing
-              </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {testimonials.map((testimonial, index) => (
                 <Card 
                   key={index}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10 animate-fade-in-up"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300"
                 >
                   <CardHeader>
                     <div className="flex items-center gap-1 mb-4">
@@ -406,8 +399,8 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
                   </CardHeader>
                   <CardContent>
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                        <span className="text-white font-semibold">
+                      <div className="w-10 h-10 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center">
+                        <span className="text-black font-semibold">
                           {testimonial.name.split(' ').map(n => n[0]).join('')}
                         </span>
                       </div>
@@ -423,20 +416,20 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-20 px-6 bg-gradient-to-r from-blue-900/30 to-purple-900/30">
+        {/* CTA Final simplificado */}
+        <section className="py-20 px-6 bg-gradient-to-r from-yellow-900/30 to-orange-900/30">
           <div className="container mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-yellow-100 to-orange-100 bg-clip-text text-transparent">
               ¿Listo para Revolucionar tu UX?
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-12">
-              Únete a miles de profesionales que ya están usando nuestra plataforma para crear experiencias excepcionales
+              Únete a miles de profesionales que ya están usando nuestra plataforma
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button 
                 onClick={onGetStarted}
                 size="lg" 
-                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/25"
+                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105"
               >
                 <CheckCircle className="w-5 h-5 mr-2" />
                 Comenzar Gratis
