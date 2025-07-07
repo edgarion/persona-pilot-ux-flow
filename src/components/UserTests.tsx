@@ -64,7 +64,7 @@ const UserTests = () => {
       participants: 0,
       createdDate: "2024-01-20"
     }
-  ];
+  ]);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
