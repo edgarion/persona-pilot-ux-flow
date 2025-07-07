@@ -165,7 +165,6 @@ const ProjectCreator = () => {
         </p>
       </div>
 
-      {/* Progress Indicator */}
       <Card>
         <CardContent className="pt-6">
           <div className="flex items-center justify-between mb-4">
@@ -194,7 +193,6 @@ const ProjectCreator = () => {
         </CardContent>
       </Card>
 
-      {/* Step Content */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -423,7 +421,6 @@ const ProjectCreator = () => {
             </div>
           )}
 
-          {/* Navigation Buttons */}
           <div className="flex justify-between pt-6 border-t">
             <Button
               variant="outline"
