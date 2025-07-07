@@ -3,17 +3,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Users, TestTube, BarChart3, Plus, Filter, FileText, Home } from "lucide-react";
+import { Users, TestTube, BarChart3, Plus, Filter, FileText } from "lucide-react";
 import UserPersonas from "@/components/UserPersonas";
 import UserTests from "@/components/UserTests";
 import Analytics from "@/components/Analytics";
 import ProjectCreator from "@/components/ProjectCreator";
 import PersonaGenerator from "@/components/PersonaGenerator";
 import DocumentationUploader from "@/components/DocumentationUploader";
-import HomePage from "@/components/HomePage";
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState("home");
+  const [activeTab, setActiveTab] = useState("dashboard");
 
   const stats = [
     {
@@ -66,13 +65,19 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-slate-800 mb-2">
+            UX Testing Hub
+          </h1>
+          <p className="text-lg text-slate-600">
+            Plataforma completa para gestionar personas, pruebas UX y análisis de usuario
+          </p>
+        </div>
+
         {/* Navigation Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid w-full grid-cols-8 lg:w-auto lg:grid-cols-8">
-            <TabsTrigger value="home" className="flex items-center gap-2">
-              <Home className="w-4 h-4" />
-              Inicio
-            </TabsTrigger>
+          <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:grid-cols-7">
             <TabsTrigger value="dashboard" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               Dashboard
@@ -102,11 +107,6 @@ const Index = () => {
               Análisis
             </TabsTrigger>
           </TabsList>
-
-          {/* Home Tab */}
-          <TabsContent value="home">
-            <HomePage />
-          </TabsContent>
 
           {/* Dashboard Tab */}
           <TabsContent value="dashboard" className="space-y-8">

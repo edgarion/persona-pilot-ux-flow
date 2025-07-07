@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -164,6 +165,7 @@ const ProjectCreator = () => {
         </p>
       </div>
 
+      {/* Progress Indicator */}
       <Card>
         <CardContent className="pt-6">
           <div className="flex items-center justify-between mb-4">
@@ -192,10 +194,11 @@ const ProjectCreator = () => {
         </CardContent>
       </Card>
 
+      {/* Step Content */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            {steps[currentStep].icon className="w-6 h-6 text-blue-600" />
+            <steps[currentStep].icon className="w-6 h-6 text-blue-600" />
             {steps[currentStep].title}
           </CardTitle>
         </CardHeader>
@@ -420,6 +423,7 @@ const ProjectCreator = () => {
             </div>
           )}
 
+          {/* Navigation Buttons */}
           <div className="flex justify-between pt-6 border-t">
             <Button
               variant="outline"
