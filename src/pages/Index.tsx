@@ -39,7 +39,7 @@ const Index = () => {
       analytics: [
         { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
         { label: "Analytics", href: "#" }
-      ]
+      ],
       "final-report": [
         { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
         { label: "Informe Final", href: "#" }
