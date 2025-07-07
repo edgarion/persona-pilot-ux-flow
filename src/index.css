@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import font for headings */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap');
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
@@ -96,6 +99,11 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     font-family: system-ui, -apple-system, sans-serif;
     line-height: 1.6;
+  }
+  
+  h1, h2, h3 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
   }
 }
 

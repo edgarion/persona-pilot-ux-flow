@@ -141,9 +141,9 @@ const LandingPage = ({ onGetStarted }: LandingPageProps) => {
           <div className="container mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full mb-8">
               <img 
-                src="/b.png" 
+                src="/Group 4.svg" 
                 alt="UX Pathia Logo" 
-                className="w-4 h-4 object-contain"
+                className="h-6 object-contain"
               />
               <span className="text-sm text-gray-300">Plataforma de Testing UX de Nueva Generación</span>
             </div>

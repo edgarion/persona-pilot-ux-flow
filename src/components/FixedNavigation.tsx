@@ -73,11 +73,10 @@ const FixedNavigation = ({ activeTab, onTabChange, onLogout }: FixedNavigationPr
             {/* Logo */}
             <div className="flex items-center gap-2">
               <img 
-                src="/b.png" 
+                src="/Group 4.svg" 
                 alt="UX Pathia Logo" 
-                className="w-10 h-10 object-contain"
+                className="h-10 object-contain"
               />
-              <span className="text-xl font-bold text-white">UX Pathia</span>
             </div>
 
             {/* Navigation Items */}
