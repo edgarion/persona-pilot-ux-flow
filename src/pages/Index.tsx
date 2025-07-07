@@ -1,13 +1,15 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Users, TestTube, BarChart3, Plus, Filter } from "lucide-react";
+import { Users, TestTube, BarChart3, Plus, Filter, FileText } from "lucide-react";
 import UserPersonas from "@/components/UserPersonas";
 import UserTests from "@/components/UserTests";
 import Analytics from "@/components/Analytics";
+import ProjectCreator from "@/components/ProjectCreator";
+import PersonaGenerator from "@/components/PersonaGenerator";
+import DocumentationUploader from "@/components/DocumentationUploader";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -69,24 +71,36 @@ const Index = () => {
             UX Testing Hub
           </h1>
           <p className="text-lg text-slate-600">
-            Gestiona tus user personas y pruebas de usuario en un solo lugar
+            Plataforma completa para gestionar personas, pruebas UX y análisis de usuario
           </p>
         </div>
 
         {/* Navigation Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:grid-cols-4">
+          <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:grid-cols-7">
             <TabsTrigger value="dashboard" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               Dashboard
             </TabsTrigger>
+            <TabsTrigger value="project-creator" className="flex items-center gap-2">
+              <Plus className="w-4 h-4" />
+              Proyectos
+            </TabsTrigger>
             <TabsTrigger value="personas" className="flex items-center gap-2">
               <Users className="w-4 h-4" />
-              User Personas
+              Personas
+            </TabsTrigger>
+            <TabsTrigger value="persona-generator" className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              Generador
             </TabsTrigger>
             <TabsTrigger value="tests" className="flex items-center gap-2">
               <TestTube className="w-4 h-4" />
               Pruebas
+            </TabsTrigger>
+            <TabsTrigger value="docs-analyzer" className="flex items-center gap-2">
+              <FileText className="w-4 h-4" />
+              Documentos
             </TabsTrigger>
             <TabsTrigger value="analytics" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
@@ -182,14 +196,29 @@ const Index = () => {
             </Card>
           </TabsContent>
 
+          {/* Project Creator Tab */}
+          <TabsContent value="project-creator">
+            <ProjectCreator />
+          </TabsContent>
+
           {/* User Personas Tab */}
           <TabsContent value="personas">
             <UserPersonas />
           </TabsContent>
 
+          {/* Persona Generator Tab */}
+          <TabsContent value="persona-generator">
+            <PersonaGenerator />
+          </TabsContent>
+
           {/* Tests Tab */}
           <TabsContent value="tests">
             <UserTests />
+          </TabsContent>
+
+          {/* Documentation Analyzer Tab */}
+          <TabsContent value="docs-analyzer">
+            <DocumentationUploader />
           </TabsContent>
 
           {/* Analytics Tab */}
