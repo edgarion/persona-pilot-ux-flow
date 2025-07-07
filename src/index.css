@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import Funnel Display font for headings */
-@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&display=swap');
+/* Import Lexend Deca font for headings */
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@400;500;600;700;800&display=swap');
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
@@ -102,7 +102,7 @@ All colors MUST be HSL.
   }
   
   h1, h2, h3 {
-    font-family: 'Funnel Display', sans-serif;
+    font-family: 'Lexend Deca', sans-serif;
     font-weight: 700;
   }
 }
