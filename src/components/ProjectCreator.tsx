@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -196,7 +195,7 @@ const ProjectCreator = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <steps[currentStep].icon className="w-6 h-6 text-blue-600" />
+            {steps[currentStep].icon className="w-6 h-6 text-blue-600" />
             {steps[currentStep].title}
           </CardTitle>
         </CardHeader>
