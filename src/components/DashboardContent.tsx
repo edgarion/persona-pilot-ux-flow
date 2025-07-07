@@ -129,7 +129,7 @@ const DashboardContent = ({ onTabChange }: DashboardContentProps) => {
 
   return (
     <TooltipProvider>
-      <div className="space-y-8 pt-20">
+      <div className="space-y-8">
         {/* Welcome Section */}
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold bg-gradient-to-r from-white via-yellow-100 to-orange-100 bg-clip-text text-transparent mb-4 animate-fade-in">

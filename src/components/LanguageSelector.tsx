@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Globe } from "lucide-react";
 
 interface Language {
@@ -25,27 +26,34 @@ const LanguageSelector = () => {
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="text-gray-300 hover:text-white hover:bg-white/10 rounded-xl">
-          <Globe className="w-4 h-4 mr-2" />
-          <span className="mr-1">{currentLanguage.flag}</span>
-          <span className="hidden sm:inline">{currentLanguage.name}</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-gray-900 border-gray-700" align="end">
-        {languages.map((language) => (
-          <DropdownMenuItem
-            key={language.code}
-            onClick={() => handleLanguageChange(language)}
-            className="text-white hover:bg-gray-700 cursor-pointer"
-          >
-            <span className="mr-2">{language.flag}</span>
-            {language.name}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Tooltip>
+      <DropdownMenu>
+        <TooltipTrigger asChild>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="text-gray-300 hover:text-white hover:bg-white/10 rounded-xl">
+              <Globe className="w-4 h-4 mr-2" />
+              <span className="mr-1">{currentLanguage.flag}</span>
+              <span className="hidden sm:inline">{currentLanguage.name}</span>
+            </Button>
+          </DropdownMenuTrigger>
+        </TooltipTrigger>
+        <DropdownMenuContent className="bg-gray-900 border-gray-700" align="end">
+          {languages.map((language) => (
+            <DropdownMenuItem
+              key={language.code}
+              onClick={() => handleLanguageChange(language)}
+              className="text-white hover:bg-gray-700 cursor-pointer"
+            >
+              <span className="mr-2">{language.flag}</span>
+              {language.name}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <TooltipContent className="bg-gray-900 border-gray-700 text-white">
+        <p>Cambiar idioma de la interfaz</p>
+      </TooltipContent>
+    </Tooltip>
   );
 };
 
