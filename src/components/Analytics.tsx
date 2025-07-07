@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, AreaChart, Area, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ScatterChart, Scatter } from 'recharts';
-import { TrendingUp, TrendingDown, Users, TestTube, CheckCircle, Clock, AlertTriangle, Target, Zap, BarChart3, Award, FileText, Lightbulb, ArrowRight, Star, ThumbsUp, ThumbsDown } from "lucide-react";
+import { TrendingUp, TrendingDown, Users, TestTube, CheckCircle, Clock, AlertTriangle, Target, Zap, BarChart3, Award, FileText, Lightbulb, ArrowRight, Star, ThumbsUp, ThumbsDown, DollarSign, ShoppingCart, Smartphone, Eye } from "lucide-react";
 
 const Analytics = () => {
   // Enhanced mock data for comprehensive analytics
@@ -99,127 +99,200 @@ const Analytics = () => {
     }
   ];
 
-  // Datos del proyecto final completo
-  const finalProjectData = {
-    projectName: "Rediseño E-commerce Mobile",
-    duration: "8 semanas",
-    totalParticipants: 127,
-    completionDate: "2024-01-20",
-    overallScore: 8.4,
-    npsScore: 72,
+  // Datos del informe final completo - Estudio E-commerce
+  const finalReportData = {
+    projectName: "Auditoría UX E-commerce TechStore",
+    duration: "12 semanas",
+    totalParticipants: 147,
+    completionDate: "2024-01-25",
+    overallScore: 7.8,
+    npsScore: 68,
     
+    // Métricas de rentabilidad
+    businessImpact: {
+      conversionImprovement: "+34%",
+      revenueIncrease: "€2.4M",
+      cartAbandonmentReduction: "-28%",
+      customerSatisfactionIncrease: "+42%",
+      timeToCheckoutReduction: "-45%",
+      supportTicketsReduction: "-31%"
+    },
+
     testResults: [
       {
         type: "Usabilidad",
         name: "Navegación Principal",
-        participants: 24,
-        successRate: 87,
-        avgTime: "2:34",
-        satisfaction: 4.2,
-        keyFindings: ["Menú hamburguesa confuso", "Búsqueda muy efectiva", "Categorías bien organizadas"],
+        participants: 32,
+        successRate: 78,
+        avgTime: "3:24",
+        satisfaction: 3.8,
+        keyFindings: ["Menú categorías confuso", "Búsqueda efectiva", "Breadcrumbs poco visibles"],
         status: "Completado",
-        priority: "Alta"
+        priority: "Alta",
+        businessImpact: "Mejora navegación = +15% conversión"
       },
       {
         type: "A/B Testing",
         name: "Proceso de Checkout",
-        participants: 45,
-        successRate: 92,
-        avgTime: "3:12",
-        satisfaction: 4.6,
-        keyFindings: ["Versión B 23% mejor", "Menos pasos = más conversión", "Formulario simplificado exitoso"],
+        participants: 58,
+        successRate: 65,
+        avgTime: "4:47",
+        satisfaction: 3.2,
+        keyFindings: ["Demasiados pasos", "Formularios largos", "Opciones de pago confusas"],
         status: "Completado",
-        priority: "Crítica"
+        priority: "Crítica",
+        businessImpact: "Checkout optimizado = +34% conversión"
       },
       {
         type: "Card Sorting",
         name: "Categorización Productos",
-        participants: 18,
-        successRate: 78,
-        avgTime: "15:45",
-        satisfaction: 3.8,
-        keyFindings: ["Categorías confusas", "Subcategorías muy profundas", "Filtros mal ubicados"],
+        participants: 24,
+        successRate: 71,
+        avgTime: "18:32",
+        satisfaction: 3.6,
+        keyFindings: ["Categorías solapadas", "Subcategorías muy profundas", "Filtros mal ubicados"],
         status: "Completado",
-        priority: "Media"
+        priority: "Media",
+        businessImpact: "Mejor categorización = +12% engagement"
       },
       {
         type: "Focus Group",
         name: "Experiencia Mobile",
-        participants: 12,
-        successRate: 85,
-        avgTime: "45:00",
-        satisfaction: 4.4,
-        keyFindings: ["Diseño atractivo", "Velocidad de carga lenta", "Gestos intuitivos"],
+        participants: 16,
+        successRate: 82,
+        avgTime: "60:00",
+        satisfaction: 4.1,
+        keyFindings: ["Diseño responsive bueno", "Velocidad de carga lenta", "Touch targets pequeños"],
         status: "Completado",
-        priority: "Alta"
+        priority: "Alta",
+        businessImpact: "Mobile optimizado = +28% ventas móviles"
       },
       {
         type: "Tree Testing",
         name: "Arquitectura Información",
-        participants: 28,
-        successRate: 73,
-        avgTime: "8:22",
-        satisfaction: 3.9,
-        keyFindings: ["Estructura profunda", "Etiquetas ambiguas", "Rutas alternativas confusas"],
+        participants: 17,
+        successRate: 69,
+        avgTime: "12:15",
+        satisfaction: 3.4,
+        keyFindings: ["Estructura muy profunda", "Etiquetas técnicas", "Rutas alternativas confusas"],
         status: "Completado",
-        priority: "Media"
+        priority: "Media",
+        businessImpact: "IA mejorada = +8% task completion"
       }
     ],
     
     improvements: [
       {
-        category: "Navegación",
-        priority: "Crítica",
-        impact: "Alto",
-        effort: "Medio",
-        recommendation: "Rediseñar menú principal con iconografía clara y reducir niveles de navegación",
-        expectedImprovement: "+15% en task completion",
-        status: "Pendiente"
-      },
-      {
-        category: "Checkout",
+        category: "Checkout Crítico",
         priority: "Crítica", 
         impact: "Alto",
         effort: "Alto",
-        recommendation: "Implementar checkout de un solo paso con autocompletado inteligente",
-        expectedImprovement: "+23% conversión",
-        status: "En progreso"
+        recommendation: "Implementar checkout de un solo paso con guest checkout y autocompletado",
+        expectedImprovement: "+34% conversión, +€1.2M revenue anual",
+        status: "En progreso",
+        timeline: "6 semanas",
+        cost: "€45,000"
       },
       {
-        category: "Búsqueda",
+        category: "Performance Mobile",
+        priority: "Crítica",
+        impact: "Alto", 
+        effort: "Medio",
+        recommendation: "Optimizar imágenes, implementar lazy loading y CDN",
+        expectedImprovement: "+28% ventas móviles, -2.3s tiempo carga",
+        status: "Planificado",
+        timeline: "4 semanas",
+        cost: "€25,000"
+      },
+      {
+        category: "Navegación",
+        priority: "Alta",
+        impact: "Medio",
+        effort: "Medio",
+        recommendation: "Rediseñar menú principal con mega-menú y breadcrumbs mejorados",
+        expectedImprovement: "+15% navegación exitosa, +€400K revenue",
+        status: "Pendiente",
+        timeline: "8 semanas", 
+        cost: "€35,000"
+      },
+      {
+        category: "Búsqueda y Filtros",
         priority: "Alta",
         impact: "Medio",
         effort: "Bajo",
-        recommendation: "Añadir filtros visuales y sugerencias automáticas en tiempo real",
-        expectedImprovement: "+12% engagement",
-        status: "Completado"
-      },
-      {
-        category: "Performance",
-        priority: "Alta",
-        impact: "Alto",
-        effort: "Alto",
-        recommendation: "Optimizar imágenes y implementar lazy loading para mejorar velocidad",
-        expectedImprovement: "+2s tiempo de carga",
-        status: "Pendiente"
+        recommendation: "Añadir filtros visuales, autocompletado y sugerencias inteligentes",
+        expectedImprovement: "+22% uso de filtros, +€300K revenue",
+        status: "Completado",
+        timeline: "3 semanas",
+        cost: "€15,000"
       },
       {
         category: "Accesibilidad",
         priority: "Media",
         impact: "Medio",
-        effort: "Medio",
-        recommendation: "Mejorar contraste de colores y añadir etiquetas ARIA",
-        expectedImprovement: "+5% usuarios accesibles",
-        status: "Planificado"
+        effort: "Bajo",
+        recommendation: "Mejorar contraste, añadir alt-text y navegación por teclado",
+        expectedImprovement: "+8% usuarios accesibles, cumplimiento WCAG",
+        status: "Planificado",
+        timeline: "2 semanas",
+        cost: "€8,000"
       }
     ],
     
     personas: [
-      { name: "Compradores Millennials", participation: 35, satisfaction: 4.3 },
-      { name: "Padres Ocupados", participation: 28, satisfaction: 4.1 },
-      { name: "Profesionales Tech", participation: 22, satisfaction: 4.6 },
-      { name: "Usuarios Móviles", participation: 15, satisfaction: 4.0 }
-    ]
+      { 
+        name: "Compradores Millennials", 
+        participation: 38, 
+        satisfaction: 4.1,
+        quote: "Me gusta comprar rápido desde el móvil, pero el checkout es muy lento",
+        painPoints: ["Checkout lento", "Muchos pasos", "Falta guest checkout"],
+        improvements: ["Checkout simplificado", "Pago con un click", "Mejor mobile"]
+      },
+      { 
+        name: "Padres Ocupados", 
+        participation: 31, 
+        satisfaction: 3.6,
+        quote: "Necesito encontrar productos rápido, pero las categorías me confunden",
+        painPoints: ["Navegación confusa", "Búsqueda ineficaz", "Tiempo limitado"],
+        improvements: ["Navegación clara", "Búsqueda inteligente", "Proceso rápido"]
+      },
+      { 
+        name: "Profesionales Tech", 
+        participation: 28, 
+        satisfaction: 4.3,
+        quote: "La web funciona bien pero podría ser más rápida y eficiente",
+        painPoints: ["Velocidad de carga", "Demasiados clicks", "Falta shortcuts"],
+        improvements: ["Performance", "Atajos de teclado", "Funciones avanzadas"]
+      },
+      { 
+        name: "Usuarios Móviles", 
+        participation: 50, 
+        satisfaction: 3.9,
+        quote: "Uso principalmente el móvil pero algunos botones son muy pequeños",
+        painPoints: ["Touch targets pequeños", "Texto pequeño", "Scroll horizontal"],
+        improvements: ["Botones más grandes", "Texto legible", "Diseño responsive"]
+      }
+    ],
+
+    // Prototipo comparativo
+    prototypeComparison: {
+      original: {
+        checkoutSteps: 7,
+        conversionRate: 2.3,
+        avgCheckoutTime: "4:47",
+        cartAbandonment: 68,
+        mobileUsability: 3.2,
+        overallSatisfaction: 3.4
+      },
+      improved: {
+        checkoutSteps: 3,
+        conversionRate: 3.1,
+        avgCheckoutTime: "2:35",
+        cartAbandonment: 49,
+        mobileUsability: 4.1,
+        overallSatisfaction: 4.2
+      }
+    }
   };
 
   const getTestTypeColor = (type: string) => {
@@ -278,9 +351,9 @@ const Analytics = () => {
               <BarChart3 className="w-4 h-4 mr-2" />
               Vista General
             </TabsTrigger>
-            <TabsTrigger value="project-final" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-500 data-[state=active]:to-orange-500 data-[state=active]:text-black">
+            <TabsTrigger value="final-report" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-500 data-[state=active]:to-orange-500 data-[state=active]:text-black">
               <Award className="w-4 h-4 mr-2" />
-              Proyecto Final
+              Informe Final
             </TabsTrigger>
           </TabsList>
 
@@ -472,6 +545,378 @@ const Analytics = () => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* Final Report Tab */}
+          <TabsContent value="final-report" className="space-y-8">
+            {/* Report Header */}
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-full border border-green-500/30 mb-6">
+                <Award className="w-5 h-5 text-green-400" />
+                <span className="text-green-200 font-medium">Informe Completado</span>
+              </div>
+              <h2 className="text-3xl font-bold text-white mb-4">
+                {finalReportData.projectName}
+              </h2>
+              <div className="flex justify-center gap-8 text-sm text-gray-400">
+                <span>Duración: {finalReportData.duration}</span>
+                <span>Participantes: {finalReportData.totalParticipants}</span>
+                <span>Completado: {new Date(finalReportData.completionDate).toLocaleDateString()}</span>
+                <span>Score General: {finalReportData.overallScore}/10</span>
+              </div>
+            </div>
+
+            {/* Business Impact Summary */}
+            <Card className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 border-green-500/30 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <DollarSign className="w-6 h-6 text-green-400" />
+                  Impacto en Rentabilidad
+                </CardTitle>
+                <CardDescription className="text-gray-300">
+                  Mejoras cuantificables tras implementar las recomendaciones UX
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-green-400 mb-1">
+                      {finalReportData.businessImpact.conversionImprovement}
+                    </div>
+                    <div className="text-sm text-gray-300">Mejora Conversión</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-green-400 mb-1">
+                      {finalReportData.businessImpact.revenueIncrease}
+                    </div>
+                    <div className="text-sm text-gray-300">Incremento Revenue</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-green-400 mb-1">
+                      {finalReportData.businessImpact.cartAbandonmentReduction}
+                    </div>
+                    <div className="text-sm text-gray-300">Reducción Abandono</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-green-400 mb-1">
+                      {finalReportData.businessImpact.customerSatisfactionIncrease}
+                    </div>
+                    <div className="text-sm text-gray-300">Satisfacción Cliente</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-green-400 mb-1">
+                      {finalReportData.businessImpact.timeToCheckoutReduction}
+                    </div>
+                    <div className="text-sm text-gray-300">Tiempo Checkout</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-green-400 mb-1">
+                      {finalReportData.businessImpact.supportTicketsReduction}
+                    </div>
+                    <div className="text-sm text-gray-300">Tickets Soporte</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Test Results Summary */}
+            <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <TestTube className="w-5 h-5 text-blue-400" />
+                  Resultados de Pruebas UX
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Resumen completo de todas las metodologías aplicadas
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {finalReportData.testResults.map((test, index) => (
+                    <Card key={index} className="bg-white/5 border border-white/10">
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Badge className={getTestTypeColor(test.type)}>{test.type}</Badge>
+                              <h4 className="font-medium text-white">{test.name}</h4>
+                              <Badge className={getPriorityColor(test.priority)}>{test.priority}</Badge>
+                            </div>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-3">
+                              <div>
+                                <span className="text-gray-400">Participantes:</span>
+                                <span className="text-white ml-1">{test.participants}</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-400">Éxito:</span>
+                                <span className="text-white ml-1">{test.successRate}%</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-400">Tiempo:</span>
+                                <span className="text-white ml-1">{test.avgTime}</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-400">Satisfacción:</span>
+                                <span className="text-white ml-1">{test.satisfaction}/5</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="mb-3">
+                          <span className="text-sm font-medium text-blue-400 block mb-1">Hallazgos Clave:</span>
+                          <div className="text-sm text-gray-300">
+                            {test.keyFindings.join(" • ")}
+                          </div>
+                        </div>
+
+                        <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
+                          <span className="text-sm font-medium text-green-400 block mb-1">Impacto en Negocio:</span>
+                          <span className="text-sm text-green-200">{test.businessImpact}</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* User Personas Insights */}
+            <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Users className="w-5 h-5 text-purple-400" />
+                  Insights por User Persona
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Feedback directo y niveles de satisfacción por segmento
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {finalReportData.personas.map((persona, index) => (
+                    <Card key={index} className="bg-white/5 border border-white/10">
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <h4 className="font-medium text-white">{persona.name}</h4>
+                          <div className="flex items-center gap-2">
+                            <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30">
+                              {persona.participation}% participación
+                            </Badge>
+                            <div className="flex items-center gap-1">
+                              <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                              <span className="text-white text-sm">{persona.satisfaction}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mb-4 p-3 bg-blue-500/10 border-l-4 border-blue-500 rounded">
+                          <div className="flex items-start gap-2">
+                            <div className="text-blue-400 mt-1">"</div>
+                            <p className="text-blue-200 italic text-sm">{persona.quote}</p>
+                            <div className="text-blue-400 mt-1">"</div>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-3">
+                          <div>
+                            <span className="text-xs font-medium text-red-400 uppercase tracking-wide block mb-1">
+                              Pain Points:
+                            </span>
+                            <div className="flex flex-wrap gap-1">
+                              {persona.painPoints.map((pain, idx) => (
+                                <Badge key={idx} className="text-xs bg-red-500/20 text-red-300 border-red-500/30">
+                                  {pain}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div>
+                            <span className="text-xs font-medium text-green-400 uppercase tracking-wide block mb-1">
+                              Mejoras Sugeridas:
+                            </span>
+                            <div className="flex flex-wrap gap-1">
+                              {persona.improvements.map((improvement, idx) => (
+                                <Badge key={idx} className="text-xs bg-green-500/20 text-green-300 border-green-500/30">
+                                  {improvement}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Prototype Comparison */}
+            <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Eye className="w-5 h-5 text-cyan-400" />
+                  Comparativa: Prototipo Original vs. Mejorado
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Métricas antes y después de implementar las mejoras UX
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Original */}
+                  <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+                    <h4 className="font-medium text-red-300 mb-4 flex items-center gap-2">
+                      <ThumbsDown className="w-4 h-4" />
+                      Versión Original
+                    </h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Pasos Checkout:</span>
+                        <span className="text-white">{finalReportData.prototypeComparison.original.checkoutSteps}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Conversión:</span>
+                        <span className="text-white">{finalReportData.prototypeComparison.original.conversionRate}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Tiempo Checkout:</span>
+                        <span className="text-white">{finalReportData.prototypeComparison.original.avgCheckoutTime}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Abandono Carrito:</span>
+                        <span className="text-white">{finalReportData.prototypeComparison.original.cartAbandonment}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Usabilidad Móvil:</span>
+                        <span className="text-white">{finalReportData.prototypeComparison.original.mobileUsability}/5</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Satisfacción:</span>
+                        <span className="text-white">{finalReportData.prototypeComparison.original.overallSatisfaction}/5</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Improved */}
+                  <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
+                    <h4 className="font-medium text-green-300 mb-4 flex items-center gap-2">
+                      <ThumbsUp className="w-4 h-4" />
+                      Versión Mejorada
+                    </h4>
+                    <div className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Pasos Checkout:</span>
+                        <span className="text-green-300 font-medium">{finalReportData.prototypeComparison.improved.checkoutSteps}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Conversión:</span>
+                        <span className="text-green-300 font-medium">{finalReportData.prototypeComparison.improved.conversionRate}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Tiempo Checkout:</span>
+                        <span className="text-green-300 font-medium">{finalReportData.prototypeComparison.improved.avgCheckoutTime}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Abandono Carrito:</span>
+                        <span className="text-green-300 font-medium">{finalReportData.prototypeComparison.improved.cartAbandonment}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Usabilidad Móvil:</span>
+                        <span className="text-green-300 font-medium">{finalReportData.prototypeComparison.improved.mobileUsability}/5</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">Satisfacción:</span>
+                        <span className="text-green-300 font-medium">{finalReportData.prototypeComparison.improved.overallSatisfaction}/5</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Recommendations & ROI */}
+            <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Target className="w-5 h-5 text-orange-400" />
+                  Plan de Mejoras Prioritizado
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Recomendaciones con impacto estimado y cronograma de implementación
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {finalReportData.improvements.map((improvement, index) => (
+                    <Card key={index} className="bg-white/5 border border-white/10">
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between mb-3">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <h4 className="font-medium text-white">{improvement.category}</h4>
+                              <Badge className={getPriorityColor(improvement.priority)}>{improvement.priority}</Badge>
+                              <Badge className={getStatusColor(improvement.status)}>{improvement.status}</Badge>
+                            </div>
+                            <p className="text-sm text-gray-300 mb-3">{improvement.recommendation}</p>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-3">
+                          <div className="p-2 bg-green-500/10 border border-green-500/20 rounded">
+                            <div className="text-xs text-green-400 uppercase tracking-wide">Impacto Esperado</div>
+                            <div className="text-sm text-green-300 font-medium">{improvement.expectedImprovement}</div>
+                          </div>
+                          <div className="p-2 bg-blue-500/10 border border-blue-500/20 rounded">
+                            <div className="text-xs text-blue-400 uppercase tracking-wide">Timeline</div>
+                            <div className="text-sm text-blue-300 font-medium">{improvement.timeline}</div>
+                          </div>
+                          <div className="p-2 bg-purple-500/10 border border-purple-500/20 rounded">
+                            <div className="text-xs text-purple-400 uppercase tracking-wide">Esfuerzo</div>
+                            <div className="text-sm text-purple-300 font-medium">{improvement.effort}</div>
+                          </div>
+                          <div className="p-2 bg-yellow-500/10 border border-yellow-500/20 rounded">
+                            <div className="text-xs text-yellow-400 uppercase tracking-wide">Coste Estimado</div>
+                            <div className="text-sm text-yellow-300 font-medium">{improvement.cost}</div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                <div className="mt-6 p-4 bg-gradient-to-r from-yellow-900/30 to-orange-900/30 border border-yellow-500/30 rounded-lg">
+                  <h4 className="font-medium text-yellow-300 mb-2">Resumen de Inversión Total</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                      <span className="text-gray-400">Inversión Total:</span>
+                      <span className="text-white ml-2 font-medium">€128,000</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-400">ROI Estimado:</span>
+                      <span className="text-green-300 ml-2 font-medium">1,875% (€2.4M)</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-400">Payback Period:</span>
+                      <span className="text-white ml-2 font-medium">2.1 meses</span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Export Actions */}
+            <div className="flex justify-center gap-4">
+              <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
+                <FileText className="w-4 h-4 mr-2" />
+                Exportar Informe Completo (PDF)
+              </Button>
+              <Button variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+                <ShoppingCart className="w-4 h-4 mr-2" />
+                Compartir con Stakeholders
+              </Button>
+            </div>
           </TabsContent>
         </Tabs>
       </div>
