@@ -5,7 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Upload, FileText, Zap, Target, Users, BarChart3, CheckCircle, AlertCircle } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Upload, FileText, Zap, Target, Users, BarChart3, CheckCircle, AlertCircle, Search, Filter, Plus, FolderPlus, Tag, Calendar, Download } from "lucide-react";
 
 interface DocumentAnalysis {
   documentType: string;
@@ -16,11 +19,97 @@ interface DocumentAnalysis {
   estimatedEffort: string;
 }
 
+interface DocumentItem {
+  id: number;
+  name: string;
+  type: string;
+  status: "Analizado" | "Procesando" | "Error";
+  insights: string[];
+  tags: string[];
+  uploadDate: string;
+  size: string;
+  assignedProjects: string[];
+}
+
 const DocumentationUploader = () => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   const [documentContext, setDocumentContext] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysis, setAnalysis] = useState<DocumentAnalysis | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterType, setFilterType] = useState("all");
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [isAssignDialogOpen, setIsAssignDialogOpen] = useState(false);
+  const [selectedDocForAssign, setSelectedDocForAssign] = useState<DocumentItem | null>(null);
+  const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
+
+  // Mock data de documentos analizados
+  const [documents, setDocuments] = useState<DocumentItem[]>([
+    {
+      id: 1,
+      name: "Wireframes E-commerce v2.0",
+      type: "Wireframes",
+      status: "Analizado",
+      insights: ["Checkout complejo", "Navegación móvil mejorable", "Filtros poco visibles"],
+      tags: ["E-commerce", "Mobile", "Checkout"],
+      uploadDate: "2024-01-15",
+      size: "2.3 MB",
+      assignedProjects: ["Rediseño E-commerce"]
+    },
+    {
+      id: 2,
+      name: "User Stories Dashboard",
+      type: "Especificaciones",
+      status: "Analizado",
+      insights: ["Funcionalidades claras", "Casos de uso bien definidos", "Falta accesibilidad"],
+      tags: ["Dashboard", "User Stories", "Funcionalidades"],
+      uploadDate: "2024-01-12",
+      size: "856 KB",
+      assignedProjects: []
+    },
+    {
+      id: 3,
+      name: "Prototipo Figma App Móvil",
+      type: "Prototipo",
+      status: "Analizado",
+      insights: ["Diseño moderno", "Interacciones fluidas", "Onboarding extenso"],
+      tags: ["Mobile", "Figma", "Prototipo", "Onboarding"],
+      uploadDate: "2024-01-10",
+      size: "4.1 MB",
+      assignedProjects: ["App Móvil v3.0"]
+    },
+    {
+      id: 4,
+      name: "Análisis Competencia",
+      type: "Investigación",
+      status: "Analizado",
+      insights: ["Benchmarks identificados", "Oportunidades de mejora", "Tendencias del mercado"],
+      tags: ["Competencia", "Benchmarking", "Mercado"],
+      uploadDate: "2024-01-08",
+      size: "1.2 MB",
+      assignedProjects: ["Rediseño E-commerce", "App Móvil v3.0"]
+    },
+    {
+      id: 5,
+      name: "Especificaciones API",
+      type: "Documentación Técnica",
+      status: "Procesando",
+      insights: [],
+      tags: ["API", "Backend", "Integración"],
+      uploadDate: "2024-01-18",
+      size: "1.8 MB",
+      assignedProjects: []
+    }
+  ]);
+
+  // Mock projects
+  const availableProjects = [
+    "Rediseño E-commerce",
+    "App Móvil v3.0", 
+    "Dashboard Analytics",
+    "Plataforma B2B",
+    "Portal Cliente"
+  ];
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
@@ -69,6 +158,35 @@ const DocumentationUploader = () => {
     }, 3000);
   };
 
+  const filteredDocuments = documents.filter(doc => {
+    const matchesSearch = doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         doc.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesType = filterType === "all" || doc.type === filterType;
+    const matchesStatus = filterStatus === "all" || doc.status === filterStatus;
+    return matchesSearch && matchesType && matchesStatus;
+  });
+
+  const handleAssignToProject = () => {
+    if (selectedDocForAssign && selectedProjects.length > 0) {
+      setDocuments(prev => prev.map(doc => 
+        doc.id === selectedDocForAssign.id 
+          ? { ...doc, assignedProjects: [...new Set([...doc.assignedProjects, ...selectedProjects])] }
+          : doc
+      ));
+      setIsAssignDialogOpen(false);
+      setSelectedDocForAssign(null);
+      setSelectedProjects([]);
+    }
+  };
+
+  const handleProjectSelection = (project: string, checked: boolean) => {
+    if (checked) {
+      setSelectedProjects(prev => [...prev, project]);
+    } else {
+      setSelectedProjects(prev => prev.filter(p => p !== project));
+    }
+  };
+
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'high': return 'bg-red-500/20 text-red-300 border-red-500/30';
@@ -77,6 +195,17 @@ const DocumentationUploader = () => {
       default: return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
     }
   };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Analizado": return "bg-emerald-500/20 text-emerald-300 border-emerald-500/30";
+      case "Procesando": return "bg-blue-500/20 text-blue-300 border-blue-500/30";
+      case "Error": return "bg-red-500/20 text-red-300 border-red-500/30";
+      default: return "bg-gray-500/20 text-gray-300 border-gray-500/30";
+    }
+  };
+
+  const documentTypes = ["Wireframes", "Especificaciones", "Prototipo", "Investigación", "Documentación Técnica"];
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -90,23 +219,166 @@ const DocumentationUploader = () => {
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 space-y-8">
         <div className="text-center mb-8 animate-fade-in">
           <h2 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-2">
-            Análisis Inteligente de Documentación
+            Gestión de Documentación
           </h2>
           <p className="text-gray-400 text-lg">
-            Sube tu documentación de producto y obtén recomendaciones automáticas de pruebas UX
+            Gestiona tu documentación analizada y asígnala a proyectos
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Filters */}
+        <div className="flex gap-4 items-center mb-6 animate-fade-in-up delay-200">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <Input
+              placeholder="Buscar documentos..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20"
+            />
+          </div>
+          <Select value={filterType} onValueChange={setFilterType}>
+            <SelectTrigger className="w-48 bg-white/5 border-white/20 text-white">
+              <Filter className="w-4 h-4 mr-2" />
+              <SelectValue placeholder="Tipo" />
+            </SelectTrigger>
+            <SelectContent className="bg-gray-800 border-gray-700">
+              <SelectItem value="all" className="text-white hover:bg-gray-700">Todos los tipos</SelectItem>
+              {documentTypes.map((type) => (
+                <SelectItem key={type} value={type} className="text-white hover:bg-gray-700">
+                  {type}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select value={filterStatus} onValueChange={setFilterStatus}>
+            <SelectTrigger className="w-48 bg-white/5 border-white/20 text-white">
+              <SelectValue placeholder="Estado" />
+            </SelectTrigger>
+            <SelectContent className="bg-gray-800 border-gray-700">
+              <SelectItem value="all" className="text-white hover:bg-gray-700">Todos los estados</SelectItem>
+              <SelectItem value="Analizado" className="text-white hover:bg-gray-700">Analizado</SelectItem>
+              <SelectItem value="Procesando" className="text-white hover:bg-gray-700">Procesando</SelectItem>
+              <SelectItem value="Error" className="text-white hover:bg-gray-700">Error</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Documentos Analizados */}
+          <div className="lg:col-span-2">
+            <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-300">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-blue-400" />
+                  Documentos Analizados ({filteredDocuments.length})
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Documentación procesada y lista para asignar a proyectos
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {filteredDocuments.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500">
+                    <FileText className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+                    <p>No se encontraron documentos</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {filteredDocuments.map((doc) => (
+                      <Card key={doc.id} className="bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300">
+                        <CardContent className="p-4">
+                          <div className="flex items-start justify-between mb-3">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <FileText className="w-4 h-4 text-gray-400" />
+                                <h4 className="font-medium text-white">{doc.name}</h4>
+                                <Badge className={getStatusColor(doc.status)}>{doc.status}</Badge>
+                              </div>
+                              <div className="flex items-center gap-4 text-sm text-gray-400 mb-2">
+                                <span>{doc.type}</span>
+                                <span>{doc.size}</span>
+                                <span><Calendar className="w-3 h-3 inline mr-1" />{new Date(doc.uploadDate).toLocaleDateString()}</span>
+                              </div>
+                            </div>
+                            <div className="flex gap-2">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl"
+                              >
+                                <Download className="w-4 h-4" />
+                              </Button>
+                              <Button
+                                size="sm"
+                                onClick={() => {
+                                  setSelectedDocForAssign(doc);
+                                  setSelectedProjects(doc.assignedProjects);
+                                  setIsAssignDialogOpen(true);
+                                }}
+                                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl"
+                              >
+                                <FolderPlus className="w-4 h-4 mr-1" />
+                                Asignar
+                              </Button>
+                            </div>
+                          </div>
+
+                          {/* Tags */}
+                          <div className="flex flex-wrap gap-1 mb-3">
+                            {doc.tags.map((tag, idx) => (
+                              <Badge key={idx} className="text-xs bg-white/10 text-gray-300 border-white/20">
+                                <Tag className="w-3 h-3 mr-1" />
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+
+                          {/* Insights */}
+                          {doc.insights.length > 0 && (
+                            <div className="mb-3">
+                              <span className="text-sm font-medium text-blue-400 block mb-1">Insights Principales:</span>
+                              <div className="text-sm text-gray-300">
+                                {doc.insights.join(" • ")}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Proyectos asignados */}
+                          <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                            <div>
+                              {doc.assignedProjects.length > 0 ? (
+                                <div className="flex flex-wrap gap-1">
+                                  <span className="text-xs text-gray-400 mr-2">Proyectos:</span>
+                                  {doc.assignedProjects.map((project, idx) => (
+                                    <Badge key={idx} className="text-xs bg-green-500/20 text-green-300 border-green-500/30">
+                                      {project}
+                                    </Badge>
+                                  ))}
+                                </div>
+                              ) : (
+                                <span className="text-xs text-gray-500">Sin asignar a proyectos</span>
+                              )}
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
           {/* Upload Section */}
-          <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-200">
+          <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-400">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Upload className="w-5 h-5 text-blue-400" />
-                Subir Documentación
+                Subir Nueva Documentación
               </CardTitle>
               <CardDescription className="text-gray-400">
-                Sube wireframes, especificaciones, user stories, o cualquier documentación de tu producto
+                Analiza nueva documentación automáticamente
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -175,7 +447,7 @@ const DocumentationUploader = () => {
               <Button
                 onClick={analyzeDocuments}
                 disabled={uploadedFiles.length === 0 || isAnalyzing}
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-xl"
+                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl"
               >
                 {isAnalyzing ? (
                   <>
@@ -192,25 +464,19 @@ const DocumentationUploader = () => {
             </CardContent>
           </Card>
 
-          {/* Analysis Results */}
-          <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-300">
+          {/* Analysis Results - Solo mostrar cuando hay análisis */}
+          {analysis && (
+            <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-500 lg:col-span-3">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <BarChart3 className="w-5 h-5 text-green-400" />
-                Resultados del Análisis
+                Último Análisis Realizado
               </CardTitle>
               <CardDescription className="text-gray-400">
                 Recomendaciones personalizadas basadas en tu documentación
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {!analysis && !isAnalyzing && (
-                <div className="text-center py-8 text-gray-500">
-                  <FileText className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-                  <p>Sube documentos para ver las recomendaciones</p>
-                </div>
-              )}
-
               {isAnalyzing && (
                 <div className="text-center py-8">
                   <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4" />
@@ -219,7 +485,6 @@ const DocumentationUploader = () => {
                 </div>
               )}
 
-              {analysis && (
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
                     <Badge className={`px-3 py-1 ${getPriorityColor(analysis.priorityLevel)}`}>
@@ -281,10 +546,80 @@ const DocumentationUploader = () => {
                     </Button>
                   </div>
                 </div>
-              )}
             </CardContent>
           </Card>
+          )}
         </div>
+
+        {/* Dialog para asignar documentos a proyectos */}
+        <Dialog open={isAssignDialogOpen} onOpenChange={setIsAssignDialogOpen}>
+          <DialogContent className="max-w-2xl bg-gray-900 border-gray-700 text-white">
+            <DialogHeader>
+              <DialogTitle className="text-white">Asignar Documento a Proyectos</DialogTitle>
+              <DialogDescription className="text-gray-400">
+                Selecciona los proyectos donde quieres usar este documento
+              </DialogDescription>
+            </DialogHeader>
+            
+            {selectedDocForAssign && (
+              <div className="space-y-6">
+                {/* Información del documento */}
+                <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <FileText className="w-4 h-4 text-blue-400" />
+                    <span className="font-medium text-white">{selectedDocForAssign.name}</span>
+                    <Badge className={getStatusColor(selectedDocForAssign.status)}>
+                      {selectedDocForAssign.status}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-gray-400">{selectedDocForAssign.type} • {selectedDocForAssign.size}</p>
+                </div>
+
+                {/* Selección de proyectos */}
+                <div>
+                  <Label className="text-gray-200 mb-3 block">Proyectos Disponibles</Label>
+                  <div className="grid gap-2 max-h-60 overflow-y-auto">
+                    {availableProjects.map((project) => (
+                      <div key={project} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`project-${project}`}
+                          checked={selectedProjects.includes(project)}
+                          onCheckedChange={(checked) => handleProjectSelection(project, !!checked)}
+                          className="border-white/20 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+                        />
+                        <Label htmlFor={`project-${project}`} className="text-sm text-gray-300 flex-1">
+                          {project}
+                        </Label>
+                        {selectedDocForAssign.assignedProjects.includes(project) && (
+                          <Badge className="text-xs bg-green-500/20 text-green-300 border-green-500/30">
+                            Asignado
+                          </Badge>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={() => setIsAssignDialogOpen(false)}
+                    variant="outline"
+                    className="flex-1 bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl"
+                  >
+                    Cancelar
+                  </Button>
+                  <Button 
+                    onClick={handleAssignToProject}
+                    className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl"
+                    disabled={selectedProjects.length === 0}
+                  >
+                    Asignar a {selectedProjects.length} proyecto(s)
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

@@ -8,7 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Plus, Search, Filter, Play, Pause, BarChart3, TestTube } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Plus, Search, Filter, Play, Pause, BarChart3, TestTube, Users, Clock, Target, HelpCircle, UserPlus, UserCheck, MessageCircle, Quote, Lightbulb, TrendingUp } from "lucide-react";
 
 interface UserTest {
   id: number;
@@ -21,6 +22,17 @@ interface UserTest {
   completion: number;
   participants: number;
   createdDate: string;
+  focusGroupSize?: number;
+  isRecruiting?: boolean;
+  recruitmentStatus?: string;
+  insights?: string[];
+  quotes?: Array<{
+    participant: string;
+    quote: string;
+    context: string;
+  }>;
+  reflections?: string[];
+  keyFindings?: string[];
 }
 
 const UserTests = () => {
@@ -35,19 +47,22 @@ const UserTests = () => {
       tasks: ["Encontrar producto específico", "Completar proceso de compra", "Usar filtros de búsqueda"],
       completion: 75,
       participants: 12,
-      createdDate: "2024-01-15"
+      createdDate: "2024-01-15",
+      isRecruiting: false
     },
     {
       id: 2,
-      name: "Usabilidad Dashboard Móvil",
-      description: "Probar la experiencia de usuario del dashboard en dispositivos móviles",
-      type: "Mobile UX",
+      name: "Focus Group Dashboard Móvil",
+      description: "Sesión de focus group para evaluar la experiencia móvil del dashboard",
+      type: "Focus Group",
       status: "Completada",
       selectedPersonas: ["Profesionales Tech", "Emprendedores"],
-      tasks: ["Navegar por el dashboard", "Crear nuevo proyecto", "Acceder a métricas"],
+      tasks: ["Discutir usabilidad móvil", "Evaluar funcionalidades", "Proponer mejoras"],
       completion: 100,
       participants: 8,
-      createdDate: "2024-01-10"
+      focusGroupSize: 8,
+      createdDate: "2024-01-10",
+      isRecruiting: false
     },
     {
       id: 3,
@@ -59,7 +74,63 @@ const UserTests = () => {
       tasks: ["Registro de cuenta", "Tutorial inicial", "Primera configuración"],
       completion: 0,
       participants: 0,
-      createdDate: "2024-01-20"
+      createdDate: "2024-01-20",
+      isRecruiting: true,
+      recruitmentStatus: "Buscando 6 participantes más"
+    },
+    {
+      id: 4,
+      name: "Focus Group Rediseño Homepage",
+      description: "Sesión de focus group para evaluar propuestas de rediseño de la página principal",
+      type: "Focus Group",
+      status: "Completada",
+      selectedPersonas: ["Compradores Millennials", "Profesionales Tech", "Padres Ocupados"],
+      tasks: ["Evaluar propuestas de diseño", "Discutir navegación principal", "Feedback sobre contenido"],
+      completion: 100,
+      participants: 8,
+      focusGroupSize: 8,
+      createdDate: "2024-01-05",
+      isRecruiting: false,
+      insights: [
+        "Los usuarios prefieren navegación simplificada",
+        "El contenido visual es más atractivo que el texto",
+        "La búsqueda debe ser más prominente",
+        "Los testimonios generan más confianza"
+      ],
+      quotes: [
+        {
+          participant: "María, 32, Marketing Manager",
+          quote: "Me encanta que todo esté tan organizado, pero siento que hay demasiadas opciones en el menú principal",
+          context: "Evaluando la navegación principal"
+        },
+        {
+          participant: "Carlos, 28, Desarrollador",
+          quote: "La búsqueda debería estar más visible. Siempre es lo primero que busco cuando entro a un sitio",
+          context: "Discutiendo funcionalidades principales"
+        },
+        {
+          participant: "Ana, 35, Madre de familia",
+          quote: "Los testimonios me dan mucha confianza. Si veo que otras personas han tenido buenas experiencias, me animo a probar",
+          context: "Hablando sobre elementos de confianza"
+        },
+        {
+          participant: "Luis, 29, Freelancer",
+          quote: "El diseño se ve moderno, pero necesito encontrar la información rápido. No tengo tiempo para explorar",
+          context: "Feedback sobre usabilidad"
+        }
+      ],
+      reflections: [
+        "Los participantes valoran la simplicidad por encima de la funcionalidad completa",
+        "Existe una clara diferencia generacional en las expectativas de navegación",
+        "La confianza es un factor crítico que influye en las decisiones de los usuarios",
+        "Los usuarios móviles tienen patrones de comportamiento diferentes a los de escritorio"
+      ],
+      keyFindings: [
+        "Reducir opciones del menú principal de 8 a 5 elementos",
+        "Hacer la búsqueda 40% más prominente en la interfaz",
+        "Añadir sección de testimonios en homepage",
+        "Implementar navegación adaptativa según dispositivo"
+      ]
     }
   ]);
 
@@ -68,11 +139,29 @@ const UserTests = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [newTest, setNewTest] = useState<Partial<UserTest>>({
     selectedPersonas: [],
-    tasks: []
+    tasks: [],
+    type: "Usabilidad"
   });
 
-  const availablePersonas = ["Profesionales Tech", "Padres Ocupados", "Compradores Millennials", "Emprendedores", "Usuarios Novatos", "Power Users"];
-  const testTypes = ["Usabilidad", "A/B Testing", "Card Sorting", "Tree Testing", "Mobile UX", "Onboarding", "Accessibility"];
+  const availablePersonas = [
+    "Profesionales Tech", 
+    "Padres Ocupados", 
+    "Compradores Millennials", 
+    "Emprendedores", 
+    "Usuarios Novatos", 
+    "Power Users"
+  ];
+
+  const testTypes = [
+    "Usabilidad", 
+    "A/B Testing", 
+    "Card Sorting", 
+    "Tree Testing", 
+    "Mobile UX", 
+    "Onboarding", 
+    "Accessibility",
+    "Focus Group"
+  ];
 
   const filteredTests = tests.filter(test => {
     const matchesSearch = test.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -108,10 +197,11 @@ const UserTests = () => {
         tasks: newTest.tasks || [],
         completion: 0,
         participants: 0,
-        createdDate: new Date().toISOString().split('T')[0]
+        createdDate: new Date().toISOString().split('T')[0],
+        ...(newTest.type === "Focus Group" && { focusGroupSize: newTest.focusGroupSize || 6 })
       };
       setTests([...tests, test]);
-      setNewTest({ selectedPersonas: [], tasks: [] });
+      setNewTest({ selectedPersonas: [], tasks: [], type: "Usabilidad" });
       setIsCreateDialogOpen(false);
     }
   };
@@ -126,35 +216,35 @@ const UserTests = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Animated Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-black via-gray-900 to-black">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.1),transparent_50%)]"></div>
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 space-y-8">
+    <TooltipProvider>
+      <div className="space-y-8">
         {/* Header */}
         <div className="flex justify-between items-center animate-fade-in">
           <div>
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-white via-yellow-100 to-orange-100 bg-clip-text text-transparent">
               Pruebas de Usuario
             </h2>
-            <p className="text-gray-400 mt-2 text-lg">Gestiona y ejecuta tus pruebas UX</p>
+            <p className="text-gray-400 mt-2 text-lg">Gestiona y ejecuta tus pruebas UX y focus groups</p>
           </div>
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-105">
-                <Plus className="w-4 h-4 mr-2" />
-                Nueva Prueba
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 rounded-xl transition-all duration-300 transform hover:scale-105">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Nueva Prueba
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent className="bg-gray-900 border-gray-700 text-white">
+                  <p>Crear nueva prueba UX o focus group</p>
+                </TooltipContent>
+              </Tooltip>
             </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-gray-900 border-gray-700 text-white">
               <DialogHeader>
                 <DialogTitle className="text-white">Crear Nueva Prueba de Usuario</DialogTitle>
                 <DialogDescription className="text-gray-400">
-                  Configura tu nueva prueba seleccionando personas y definiendo tareas
+                  Configura tu nueva prueba seleccionando personas y definiendo objetivos
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
@@ -170,7 +260,17 @@ const UserTests = () => {
                 </div>
                 
                 <div>
-                  <Label htmlFor="testType" className="text-gray-200">Tipo de Prueba</Label>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Label htmlFor="testType" className="text-gray-200">Tipo de Prueba</Label>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <HelpCircle className="w-4 h-4 text-gray-400" />
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-gray-900 border-gray-700 text-white max-w-sm">
+                        <p>Focus Group: Sesión grupal de discusión con 6-12 participantes para obtener feedback cualitativo. Ideal para explorar percepciones, actitudes y motivaciones.</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <Select
                     value={newTest.type}
                     onValueChange={(value) => setNewTest({...newTest, type: value})}
@@ -188,6 +288,38 @@ const UserTests = () => {
                   </Select>
                 </div>
 
+                {newTest.type === "Focus Group" && (
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Label htmlFor="focusGroupSize" className="text-gray-200">Tamaño del Focus Group</Label>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <HelpCircle className="w-4 h-4 text-gray-400" />
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-gray-900 border-gray-700 text-white max-w-sm">
+                          <p>6-8 participantes: Ideal para discusiones profundas<br/>
+                          10-12 participantes: Mejor para obtener diversidad de opiniones</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
+                    <Select
+                      value={newTest.focusGroupSize?.toString()}
+                      onValueChange={(value) => setNewTest({...newTest, focusGroupSize: parseInt(value)})}
+                    >
+                      <SelectTrigger className="bg-white/5 border-white/20 text-white">
+                        <SelectValue placeholder="Número de participantes" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-gray-800 border-gray-700">
+                        {[6, 8, 10, 12].map((size) => (
+                          <SelectItem key={size} value={size.toString()} className="text-white hover:bg-gray-700">
+                            {size} participantes
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+
                 <div>
                   <Label htmlFor="description" className="text-gray-200">Descripción</Label>
                   <Textarea
@@ -200,7 +332,17 @@ const UserTests = () => {
                 </div>
 
                 <div>
-                  <Label className="text-gray-200">Seleccionar User Personas</Label>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Label className="text-gray-200">Seleccionar User Personas (Obligatorio)</Label>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <HelpCircle className="w-4 h-4 text-gray-400" />
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-gray-900 border-gray-700 text-white max-w-sm">
+                        <p>Selecciona las personas que mejor representen a tu audiencia objetivo. Para Focus Groups, recomendamos 2-3 personas diferentes para obtener perspectivas variadas.</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
                   <div className="grid grid-cols-2 gap-2 mt-2">
                     {availablePersonas.map((persona) => (
                       <div key={persona} className="flex items-center space-x-2">
@@ -208,7 +350,7 @@ const UserTests = () => {
                           id={persona}
                           checked={newTest.selectedPersonas?.includes(persona)}
                           onCheckedChange={(checked) => handlePersonaSelection(persona, !!checked)}
-                          className="border-white/20 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+                          className="border-white/20 data-[state=checked]:bg-yellow-600 data-[state=checked]:border-yellow-600"
                         />
                         <Label htmlFor={persona} className="text-sm text-gray-300">
                           {persona}
@@ -219,11 +361,19 @@ const UserTests = () => {
                   {newTest.selectedPersonas?.length === 0 && (
                     <p className="text-sm text-red-400 mt-1">Selecciona al menos una persona</p>
                   )}
+                  {newTest.type === "Focus Group" && newTest.selectedPersonas && newTest.selectedPersonas.length > 0 && (
+                    <div className="mt-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+                      <p className="text-sm text-blue-300">
+                        <Users className="w-4 h-4 inline mr-1" />
+                        Focus Group configurado: {newTest.focusGroupSize || 6} participantes representando {newTest.selectedPersonas.length} persona(s)
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 <Button 
                   onClick={handleCreateTest} 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-xl"
+                  className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl"
                   disabled={!newTest.name || !newTest.type || !newTest.selectedPersonas?.length}
                 >
                   Crear Prueba
@@ -241,7 +391,7 @@ const UserTests = () => {
               placeholder="Buscar pruebas..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20"
+              className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-yellow-400 focus:ring-yellow-400/20"
             />
           </div>
           <Select value={filterStatus} onValueChange={setFilterStatus}>
@@ -264,20 +414,35 @@ const UserTests = () => {
           {filteredTests.map((test, index) => (
             <Card 
               key={test.id} 
-              className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10 animate-fade-in-up"
+              className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/10 animate-fade-in-up"
               style={{ animationDelay: `${300 + index * 100}ms` }}
             >
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <TestTube className="w-5 h-5 text-blue-400" />
+                      {test.type === "Focus Group" ? (
+                        <Users className="w-5 h-5 text-yellow-400" />
+                      ) : (
+                        <TestTube className="w-5 h-5 text-blue-400" />
+                      )}
                       <CardTitle className="text-lg text-white">{test.name}</CardTitle>
                     </div>
                     <CardDescription className="mb-2 text-gray-400">{test.description}</CardDescription>
                     <div className="flex items-center gap-2">
                       <Badge className="bg-white/10 text-gray-300 border-white/20">{test.type}</Badge>
                       <Badge className={getStatusColor(test.status)}>{test.status}</Badge>
+                      {test.focusGroupSize && (
+                        <Badge className="bg-yellow-500/20 text-yellow-300 border-yellow-500/30">
+                          Focus Group: {test.focusGroupSize}p
+                        </Badge>
+                      )}
+                      {test.isRecruiting && (
+                        <Badge className="bg-orange-500/20 text-orange-300 border-orange-500/30 animate-pulse">
+                          <UserPlus className="w-3 h-3 mr-1" />
+                          Reclutando
+                        </Badge>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -292,7 +457,7 @@ const UserTests = () => {
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
                       <div
-                        className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all"
+                        className="bg-gradient-to-r from-yellow-500 to-orange-500 h-2 rounded-full transition-all"
                         style={{ width: `${test.completion}%` }}
                       />
                     </div>
@@ -317,7 +482,7 @@ const UserTests = () => {
                 {test.tasks.length > 0 && (
                   <div>
                     <span className="text-sm font-medium text-gray-400 block mb-2">
-                      Tareas ({test.tasks.length})
+                      {test.type === "Focus Group" ? "Temas de Discusión" : "Tareas"} ({test.tasks.length})
                     </span>
                     <div className="space-y-1">
                       {test.tasks.slice(0, 2).map((task, idx) => (
@@ -328,7 +493,7 @@ const UserTests = () => {
                       ))}
                       {test.tasks.length > 2 && (
                         <div className="text-sm text-gray-500">
-                          +{test.tasks.length - 2} tareas más
+                          +{test.tasks.length - 2} más
                         </div>
                       )}
                     </div>
@@ -338,37 +503,229 @@ const UserTests = () => {
                 {/* Stats */}
                 <div className="flex justify-between items-center pt-2 border-t border-white/10">
                   <div className="text-sm text-gray-400">
-                    <span className="font-medium text-white">{test.participants}</span> participantes
+                    <span className="font-medium text-white">{test.participants}</span> 
+                    {test.focusGroupSize ? ` / ${test.focusGroupSize}` : ""} participantes
                   </div>
-                  <div className="text-sm text-gray-500">
-                    Creada: {new Date(test.createdDate).toLocaleDateString()}
+                  {test.isRecruiting && test.recruitmentStatus && (
+                    <div className="text-xs text-orange-300">
+                      {test.recruitmentStatus}
+                    </div>
+                  )}
+                  {!test.isRecruiting && (
+                    <div className="text-sm text-gray-500">
+                      Creada: {new Date(test.createdDate).toLocaleDateString()}
+                    </div>
+                  )}
+                </div>
+
+                {/* Recruitment Status for Focus Groups */}
+                {test.type === "Focus Group" && test.isRecruiting && (
+                  <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-orange-300">Estado de Reclutamiento</span>
+                      <Badge className="bg-orange-500/20 text-orange-300 border-orange-500/30">
+                        {test.participants}/{test.focusGroupSize}
+                      </Badge>
+                    </div>
+                    <div className="w-full bg-orange-500/20 rounded-full h-2 mb-2">
+                      <div
+                        className="bg-orange-500 h-2 rounded-full transition-all"
+                        style={{ width: `${(test.participants / (test.focusGroupSize || 1)) * 100}%` }}
+                      />
+                    </div>
+                    <p className="text-xs text-orange-200">
+                      Personas objetivo: {test.selectedPersonas.join(", ")}
+                    </p>
                   </div>
+                )}
+
+                {/* Assign Saved Personas Button */}
+                <div className="pt-4 border-t border-white/10">
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    className="w-full bg-blue-500/10 border-blue-500/20 text-blue-300 hover:bg-blue-500/20 hover:text-blue-200 rounded-xl"
+                  >
+                    <UserCheck className="w-4 h-4 mr-2" />
+                    Asignar Personas Guardadas
+                  </Button>
                 </div>
 
                 {/* Actions */}
                 <div className="flex gap-2 pt-2">
-                  {test.status === "Planificada" && (
-                    <Button size="sm" className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl">
-                      <Play className="w-4 h-4 mr-2" />
-                      Iniciar
-                    </Button>
+                  {test.status === "Planificada" && !test.isRecruiting && (
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button size="sm" className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl">
+                          <Play className="w-4 h-4 mr-2" />
+                          Iniciar
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-gray-900 border-gray-700 text-white">
+                        <p>Comenzar la ejecución de la prueba</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                  {test.status === "Planificada" && test.isRecruiting && (
+                    <>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button size="sm" className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 rounded-xl">
+                            <UserPlus className="w-4 h-4 mr-2" />
+                            Gestionar Participantes
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-gray-900 border-gray-700 text-white">
+                          <p>Gestionar reclutamiento y selección de participantes</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button size="sm" variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+                            <Play className="w-4 h-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-gray-900 border-gray-700 text-white">
+                          <p>Iniciar con participantes actuales</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </>
                   )}
                   {test.status === "En progreso" && (
                     <>
-                      <Button size="sm" variant="outline" className="flex-1 bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
-                        <Pause className="w-4 h-4 mr-2" />
-                        Pausar
-                      </Button>
-                      <Button size="sm" variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
-                        <BarChart3 className="w-4 h-4" />
-                      </Button>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button size="sm" variant="outline" className="flex-1 bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+                            <Pause className="w-4 h-4 mr-2" />
+                            Pausar
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-gray-900 border-gray-700 text-white">
+                          <p>Pausar temporalmente la prueba</p>
+                        </TooltipContent>
+                      </Tooltip>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button size="sm" variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+                            <BarChart3 className="w-4 h-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-gray-900 border-gray-700 text-white">
+                          <p>Ver progreso en tiempo real</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </>
                   )}
                   {test.status === "Completada" && (
-                    <Button size="sm" className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-xl">
-                      <BarChart3 className="w-4 h-4 mr-2" />
-                      Ver Resultados
-                    </Button>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div className="flex gap-2 w-full">
+                          <Button size="sm" className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
+                            <BarChart3 className="w-4 h-4 mr-2" />
+                            Resultados
+                          </Button>
+                          {test.type === "Focus Group" && test.insights && (
+                            <Button size="sm" className="flex-1 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-xl">
+                              <MessageCircle className="w-4 h-4 mr-2" />
+                              Insights
+                            </Button>
+                          )}
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-gray-900 border-gray-700 text-white">
+                        <p>Ver análisis completo y insights del focus group</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+
+                  {/* Focus Group Insights Section */}
+                  {test.type === "Focus Group" && test.status === "Completada" && test.insights && (
+                    <div className="mt-4 space-y-4 pt-4 border-t border-white/10">
+                      {/* Key Insights */}
+                      <div>
+                        <h5 className="font-medium text-blue-400 mb-2 flex items-center gap-2">
+                          <Lightbulb className="w-4 h-4" />
+                          Insights Principales
+                        </h5>
+                        <div className="space-y-1">
+                          {test.insights.slice(0, 2).map((insight, idx) => (
+                            <div key={idx} className="text-sm text-gray-300 flex items-start gap-2">
+                              <TrendingUp className="w-3 h-3 text-blue-400 mt-1 flex-shrink-0" />
+                              {insight}
+                            </div>
+                          ))}
+                          {test.insights.length > 2 && (
+                            <div className="text-xs text-blue-400 cursor-pointer hover:text-blue-300">
+                              Ver {test.insights.length - 2} insights más...
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Featured Quote */}
+                      {test.quotes && test.quotes.length > 0 && (
+                        <div>
+                          <h5 className="font-medium text-purple-400 mb-2 flex items-center gap-2">
+                            <Quote className="w-4 h-4" />
+                            Quote Destacado
+                          </h5>
+                          <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-3">
+                            <blockquote className="text-sm text-purple-200 italic mb-2">
+                              "{test.quotes[0].quote}"
+                            </blockquote>
+                            <div className="text-xs text-purple-300">
+                              — {test.quotes[0].participant}
+                            </div>
+                            <div className="text-xs text-purple-400 mt-1">
+                              {test.quotes[0].context}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Key Findings */}
+                      {test.keyFindings && test.keyFindings.length > 0 && (
+                        <div>
+                          <h5 className="font-medium text-green-400 mb-2 flex items-center gap-2">
+                            <Target className="w-4 h-4" />
+                            Hallazgos Clave
+                          </h5>
+                          <div className="space-y-1">
+                            {test.keyFindings.slice(0, 2).map((finding, idx) => (
+                              <div key={idx} className="text-sm text-gray-300 flex items-start gap-2">
+                                <div className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                                {finding}
+                              </div>
+                            ))}
+                            {test.keyFindings.length > 2 && (
+                              <div className="text-xs text-green-400 cursor-pointer hover:text-green-300">
+                                Ver {test.keyFindings.length - 2} hallazgos más...
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Reflection */}
+                      {test.reflections && test.reflections.length > 0 && (
+                        <div>
+                          <h5 className="font-medium text-amber-400 mb-2 flex items-center gap-2">
+                            <MessageCircle className="w-4 h-4" />
+                            Reflexión del Moderador
+                          </h5>
+                          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
+                            <p className="text-sm text-amber-200">
+                              {test.reflections[0]}
+                            </p>
+                            {test.reflections.length > 1 && (
+                              <div className="text-xs text-amber-400 mt-2 cursor-pointer hover:text-amber-300">
+                                Ver más reflexiones...
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   )}
                 </div>
               </CardContent>
@@ -388,7 +745,7 @@ const UserTests = () => {
           </div>
         )}
       </div>
-    </div>
+    </TooltipProvider>
   );
 };
 
