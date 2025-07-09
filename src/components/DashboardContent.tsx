@@ -59,7 +59,7 @@ const DashboardContent = ({ onTabChange }: DashboardContentProps) => {
       icon: BarChart3,
       trend: "+5% vs mes anterior",
       color: "from-green-500 to-emerald-500",
-      action: () => onTabChange("analytics")
+      action: () => onTabChange("informes")
     }
   ];
 
@@ -190,10 +190,13 @@ const DashboardContent = ({ onTabChange }: DashboardContentProps) => {
         <div className="text-center mb-8 animate-fade-in-up delay-100">
           <Dialog open={isReportDialogOpen} onOpenChange={setIsReportDialogOpen}>
             <DialogTrigger asChild>
-              <Button size="lg" className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
-                <FileText className="w-6 h-6 mr-3" />
-                Generar Informe Final Completo
-                <Download className="w-5 h-5 ml-3" />
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-yellow-500/25 transition-all duration-300 transform hover:scale-105"
+                onClick={() => onTabChange("project-creator")}
+              >
+                <Plus className="w-6 h-6 mr-3" />
+                Crear Nuevo Proyecto
               </Button>
             </DialogTrigger>
           </Dialog>

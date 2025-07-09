@@ -19,30 +19,26 @@ const Index = () => {
 
   const getBreadcrumbPath = () => {
     const paths = {
-      dashboard: [{ label: "Dashboard", href: "#" }],
+      dashboard: [{ label: "Panel", href: "#" }],
       "project-creator": [
-        { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
+        { label: "Panel", href: "#", onClick: () => setActiveTab("dashboard") },
         { label: "Crear Proyecto", href: "#" }
       ],
       personas: [
-        { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
+        { label: "Panel", href: "#", onClick: () => setActiveTab("dashboard") },
         { label: "Personas", href: "#" }
       ],
       tests: [
-        { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
+        { label: "Panel", href: "#", onClick: () => setActiveTab("dashboard") },
         { label: "Pruebas de Usuario", href: "#" }
       ],
       "docs-analyzer": [
-        { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
+        { label: "Panel", href: "#", onClick: () => setActiveTab("dashboard") },
         { label: "Análisis de Documentos", href: "#" }
       ],
-      analytics: [
-        { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
-        { label: "Analytics", href: "#" }
-      ],
-      "final-report": [
-        { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
-        { label: "Informe Final", href: "#" }
+      informes: [
+        { label: "Panel", href: "#", onClick: () => setActiveTab("dashboard") },
+        { label: "Informes", href: "#" }
       ]
     };
     return paths[activeTab as keyof typeof paths] || paths.dashboard;
@@ -98,11 +94,8 @@ const Index = () => {
                 <DocumentationUploader />
               </TabsContent>
 
-              <TabsContent value="analytics">
+              <TabsContent value="informes">
                 <Analytics />
-              </TabsContent>
-
-              <TabsContent value="final-report">
                 <FinalReport />
               </TabsContent>
             </Tabs>

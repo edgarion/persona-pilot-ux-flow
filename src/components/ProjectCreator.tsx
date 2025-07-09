@@ -259,7 +259,7 @@ const ProjectCreator = () => {
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
-        {/* Header */}
+        {/* Formulario de creación de proyectos */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full border border-blue-500/30 mb-6 animate-fade-in">
             <Sparkles className="w-4 h-4 text-blue-400" />
@@ -274,30 +274,60 @@ const ProjectCreator = () => {
           </p>
         </div>
 
+        {/* Biblioteca de Proyectos */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-yellow-400 mb-6">Biblioteca de Proyectos</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in-up">
+            {[ 
+              { nombre: "Rediseño E-commerce", descripcion: "Optimización del checkout y navegación para aumentar la conversión." },
+              { nombre: "App Móvil v3.0", descripcion: "Mejoras de onboarding y funcionalidades clave para usuarios móviles." },
+              { nombre: "Dashboard Analytics", descripcion: "Reestructuración de KPIs y experiencia visual para equipos internos." }
+            ].map((proy, idx) => (
+              <Card key={idx} className="bg-white/5 border border-white/10">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Folder className="w-5 h-5 text-yellow-400" />
+                    {proy.nombre}
+                  </CardTitle>
+                  <CardDescription className="text-gray-300 min-h-[48px]">{proy.descripcion}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button variant="outline" className="w-full border-yellow-400 text-yellow-300 hover:bg-yellow-500/10" onClick={() => alert(`Ver detalles de: ${proy.nombre}`)}>
+                    Ver detalles
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
         {!analysisResult ? (
           /* Input Interface */
           <div className="space-y-8">
             {/* Main Input Card */}
             <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-300">
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Brain className="w-6 h-6 text-blue-400" />
-                  Describe Your UX Challenge
-                </CardTitle>
+                <div className="flex flex-col gap-2 w-full">
+                  <h2 className="text-2xl font-bold text-blue-300 mb-2 text-left">Crear Proyecto</h2>
+                  <span className="flex items-center gap-2 text-white text-xl font-semibold">
+                    <Brain className="w-6 h-6 text-blue-400" />
+                    Describe tu reto UX
+                  </span>
+                </div>
                 <CardDescription className="text-gray-300">
-                  Tell us about your project, users, and goals. The more context you provide, the better our AI analysis will be.
+                  Cuéntanos sobre tu proyecto, usuarios y objetivos. Cuanta más información proporciones, mejor será el análisis generado por la IA.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
                   <Label htmlFor="description" className="text-gray-200 text-base font-medium">
-                    Project Description
+                    Descripción del Proyecto
                   </Label>
                   <Textarea
                     id="description"
                     value={projectDescription}
                     onChange={(e) => setProjectDescription(e.target.value)}
-                    placeholder="Example: I'm redesigning our mobile app's checkout process. Users are abandoning their carts at a 70% rate, particularly on mobile devices. Our target audience is tech-savvy millennials who value speed and simplicity..."
+                    placeholder="Ejemplo: Estoy rediseñando el proceso de checkout de nuestra app móvil. Los usuarios abandonan el carrito en un 70%, especialmente en dispositivos móviles. Nuestro público objetivo son millennials expertos en tecnología que valoran la rapidez y la simplicidad..."
                     className="mt-3 bg-white/5 border-white/20 text-white placeholder:text-gray-400 min-h-[120px] text-base leading-relaxed focus:border-blue-400 focus:ring-blue-400/20"
                     rows={6}
                   />
@@ -318,7 +348,7 @@ const ProjectCreator = () => {
                       </DialogTrigger>
                       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900 border-gray-700 text-white">
                         <DialogHeader>
-                          <DialogTitle className="text-white">Añadir Documentación al Proyecto</DialogTitle>
+                          <DialogTitle className="text-white">Añadir documentación al proyecto</DialogTitle>
                           <DialogDescription className="text-gray-400">
                             Selecciona documentos ya analizados o sube nuevos archivos
                           </DialogDescription>
@@ -327,7 +357,7 @@ const ProjectCreator = () => {
                         <div className="space-y-6">
                           {/* Documentos ya analizados */}
                           <div>
-                            <h4 className="font-medium text-white mb-3">Documentos Analizados Disponibles</h4>
+                            <h4 className="font-medium text-white mb-3">Documentos analizados disponibles</h4>
                             <div className="grid gap-3 max-h-60 overflow-y-auto">
                               {availableDocs.map((doc) => (
                                 <div key={doc.id} className="flex items-start gap-3 p-3 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
@@ -352,7 +382,7 @@ const ProjectCreator = () => {
                                       ))}
                                     </div>
                                     <div className="text-xs text-gray-500">
-                                      <strong>Insights:</strong> {doc.insights.join(", ")}
+                                      <strong>Conocimientos:</strong> {doc.insights.join(", ")}
                                     </div>
                                   </div>
                                 </div>
@@ -362,7 +392,7 @@ const ProjectCreator = () => {
 
                           {/* Subir nuevos documentos */}
                           <div>
-                            <h4 className="font-medium text-white mb-3">Subir Nuevos Documentos</h4>
+                            <h4 className="font-medium text-white mb-3">Subir nuevos documentos</h4>
                             <div className="border-2 border-dashed border-white/20 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
                               <input
                                 type="file"
@@ -378,14 +408,14 @@ const ProjectCreator = () => {
                                   Arrastra archivos aquí o <span className="text-blue-400 underline">selecciona archivos</span>
                                 </p>
                                 <p className="text-xs text-gray-500 mt-1">
-                                  PDF, DOC, PNG, JPG, Figma (Max 10MB cada uno)
+                                  PDF, DOC, PNG, JPG, Figma (Máx 10MB cada uno)
                                 </p>
                               </label>
                             </div>
 
                             {uploadedFiles.length > 0 && (
                               <div className="mt-4">
-                                <Label className="text-gray-200">Archivos para Subir ({uploadedFiles.length})</Label>
+                                <Label className="text-gray-200">Archivos para subir ({uploadedFiles.length})</Label>
                                 <div className="space-y-2 mt-2">
                                   {uploadedFiles.map((file, index) => (
                                     <div key={index} className="flex items-center justify-between p-2 bg-white/5 rounded border border-white/10">
@@ -416,7 +446,7 @@ const ProjectCreator = () => {
                               onClick={() => setIsDocDialogOpen(false)}
                               className="flex-1 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl"
                             >
-                              Confirmar Selección ({selectedDocs.length + uploadedFiles.length})
+                              Confirmar selección ({selectedDocs.length + uploadedFiles.length})
                             </Button>
                           </div>
                         </div>

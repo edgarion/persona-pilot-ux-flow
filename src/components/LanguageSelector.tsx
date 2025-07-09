@@ -32,7 +32,6 @@ const LanguageSelector = () => {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm" className="text-gray-300 hover:text-white hover:bg-white/10 rounded-xl">
               <Globe className="w-4 h-4 mr-2" />
-              <span className="mr-1">{currentLanguage.flag}</span>
               <span className="hidden sm:inline">{currentLanguage.name}</span>
             </Button>
           </DropdownMenuTrigger>
@@ -44,7 +43,6 @@ const LanguageSelector = () => {
               onClick={() => handleLanguageChange(language)}
               className="text-white hover:bg-gray-700 cursor-pointer"
             >
-              <span className="mr-2">{language.flag}</span>
               {language.name}
             </DropdownMenuItem>
           ))}

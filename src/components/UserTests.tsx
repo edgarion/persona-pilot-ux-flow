@@ -9,9 +9,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Plus, Search, Filter, Play, Pause, BarChart3, TestTube, Users, Clock, Target, HelpCircle, UserPlus, UserCheck, MessageCircle, Quote, Lightbulb, TrendingUp } from "lucide-react";
+import { Plus, Search, Filter, Play, Pause, BarChart3, PruebaTube, Users, Clock, Target, HelpCircle, UserPlus, UserCheck, MessageCircle, Quote, Lightbulb, TrendingUp } from "lucide-react";
 
-interface UserTest {
+interface UserPrueba {
   id: number;
   name: string;
   description: string;
@@ -24,7 +24,7 @@ interface UserTest {
   createdDate: string;
   focusGroupSize?: number;
   isRecruiting?: boolean;
-  recruitmentStatus?: string;
+  recruitmentEstado?: string;
   insights?: string[];
   quotes?: Array<{
     participant: string;
@@ -35,8 +35,8 @@ interface UserTest {
   keyFindings?: string[];
 }
 
-const UserTests = () => {
-  const [tests, setTests] = useState<UserTest[]>([
+const UserPruebas = () => {
+  const [tests, setPruebas] = useState<UserPrueba[]>([
     {
       id: 1,
       name: "Prueba de Navegación E-commerce",
@@ -76,7 +76,7 @@ const UserTests = () => {
       participants: 0,
       createdDate: "2024-01-20",
       isRecruiting: true,
-      recruitmentStatus: "Buscando 6 participantes más"
+      recruitmentEstado: "Buscando 6 participantes más"
     },
     {
       id: 4,
@@ -135,9 +135,9 @@ const UserTests = () => {
   ]);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterStatus, setFilterStatus] = useState("all");
+  const [filterEstado, setFilterEstado] = useState("all");
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [newTest, setNewTest] = useState<Partial<UserTest>>({
+  const [newPrueba, setNewPrueba] = useState<Partial<UserPrueba>>({
     selectedPersonas: [],
     tasks: [],
     type: "Usabilidad"
@@ -152,61 +152,61 @@ const UserTests = () => {
     "Power Users"
   ];
 
-  const testTypes = [
+  const testTipos = [
     "Usabilidad", 
-    "A/B Testing", 
+    "A/B Pruebaing", 
     "Card Sorting", 
-    "Tree Testing", 
+    "Tree Pruebaing", 
     "Mobile UX", 
     "Onboarding", 
     "Accessibility",
     "Focus Group"
   ];
 
-  const filteredTests = tests.filter(test => {
+  const filteredPruebas = tests.filter(test => {
     const matchesSearch = test.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          test.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = filterStatus === "all" || test.status === filterStatus;
-    return matchesSearch && matchesStatus;
+    const matchesEstado = filterEstado === "all" || test.status === filterEstado;
+    return matchesSearch && matchesEstado;
   });
 
   const handlePersonaSelection = (persona: string, checked: boolean) => {
-    const currentPersonas = newTest.selectedPersonas || [];
+    const currentPersonas = newPrueba.selectedPersonas || [];
     if (checked) {
-      setNewTest({
-        ...newTest,
+      setNewPrueba({
+        ...newPrueba,
         selectedPersonas: [...currentPersonas, persona]
       });
     } else {
-      setNewTest({
-        ...newTest,
+      setNewPrueba({
+        ...newPrueba,
         selectedPersonas: currentPersonas.filter(p => p !== persona)
       });
     }
   };
 
-  const handleCreateTest = () => {
-    if (newTest.name && newTest.type && newTest.selectedPersonas?.length) {
-      const test: UserTest = {
+  const handleCreatePrueba = () => {
+    if (newPrueba.name && newPrueba.type && newPrueba.selectedPersonas?.length) {
+      const test: UserPrueba = {
         id: tests.length + 1,
-        name: newTest.name || "",
-        description: newTest.description || "",
-        type: newTest.type || "",
+        name: newPrueba.name || "",
+        description: newPrueba.description || "",
+        type: newPrueba.type || "",
         status: "Planificada",
-        selectedPersonas: newTest.selectedPersonas || [],
-        tasks: newTest.tasks || [],
+        selectedPersonas: newPrueba.selectedPersonas || [],
+        tasks: newPrueba.tasks || [],
         completion: 0,
         participants: 0,
         createdDate: new Date().toISOString().split('T')[0],
-        ...(newTest.type === "Focus Group" && { focusGroupSize: newTest.focusGroupSize || 6 })
+        ...(newPrueba.type === "Focus Group" && { focusGroupSize: newPrueba.focusGroupSize || 6 })
       };
-      setTests([...tests, test]);
-      setNewTest({ selectedPersonas: [], tasks: [], type: "Usabilidad" });
+      setPruebas([...tests, test]);
+      setNewPrueba({ selectedPersonas: [], tasks: [], type: "Usabilidad" });
       setIsCreateDialogOpen(false);
     }
   };
 
-  const getStatusColor = (status: string) => {
+  const getEstadoColor = (status: string) => {
     switch (status) {
       case "Completada": return "bg-emerald-500/20 text-emerald-300 border-emerald-500/30";
       case "En progreso": return "bg-blue-500/20 text-blue-300 border-blue-500/30";
@@ -232,7 +232,7 @@ const UserTests = () => {
                 <TooltipTrigger asChild>
                   <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 rounded-xl transition-all duration-300 transform hover:scale-105">
                     <Plus className="w-4 h-4 mr-2" />
-                    Nueva Prueba
+                    Crear Nueva Prueba
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-gray-900 border-gray-700 text-white">
@@ -252,8 +252,8 @@ const UserTests = () => {
                   <Label htmlFor="testName" className="text-gray-200">Nombre de la Prueba</Label>
                   <Input
                     id="testName"
-                    value={newTest.name || ""}
-                    onChange={(e) => setNewTest({...newTest, name: e.target.value})}
+                    value={newPrueba.name || ""}
+                    onChange={(e) => setNewPrueba({...newPrueba, name: e.target.value})}
                     placeholder="Ej: Prueba de Navegación E-commerce"
                     className="bg-white/5 border-white/20 text-white placeholder:text-gray-400"
                   />
@@ -261,7 +261,7 @@ const UserTests = () => {
                 
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Label htmlFor="testType" className="text-gray-200">Tipo de Prueba</Label>
+                    <Label htmlFor="testTipo" className="text-gray-200">Tipo de Prueba</Label>
                     <Tooltip>
                       <TooltipTrigger>
                         <HelpCircle className="w-4 h-4 text-gray-400" />
@@ -272,14 +272,14 @@ const UserTests = () => {
                     </Tooltip>
                   </div>
                   <Select
-                    value={newTest.type}
-                    onValueChange={(value) => setNewTest({...newTest, type: value})}
+                    value={newPrueba.type}
+                    onValueChange={(value) => setNewPrueba({...newPrueba, type: value})}
                   >
                     <SelectTrigger className="bg-white/5 border-white/20 text-white">
                       <SelectValue placeholder="Selecciona tipo de prueba" />
                     </SelectTrigger>
                     <SelectContent className="bg-gray-800 border-gray-700">
-                      {testTypes.map((type) => (
+                      {testTipos.map((type) => (
                         <SelectItem key={type} value={type} className="text-white hover:bg-gray-700">
                           {type}
                         </SelectItem>
@@ -288,7 +288,7 @@ const UserTests = () => {
                   </Select>
                 </div>
 
-                {newTest.type === "Focus Group" && (
+                {newPrueba.type === "Focus Group" && (
                   <div>
                     <div className="flex items-center gap-2 mb-2">
                       <Label htmlFor="focusGroupSize" className="text-gray-200">Tamaño del Focus Group</Label>
@@ -303,8 +303,8 @@ const UserTests = () => {
                       </Tooltip>
                     </div>
                     <Select
-                      value={newTest.focusGroupSize?.toString()}
-                      onValueChange={(value) => setNewTest({...newTest, focusGroupSize: parseInt(value)})}
+                      value={newPrueba.focusGroupSize?.toString()}
+                      onValueChange={(value) => setNewPrueba({...newPrueba, focusGroupSize: parseInt(value)})}
                     >
                       <SelectTrigger className="bg-white/5 border-white/20 text-white">
                         <SelectValue placeholder="Número de participantes" />
@@ -324,8 +324,8 @@ const UserTests = () => {
                   <Label htmlFor="description" className="text-gray-200">Descripción</Label>
                   <Textarea
                     id="description"
-                    value={newTest.description || ""}
-                    onChange={(e) => setNewTest({...newTest, description: e.target.value})}
+                    value={newPrueba.description || ""}
+                    onChange={(e) => setNewPrueba({...newPrueba, description: e.target.value})}
                     placeholder="Describe el objetivo de la prueba..."
                     className="bg-white/5 border-white/20 text-white placeholder:text-gray-400"
                   />
@@ -333,7 +333,7 @@ const UserTests = () => {
 
                 <div>
                   <div className="flex items-center gap-2 mb-2">
-                    <Label className="text-gray-200">Seleccionar User Personas (Obligatorio)</Label>
+                    <Label className="text-gray-200">Seleccionar Personas (Obligatorio)</Label>
                     <Tooltip>
                       <TooltipTrigger>
                         <HelpCircle className="w-4 h-4 text-gray-400" />
@@ -348,7 +348,7 @@ const UserTests = () => {
                       <div key={persona} className="flex items-center space-x-2">
                         <Checkbox
                           id={persona}
-                          checked={newTest.selectedPersonas?.includes(persona)}
+                          checked={newPrueba.selectedPersonas?.includes(persona)}
                           onCheckedChange={(checked) => handlePersonaSelection(persona, !!checked)}
                           className="border-white/20 data-[state=checked]:bg-yellow-600 data-[state=checked]:border-yellow-600"
                         />
@@ -358,23 +358,23 @@ const UserTests = () => {
                       </div>
                     ))}
                   </div>
-                  {newTest.selectedPersonas?.length === 0 && (
+                  {newPrueba.selectedPersonas?.length === 0 && (
                     <p className="text-sm text-red-400 mt-1">Selecciona al menos una persona</p>
                   )}
-                  {newTest.type === "Focus Group" && newTest.selectedPersonas && newTest.selectedPersonas.length > 0 && (
+                  {newPrueba.type === "Focus Group" && newPrueba.selectedPersonas && newPrueba.selectedPersonas.length > 0 && (
                     <div className="mt-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                       <p className="text-sm text-blue-300">
                         <Users className="w-4 h-4 inline mr-1" />
-                        Focus Group configurado: {newTest.focusGroupSize || 6} participantes representando {newTest.selectedPersonas.length} persona(s)
+                        Focus Group configurado: {newPrueba.focusGroupSize || 6} participantes representando {newPrueba.selectedPersonas.length} persona(s)
                       </p>
                     </div>
                   )}
                 </div>
 
                 <Button 
-                  onClick={handleCreateTest} 
+                  onClick={handleCreatePrueba} 
                   className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl"
-                  disabled={!newTest.name || !newTest.type || !newTest.selectedPersonas?.length}
+                  disabled={!newPrueba.name || !newPrueba.type || !newPrueba.selectedPersonas?.length}
                 >
                   Crear Prueba
                 </Button>
@@ -394,7 +394,7 @@ const UserTests = () => {
               className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-yellow-400 focus:ring-yellow-400/20"
             />
           </div>
-          <Select value={filterStatus} onValueChange={setFilterStatus}>
+          <Select value={filterEstado} onValueChange={setFilterEstado}>
             <SelectTrigger className="w-48 bg-white/5 border-white/20 text-white">
               <Filter className="w-4 h-4 mr-2" />
               <SelectValue placeholder="Filtrar por estado" />
@@ -409,9 +409,9 @@ const UserTests = () => {
           </Select>
         </div>
 
-        {/* Tests Grid */}
+        {/* Pruebas Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {filteredTests.map((test, index) => (
+          {filteredPruebas.map((test, index) => (
             <Card 
               key={test.id} 
               className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/10 animate-fade-in-up"
@@ -424,14 +424,14 @@ const UserTests = () => {
                       {test.type === "Focus Group" ? (
                         <Users className="w-5 h-5 text-yellow-400" />
                       ) : (
-                        <TestTube className="w-5 h-5 text-blue-400" />
+                        <PruebaTube className="w-5 h-5 text-blue-400" />
                       )}
                       <CardTitle className="text-lg text-white">{test.name}</CardTitle>
                     </div>
                     <CardDescription className="mb-2 text-gray-400">{test.description}</CardDescription>
                     <div className="flex items-center gap-2">
                       <Badge className="bg-white/10 text-gray-300 border-white/20">{test.type}</Badge>
-                      <Badge className={getStatusColor(test.status)}>{test.status}</Badge>
+                      <Badge className={getEstadoColor(test.status)}>{test.status}</Badge>
                       {test.focusGroupSize && (
                         <Badge className="bg-yellow-500/20 text-yellow-300 border-yellow-500/30">
                           Focus Group: {test.focusGroupSize}p
@@ -467,7 +467,7 @@ const UserTests = () => {
                 {/* Selected Personas */}
                 <div>
                   <span className="text-sm font-medium text-gray-400 block mb-2">
-                    User Personas ({test.selectedPersonas.length})
+                    Personas ({test.selectedPersonas.length})
                   </span>
                   <div className="flex flex-wrap gap-1">
                     {test.selectedPersonas.map((persona, idx) => (
@@ -506,9 +506,9 @@ const UserTests = () => {
                     <span className="font-medium text-white">{test.participants}</span> 
                     {test.focusGroupSize ? ` / ${test.focusGroupSize}` : ""} participantes
                   </div>
-                  {test.isRecruiting && test.recruitmentStatus && (
+                  {test.isRecruiting && test.recruitmentEstado && (
                     <div className="text-xs text-orange-300">
-                      {test.recruitmentStatus}
+                      {test.recruitmentEstado}
                     </div>
                   )}
                   {!test.isRecruiting && (
@@ -518,7 +518,7 @@ const UserTests = () => {
                   )}
                 </div>
 
-                {/* Recruitment Status for Focus Groups */}
+                {/* Recruitment Estado for Focus Groups */}
                 {test.type === "Focus Group" && test.isRecruiting && (
                   <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
                     <div className="flex items-center justify-between mb-2">
@@ -733,9 +733,9 @@ const UserTests = () => {
           ))}
         </div>
 
-        {filteredTests.length === 0 && (
+        {filteredPruebas.length === 0 && (
           <div className="text-center py-12 animate-fade-in">
-            <TestTube className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+            <PruebaTube className="w-12 h-12 text-gray-600 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-400 mb-2">
               No se encontraron pruebas
             </h3>
@@ -749,4 +749,4 @@ const UserTests = () => {
   );
 };
 
-export default UserTests;
+export default UserPruebas;

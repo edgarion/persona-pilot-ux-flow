@@ -23,7 +23,7 @@ const FixedNavigation = ({ activeTab, onTabChange, onLogout }: FixedNavigationPr
   const navItems = [
     {
       id: "dashboard",
-      label: "Dashboard",
+      label: "Panel",
       icon: Home,
       tooltip: "Panel principal con resumen de actividades"
     },
@@ -52,16 +52,10 @@ const FixedNavigation = ({ activeTab, onTabChange, onLogout }: FixedNavigationPr
       tooltip: "Analizar documentación con IA"
     },
     {
-      id: "analytics",
-      label: "Analytics",
+      id: "informes",
+      label: "Informes",
       icon: BarChart3,
-      tooltip: "Ver métricas y resultados detallados"
-    },
-    {
-      id: "final-report",
-      label: "Informe Final",
-      icon: FileText,
-      tooltip: "Ver métricas y resultados detallados"
+      tooltip: "Ver métricas e informes UX"
     }
   ];
 

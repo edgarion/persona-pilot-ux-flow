@@ -5,12 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Seleccionar, SeleccionarContent, SeleccionarItem, SeleccionarTrigger, SeleccionarValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Upload, FileText, Zap, Target, Users, BarChart3, CheckCircle, AlertCircle, Search, Filter, Plus, FolderPlus, Tag, Calendar, Download } from "lucide-react";
+import { Subir, ArchivoText, Zap, Target, Users, BarChart3, CheckCircle, AlertCircle, Search, Filter, Plus, FolderPlus, Tag, Calendar, Descargar } from "lucide-react";
 
-interface DocumentAnalysis {
+interface DocumentoAnalysis {
   documentType: string;
   keyInsights: string[];
   recommendedTests: string[];
@@ -19,7 +19,7 @@ interface DocumentAnalysis {
   estimatedEffort: string;
 }
 
-interface DocumentItem {
+interface DocumentoItem {
   id: number;
   name: string;
   type: string;
@@ -31,20 +31,20 @@ interface DocumentItem {
   assignedProjects: string[];
 }
 
-const DocumentationUploader = () => {
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [documentContext, setDocumentContext] = useState("");
+const DocumentoationSubirer = () => {
+  const [uploadedArchivos, setSubiredArchivos] = useState<Archivo[]>([]);
+  const [documentContext, setDocumentoContext] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analysis, setAnalysis] = useState<DocumentAnalysis | null>(null);
+  const [analysis, setAnalysis] = useState<DocumentoAnalysis | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterStatus, setFilterStatus] = useState("all");
   const [isAssignDialogOpen, setIsAssignDialogOpen] = useState(false);
-  const [selectedDocForAssign, setSelectedDocForAssign] = useState<DocumentItem | null>(null);
-  const [selectedProjects, setSelectedProjects] = useState<string[]>([]);
+  const [selectedDocForAssign, setSeleccionaredDocForAssign] = useState<DocumentoItem | null>(null);
+  const [selectedProjects, setSeleccionaredProjects] = useState<string[]>([]);
 
   // Mock data de documentos analizados
-  const [documents, setDocuments] = useState<DocumentItem[]>([
+  const [documents, setDocumentos] = useState<DocumentoItem[]>([
     {
       id: 1,
       name: "Wireframes E-commerce v2.0",
@@ -92,7 +92,7 @@ const DocumentationUploader = () => {
     {
       id: 5,
       name: "Especificaciones API",
-      type: "Documentación Técnica",
+      type: "Documentoación Técnica",
       status: "Procesando",
       insights: [],
       tags: ["API", "Backend", "Integración"],
@@ -111,21 +111,21 @@ const DocumentationUploader = () => {
     "Portal Cliente"
   ];
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleArchivoSubir = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
-    setUploadedFiles(prev => [...prev, ...files]);
+    setSubiredArchivos(prev => [...prev, ...files]);
   };
 
-  const removeFile = (index: number) => {
-    setUploadedFiles(prev => prev.filter((_, i) => i !== index));
+  const removeArchivo = (index: number) => {
+    setSubiredArchivos(prev => prev.filter((_, i) => i !== index));
   };
 
-  const analyzeDocuments = async () => {
+  const analyzeDocumentos = async () => {
     setIsAnalyzing(true);
     
     // Simular análisis de documentos
     setTimeout(() => {
-      const mockAnalysis: DocumentAnalysis = {
+      const mockAnalysis: DocumentoAnalysis = {
         documentType: "Especificaciones de Producto y Wireframes",
         keyInsights: [
           "Sistema de e-commerce con checkout complejo",
@@ -158,7 +158,7 @@ const DocumentationUploader = () => {
     }, 3000);
   };
 
-  const filteredDocuments = documents.filter(doc => {
+  const filteredDocumentos = documents.filter(doc => {
     const matchesSearch = doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          doc.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesType = filterType === "all" || doc.type === filterType;
@@ -168,22 +168,22 @@ const DocumentationUploader = () => {
 
   const handleAssignToProject = () => {
     if (selectedDocForAssign && selectedProjects.length > 0) {
-      setDocuments(prev => prev.map(doc => 
+      setDocumentos(prev => prev.map(doc => 
         doc.id === selectedDocForAssign.id 
           ? { ...doc, assignedProjects: [...new Set([...doc.assignedProjects, ...selectedProjects])] }
           : doc
       ));
       setIsAssignDialogOpen(false);
-      setSelectedDocForAssign(null);
-      setSelectedProjects([]);
+      setSeleccionaredDocForAssign(null);
+      setSeleccionaredProjects([]);
     }
   };
 
-  const handleProjectSelection = (project: string, checked: boolean) => {
+  const handleProjectSeleccionarion = (project: string, checked: boolean) => {
     if (checked) {
-      setSelectedProjects(prev => [...prev, project]);
+      setSeleccionaredProjects(prev => [...prev, project]);
     } else {
-      setSelectedProjects(prev => prev.filter(p => p !== project));
+      setSeleccionaredProjects(prev => prev.filter(p => p !== project));
     }
   };
 
@@ -205,7 +205,7 @@ const DocumentationUploader = () => {
     }
   };
 
-  const documentTypes = ["Wireframes", "Especificaciones", "Prototipo", "Investigación", "Documentación Técnica"];
+  const documentTypes = ["Wireframes", "Especificaciones", "Prototipo", "Investigación", "Documentoación Técnica"];
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -237,31 +237,31 @@ const DocumentationUploader = () => {
               className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20"
             />
           </div>
-          <Select value={filterType} onValueChange={setFilterType}>
-            <SelectTrigger className="w-48 bg-white/5 border-white/20 text-white">
+          <Seleccionar value={filterType} onValueChange={setFilterType}>
+            <SeleccionarTrigger className="w-48 bg-white/5 border-white/20 text-white">
               <Filter className="w-4 h-4 mr-2" />
-              <SelectValue placeholder="Tipo" />
-            </SelectTrigger>
-            <SelectContent className="bg-gray-800 border-gray-700">
-              <SelectItem value="all" className="text-white hover:bg-gray-700">Todos los tipos</SelectItem>
+              <SeleccionarValue placeholder="Tipo" />
+            </SeleccionarTrigger>
+            <SeleccionarContent className="bg-gray-800 border-gray-700">
+              <SeleccionarItem value="all" className="text-white hover:bg-gray-700">Todos los tipos</SeleccionarItem>
               {documentTypes.map((type) => (
-                <SelectItem key={type} value={type} className="text-white hover:bg-gray-700">
+                <SeleccionarItem key={type} value={type} className="text-white hover:bg-gray-700">
                   {type}
-                </SelectItem>
+                </SeleccionarItem>
               ))}
-            </SelectContent>
-          </Select>
-          <Select value={filterStatus} onValueChange={setFilterStatus}>
-            <SelectTrigger className="w-48 bg-white/5 border-white/20 text-white">
-              <SelectValue placeholder="Estado" />
-            </SelectTrigger>
-            <SelectContent className="bg-gray-800 border-gray-700">
-              <SelectItem value="all" className="text-white hover:bg-gray-700">Todos los estados</SelectItem>
-              <SelectItem value="Analizado" className="text-white hover:bg-gray-700">Analizado</SelectItem>
-              <SelectItem value="Procesando" className="text-white hover:bg-gray-700">Procesando</SelectItem>
-              <SelectItem value="Error" className="text-white hover:bg-gray-700">Error</SelectItem>
-            </SelectContent>
-          </Select>
+            </SeleccionarContent>
+          </Seleccionar>
+          <Seleccionar value={filterStatus} onValueChange={setFilterStatus}>
+            <SeleccionarTrigger className="w-48 bg-white/5 border-white/20 text-white">
+              <SeleccionarValue placeholder="Estado" />
+            </SeleccionarTrigger>
+            <SeleccionarContent className="bg-gray-800 border-gray-700">
+              <SeleccionarItem value="all" className="text-white hover:bg-gray-700">Todos los estados</SeleccionarItem>
+              <SeleccionarItem value="Analizado" className="text-white hover:bg-gray-700">Analizado</SeleccionarItem>
+              <SeleccionarItem value="Procesando" className="text-white hover:bg-gray-700">Procesando</SeleccionarItem>
+              <SeleccionarItem value="Error" className="text-white hover:bg-gray-700">Error</SeleccionarItem>
+            </SeleccionarContent>
+          </Seleccionar>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -270,28 +270,28 @@ const DocumentationUploader = () => {
             <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-300">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-blue-400" />
-                  Documentos Analizados ({filteredDocuments.length})
+                  <ArchivoText className="w-5 h-5 text-blue-400" />
+                  Documentos Analizados ({filteredDocumentos.length})
                 </CardTitle>
                 <CardDescription className="text-gray-400">
                   Documentación procesada y lista para asignar a proyectos
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {filteredDocuments.length === 0 ? (
+                {filteredDocumentos.length === 0 ? (
                   <div className="text-center py-8 text-gray-500">
-                    <FileText className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+                    <ArchivoText className="w-12 h-12 text-gray-600 mx-auto mb-4" />
                     <p>No se encontraron documentos</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {filteredDocuments.map((doc) => (
+                    {filteredDocumentos.map((doc) => (
                       <Card key={doc.id} className="bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300">
                         <CardContent className="p-4">
                           <div className="flex items-start justify-between mb-3">
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
-                                <FileText className="w-4 h-4 text-gray-400" />
+                                <ArchivoText className="w-4 h-4 text-gray-400" />
                                 <h4 className="font-medium text-white">{doc.name}</h4>
                                 <Badge className={getStatusColor(doc.status)}>{doc.status}</Badge>
                               </div>
@@ -307,13 +307,13 @@ const DocumentationUploader = () => {
                                 variant="outline"
                                 className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl"
                               >
-                                <Download className="w-4 h-4" />
+                                <Descargar className="w-4 h-4" />
                               </Button>
                               <Button
                                 size="sm"
                                 onClick={() => {
-                                  setSelectedDocForAssign(doc);
-                                  setSelectedProjects(doc.assignedProjects);
+                                  setSeleccionaredDocForAssign(doc);
+                                  setSeleccionaredProjects(doc.assignedProjects);
                                   setIsAssignDialogOpen(true);
                                 }}
                                 className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl"
@@ -370,11 +370,11 @@ const DocumentationUploader = () => {
             </Card>
           </div>
 
-          {/* Upload Section */}
+          {/* Subir Section */}
           <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-400">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <Upload className="w-5 h-5 text-blue-400" />
+                <Subir className="w-5 h-5 text-blue-400" />
                 Subir Nueva Documentación
               </CardTitle>
               <CardDescription className="text-gray-400">
@@ -390,11 +390,11 @@ const DocumentationUploader = () => {
                     type="file"
                     multiple
                     accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.figma"
-                    onChange={handleFileUpload}
+                    onChange={handleArchivoSubir}
                     className="hidden"
                   />
                   <label htmlFor="file-upload" className="cursor-pointer">
-                    <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                    <Subir className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                     <p className="text-sm text-gray-400">
                       Arrastra archivos aquí o <span className="text-blue-400 underline">selecciona archivos</span>
                     </p>
@@ -405,14 +405,14 @@ const DocumentationUploader = () => {
                 </div>
               </div>
 
-              {uploadedFiles.length > 0 && (
+              {uploadedArchivos.length > 0 && (
                 <div>
-                  <Label className="text-gray-200">Archivos Subidos ({uploadedFiles.length})</Label>
+                  <Label className="text-gray-200">Archivos Subidos ({uploadedArchivos.length})</Label>
                   <div className="space-y-2 mt-2">
-                    {uploadedFiles.map((file, index) => (
+                    {uploadedArchivos.map((file, index) => (
                       <div key={index} className="flex items-center justify-between p-2 bg-white/5 rounded border border-white/10">
                         <div className="flex items-center gap-2">
-                          <FileText className="w-4 h-4 text-gray-400" />
+                          <ArchivoText className="w-4 h-4 text-gray-400" />
                           <span className="text-sm text-gray-300">{file.name}</span>
                           <Badge className="text-xs bg-white/10 text-gray-300 border-white/20">
                             {(file.size / 1024 / 1024).toFixed(1)}MB
@@ -421,7 +421,7 @@ const DocumentationUploader = () => {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => removeFile(index)}
+                          onClick={() => removeArchivo(index)}
                           className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
                         >
                           Eliminar
@@ -437,7 +437,7 @@ const DocumentationUploader = () => {
                 <Textarea
                   id="context"
                   value={documentContext}
-                  onChange={(e) => setDocumentContext(e.target.value)}
+                  onChange={(e) => setDocumentoContext(e.target.value)}
                   placeholder="Proporciona contexto sobre tu producto, objetivos del proyecto, usuarios objetivo, etc..."
                   rows={3}
                   className="bg-white/5 border-white/20 text-white placeholder:text-gray-400"
@@ -445,8 +445,8 @@ const DocumentationUploader = () => {
               </div>
 
               <Button
-                onClick={analyzeDocuments}
-                disabled={uploadedFiles.length === 0 || isAnalyzing}
+                onClick={analyzeDocumentos}
+                disabled={uploadedArchivos.length === 0 || isAnalyzing}
                 className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl"
               >
                 {isAnalyzing ? (
@@ -467,23 +467,23 @@ const DocumentationUploader = () => {
           {/* Analysis Results - Solo mostrar cuando hay análisis */}
           {analysis && (
             <Card className="bg-white/5 backdrop-blur-sm border border-white/10 animate-fade-in-up delay-500 lg:col-span-3">
-            <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <BarChart3 className="w-5 h-5 text-green-400" />
-                Último Análisis Realizado
-              </CardTitle>
-              <CardDescription className="text-gray-400">
-                Recomendaciones personalizadas basadas en tu documentación
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {isAnalyzing && (
-                <div className="text-center py-8">
-                  <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4" />
-                  <p className="text-gray-400">Analizando tu documentación...</p>
-                  <p className="text-sm text-gray-500 mt-1">Esto puede tomar unos minutos</p>
-                </div>
-              )}
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5 text-green-400" />
+                  Último Análisis Realizado
+                </CardTitle>
+                <CardDescription className="text-gray-400">
+                  Recomendaciones personalizadas basadas en tu documentación
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {isAnalyzing && (
+                  <div className="text-center py-8">
+                    <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4" />
+                    <p className="text-gray-400">Analizando tu documentación...</p>
+                    <p className="text-sm text-gray-500 mt-1">Esto puede tomar unos minutos</p>
+                  </div>
+                )}
 
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
@@ -555,7 +555,7 @@ const DocumentationUploader = () => {
         <Dialog open={isAssignDialogOpen} onOpenChange={setIsAssignDialogOpen}>
           <DialogContent className="max-w-2xl bg-gray-900 border-gray-700 text-white">
             <DialogHeader>
-              <DialogTitle className="text-white">Asignar Documento a Proyectos</DialogTitle>
+              <DialogTitle className="text-white">Asignar Documentoo a Proyectos</DialogTitle>
               <DialogDescription className="text-gray-400">
                 Selecciona los proyectos donde quieres usar este documento
               </DialogDescription>
@@ -566,7 +566,7 @@ const DocumentationUploader = () => {
                 {/* Información del documento */}
                 <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
-                    <FileText className="w-4 h-4 text-blue-400" />
+                    <ArchivoText className="w-4 h-4 text-blue-400" />
                     <span className="font-medium text-white">{selectedDocForAssign.name}</span>
                     <Badge className={getStatusColor(selectedDocForAssign.status)}>
                       {selectedDocForAssign.status}
@@ -584,7 +584,7 @@ const DocumentationUploader = () => {
                         <Checkbox
                           id={`project-${project}`}
                           checked={selectedProjects.includes(project)}
-                          onCheckedChange={(checked) => handleProjectSelection(project, !!checked)}
+                          onCheckedChange={(checked) => handleProjectSeleccionarion(project, !!checked)}
                           className="border-white/20 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
                         />
                         <Label htmlFor={`project-${project}`} className="text-sm text-gray-300 flex-1">
@@ -625,4 +625,4 @@ const DocumentationUploader = () => {
   );
 };
 
-export default DocumentationUploader;
+export default DocumentoationSubirer;

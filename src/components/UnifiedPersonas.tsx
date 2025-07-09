@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescripción, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescripción, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -95,7 +95,7 @@ const UnifiedPersonas = () => {
 
   // Existing personas state
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterCategory, setFilterCategory] = useState("all");
+  const [filterCategoría, setFilterCategoría] = useState("all");
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [newPersona, setNewPersona] = useState<Partial<UserPersona>>({
     goals: [],
@@ -124,8 +124,8 @@ const UnifiedPersonas = () => {
   const filteredPersonas = personas.filter(persona => {
     const matchesSearch = persona.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          persona.occupation.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = filterCategory === "all" || persona.category === filterCategory;
-    return matchesSearch && matchesCategory;
+    const matchesCategoría = filterCategoría === "all" || persona.category === filterCategoría;
+    return matchesSearch && matchesCategoría;
   });
 
   const handleCreatePersona = () => {
@@ -253,7 +253,7 @@ const UnifiedPersonas = () => {
         {/* Header */}
         <div className="text-center mb-8 animate-fade-in">
           <h2 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-2">
-            User Personas
+            Personas de Usuario
           </h2>
           <p className="text-gray-400 text-lg">
             Gestiona tus personas existentes o genera nuevas automáticamente
@@ -289,10 +289,10 @@ const UnifiedPersonas = () => {
                 </DialogTrigger>
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-gray-900 border-gray-700 text-white">
                   <DialogHeader>
-                    <DialogTitle className="text-white">Crear Nueva User Persona</DialogTitle>
-                    <DialogDescription className="text-gray-400">
+                    <DialogTitle className="text-white">Crear Nueva Persona de Usuario</DialogTitle>
+                    <DialogDescripción className="text-gray-400">
                       Define las características de tu nuevo arquetipo de usuario
-                    </DialogDescription>
+                    </DialogDescripción>
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-2 gap-4">
@@ -366,7 +366,7 @@ const UnifiedPersonas = () => {
                   className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20"
                 />
               </div>
-              <Select value={filterCategory} onValueChange={setFilterCategory}>
+              <Select value={filterCategoría} onValueChange={setFilterCategoría}>
                 <SelectTrigger className="w-48 bg-white/5 border-white/20 text-white">
                   <Filter className="w-4 h-4 mr-2" />
                   <SelectValue placeholder="Filtrar por categoría" />
@@ -408,7 +408,7 @@ const UnifiedPersonas = () => {
                         </div>
                         <div>
                           <CardTitle className="text-lg text-white">{persona.name}</CardTitle>
-                          <CardDescription className="text-gray-400">{persona.occupation}</CardDescription>
+                          <CardDescripción className="text-gray-400">{persona.occupation}</CardDescripción>
                         </div>
                       </div>
                       <Button
@@ -529,9 +529,9 @@ const UnifiedPersonas = () => {
                     <Brain className="w-5 h-5 text-purple-400" />
                     Configuración IA
                   </CardTitle>
-                  <CardDescription className="text-gray-400">
+                  <CardDescripción className="text-gray-400">
                     Selecciona los parámetros para generar personas
-                  </CardDescription>
+                  </CardDescripción>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
@@ -591,7 +591,7 @@ const UnifiedPersonas = () => {
                   <Button
                     onClick={generatePersonas}
                     disabled={!canGenerate || isGenerating}
-                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 rounded-xl transition-all duration-300 transform hover:scale-105"
+                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-500 text-black border-0 rounded-xl transition-all duration-300 transform hover:scale-105"
                   >
                     {isGenerating ? (
                       <>
@@ -616,9 +616,9 @@ const UnifiedPersonas = () => {
                       <User className="w-5 h-5 text-blue-400" />
                       Personas Generadas
                     </CardTitle>
-                    <CardDescription className="text-gray-400">
-                      User personas basadas en tus parámetros seleccionados
-                    </CardDescription>
+                    <CardDescripción className="text-gray-400">
+                      Personas de usuario basadas en tus parámetros seleccionados
+                    </CardDescripción>
                   </CardHeader>
                   <CardContent>
                     {!isGenerating && generatedPersonas.length === 0 && (
@@ -631,7 +631,7 @@ const UnifiedPersonas = () => {
                     {isGenerating && (
                       <div className="text-center py-12">
                         <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4" />
-                        <p className="text-gray-400">Generando user personas...</p>
+                        <p className="text-gray-400">Generando personas de usuario...</p>
                         <p className="text-sm text-gray-500 mt-1">Analizando arquetipos y demografía</p>
                       </div>
                     )}
@@ -642,7 +642,7 @@ const UnifiedPersonas = () => {
                           <Badge className="px-3 py-1 bg-blue-500/20 text-blue-300 border-blue-500/30">
                             {generatedPersonas.length} personas generadas
                           </Badge>
-                          <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
+                          <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-500 text-black rounded-xl">
                             <Download className="w-4 h-4 mr-2" />
                             Exportar Todas
                           </Button>
@@ -655,14 +655,14 @@ const UnifiedPersonas = () => {
                                 <div className="flex items-center justify-between">
                                   <div>
                                     <CardTitle className="text-lg text-white">{persona.name}</CardTitle>
-                                    <CardDescription className="text-gray-400">{persona.occupation} • {persona.age} años</CardDescription>
+                                    <CardDescripción className="text-gray-400">{persona.occupation} • {persona.age} años</CardDescripción>
                                   </div>
                                   <div className="flex gap-2">
                                     <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30">{persona.category}</Badge>
                                     <Button 
                                       size="sm" 
                                       onClick={() => addGeneratedPersona(persona)}
-                                      className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl"
+                                      className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-600 rounded-xl"
                                     >
                                       <Plus className="w-4 h-4 mr-1" />
                                       Añadir
@@ -716,7 +716,7 @@ const UnifiedPersonas = () => {
                                     <Button 
                                       size="sm" 
                                       onClick={() => addGeneratedPersona(persona)}
-                                      className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 rounded-xl"
+                                      className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-600 rounded-xl"
                                     >
                                       <Plus className="w-4 h-4 mr-1" />
                                       Añadir

@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
-import { FileText, Download, Share2, TrendingUp, TrendingDown, Users, CheckCircle, AlertTriangle, Target, Star, Quote, Eye, Lightbulb, Award, Zap, Image as ImageIcon, DollarSign, Calculator, Percent, Euro } from "lucide-react";
+import { FileText, Descargar, Share2, TrendingUp, TrendingDown, Users, CheckCircle, AlertTriangle, Target, Star, Quote, Eye, Lightbulb, Award, Zap, Image as ImageIcon, DollarSign, Calculator, Percent, Euro } from "lucide-react";
 
 interface ExpertAnalysis {
   id: number;
@@ -281,7 +281,7 @@ const FinalReport = () => {
             <Dialog open={isExportDialogOpen} onOpenChange={setIsExportDialogOpen}>
               <DialogTrigger asChild>
                 <Button variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
-                  <Download className="w-4 h-4 mr-2" />
+                  <Descargar className="w-4 h-4 mr-2" />
                   Exportar
                 </Button>
               </DialogTrigger>

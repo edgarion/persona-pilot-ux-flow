@@ -26,11 +26,11 @@ const Analytics = () => {
   ];
 
   const userSatisfactionData = [
-    { test: 'E-commerce Nav', satisfaction: 4.2, nps: 65, completion: 84 },
+    { test: 'Navegación E-commerce', satisfaction: 4.2, nps: 65, completion: 84 },
     { test: 'Dashboard Móvil', satisfaction: 4.6, nps: 78, completion: 92 },
     { test: 'Onboarding', satisfaction: 3.8, nps: 45, completion: 78 },
-    { test: 'Checkout Flow', satisfaction: 4.4, nps: 70, completion: 89 },
-    { test: 'Search Feature', satisfaction: 3.5, nps: 35, completion: 76 }
+    { test: 'Flujo de Checkout', satisfaction: 4.4, nps: 70, completion: 89 },
+    { test: 'Función de Búsqueda', satisfaction: 3.5, nps: 35, completion: 76 }
   ];
 
   const insights = [
@@ -74,12 +74,12 @@ const Analytics = () => {
 
   const recentFindings = [
     {
-      test: "E-commerce Navigation",
+      test: "Navegación E-commerce",
       finding: "Los usuarios tienen dificultades para encontrar el filtro de precio en móvil",
       severity: "Alta",
       impact: "Reduce conversiones en 23%",
       recommendation: "Rediseñar filtros móviles con mejor accesibilidad",
-      status: "pending"
+      status: "pendiente"
     },
     {
       test: "Dashboard Móvil",
