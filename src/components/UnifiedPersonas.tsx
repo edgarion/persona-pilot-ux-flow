@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import FocusGroupManager from "./FocusGroupManager";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -11,7 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Search, Filter, Edit, User, Wand2, Zap, Download, Brain, Target, TestTube, MessageSquare } from "lucide-react";
 
-interface UserPersona {
+export interface UserPersona {
   id: number;
   name: string;
   age: string;
@@ -93,7 +94,7 @@ const UnifiedPersonas = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedPersonas, setGeneratedPersonas] = useState<GeneratedPersona[]>([]);
 
-  // Existing personas state
+  // Existing persona artificial state
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -140,7 +141,7 @@ const UnifiedPersonas = () => {
         goals: newPersona.goals || [],
         frustrations: newPersona.frustrations || [],
         techLevel: newPersona.techLevel || "",
-        description: newPersona.description || ""
+        description: newPersona.description || "",
       };
       setPersonas([...personas, persona]);
       setNewPersona({ goals: [], frustrations: [] });
@@ -167,7 +168,7 @@ const UnifiedPersonas = () => {
   const generatePersonas = async () => {
     setIsGenerating(true);
     
-    // Simular generación de personas
+    // Simular generación de personas artificiales
     setTimeout(() => {
       const mockPersonas: GeneratedPersona[] = [
         {
@@ -253,10 +254,10 @@ const UnifiedPersonas = () => {
         {/* Header */}
         <div className="text-center mb-8 animate-fade-in">
           <h2 className="text-4xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-2">
-            User Personas
+            User Personas Artificiales
           </h2>
           <p className="text-gray-400 text-lg">
-            Gestiona tus personas existentes o genera nuevas automáticamente
+            Gestiona tus personas artificiales existentes o genera nuevas automáticamente
           </p>
         </div>
 
@@ -264,7 +265,7 @@ const UnifiedPersonas = () => {
           <TabsList className="grid w-full grid-cols-2 bg-white/5 border border-white/10">
             <TabsTrigger value="existing" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-500 data-[state=active]:to-orange-500 data-[state=active]:text-black">
               <User className="w-4 h-4 mr-2" />
-              Personas Existentes
+              Personas Artificiales Existentes
             </TabsTrigger>
             <TabsTrigger value="generator" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-500 data-[state=active]:to-orange-500 data-[state=active]:text-black">
               <Wand2 className="w-4 h-4 mr-2" />
@@ -272,12 +273,12 @@ const UnifiedPersonas = () => {
             </TabsTrigger>
           </TabsList>
 
-          {/* Existing Personas Tab */}
+          {/* Existing Persona Artificial Tab */}
           <TabsContent value="existing" className="space-y-6">
             {/* Header with Create Button */}
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="text-2xl font-bold text-white">Personas Existentes</h3>
+                <h3 className="text-2xl font-bold text-white">Personas Artificiales Existentes</h3>
                 <p className="text-gray-400">Gestiona tus arquetipos de usuarios</p>
               </div>
               <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
@@ -360,7 +361,7 @@ const UnifiedPersonas = () => {
               <div className="relative flex-1 max-w-md">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
-                  placeholder="Buscar personas..."
+                  placeholder="Buscar personas artificiales..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10 bg-white/5 border-white/20 text-white placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-400/20"
@@ -382,7 +383,7 @@ const UnifiedPersonas = () => {
               </Select>
             </div>
 
-            {/* Personas Grid */}
+            {/* Persona Artificial Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredPersonas.map((persona, index) => (
                 <Card 
@@ -510,10 +511,10 @@ const UnifiedPersonas = () => {
               <div className="text-center py-12 animate-fade-in">
                 <User className="w-12 h-12 text-gray-600 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-400 mb-2">
-                  No se encontraron personas
+                  No se encontraron personas artificiales
                 </h3>
                 <p className="text-gray-500">
-                  Intenta ajustar tus filtros o crear una nueva persona
+                  Intenta ajustar tus filtros o crear una nueva persona artificial
                 </p>
               </div>
             )}
@@ -530,7 +531,7 @@ const UnifiedPersonas = () => {
                     Configuración IA
                   </CardTitle>
                   <CardDescription className="text-gray-400">
-                    Selecciona los parámetros para generar personas
+                    Selecciona los parámetros para generar personas artificiales
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -601,37 +602,37 @@ const UnifiedPersonas = () => {
                     ) : (
                       <>
                         <Zap className="w-4 h-4 mr-2" />
-                        Generar Personas
+                        Generar Personas Artificiales
                       </>
                     )}
                   </Button>
                 </CardContent>
               </Card>
 
-              {/* Generated Personas */}
+              {/* Generated Persona Artificial */}
               <div className="lg:col-span-2">
                 <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
                   <CardHeader>
                     <CardTitle className="text-white flex items-center gap-2">
                       <User className="w-5 h-5 text-blue-400" />
-                      Personas Generadas
+                      Personas Artificiales Generadas
                     </CardTitle>
                     <CardDescription className="text-gray-400">
-                      User personas basadas en tus parámetros seleccionados
+                      User personas artificiales basadas en tus parámetros seleccionados
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     {!isGenerating && generatedPersonas.length === 0 && (
                       <div className="text-center py-12 text-gray-500">
                         <User className="w-12 h-12 text-gray-600 mx-auto mb-4" />
-                        <p>Configura los parámetros y genera personas</p>
+                        <p>Configura los parámetros y genera personas artificiales</p>
                       </div>
                     )}
 
                     {isGenerating && (
                       <div className="text-center py-12">
                         <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4" />
-                        <p className="text-gray-400">Generando user personas...</p>
+                        <p className="text-gray-400">Generando user personas artificiales...</p>
                         <p className="text-sm text-gray-500 mt-1">Analizando arquetipos y demografía</p>
                       </div>
                     )}
@@ -640,7 +641,7 @@ const UnifiedPersonas = () => {
                       <div className="space-y-6">
                         <div className="flex justify-between items-center">
                           <Badge className="px-3 py-1 bg-blue-500/20 text-blue-300 border-blue-500/30">
-                            {generatedPersonas.length} personas generadas
+                            {generatedPersonas.length} personas artificiales generadas
                           </Badge>
                           <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
                             <Download className="w-4 h-4 mr-2" />
@@ -733,11 +734,30 @@ const UnifiedPersonas = () => {
                 </Card>
               </div>
             </div>
-          </TabsContent>
+           </TabsContent>
+
+            {/* Focus Group Section */}
+            <div className="mt-10">
+              <Card className="bg-gray-900 border border-gray-700">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <TestTube className="w-5 h-5 text-blue-400" />
+                    Grupos para Focus Group
+                  </CardTitle>
+                  <CardDescription>
+                    Crea o selecciona grupos de personas artificiales para tus focus group.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <FocusGroupManager personas={generatedPersonas.length > 0 ? (generatedPersonas as UserPersona[]) : personas} />
+                </CardContent>
+              </Card>
+            </div>
         </Tabs>
       </div>
     </div>
   );
-};
+
+}
 
 export default UnifiedPersonas;
