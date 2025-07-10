@@ -36,13 +36,9 @@ const Index = () => {
         { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
         { label: "Análisis de Documentos", href: "#" }
       ],
-      analytics: [
+      "informe-analytics": [
         { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
-        { label: "Analytics", href: "#" }
-      ],
-      "final-report": [
-        { label: "Dashboard", href: "#", onClick: () => setActiveTab("dashboard") },
-        { label: "Informe Final", href: "#" }
+        { label: "Informe & Analytics", href: "#" }
       ]
     };
     return paths[activeTab as keyof typeof paths] || paths.dashboard;
@@ -98,12 +94,11 @@ const Index = () => {
                 <DocumentationUploader />
               </TabsContent>
 
-              <TabsContent value="analytics">
-                <Analytics />
-              </TabsContent>
-
-              <TabsContent value="final-report">
-                <FinalReport />
+              <TabsContent value="informe-analytics">
+                <div className="space-y-8">
+                  <Analytics />
+                  <FinalReport />
+                </div>
               </TabsContent>
             </Tabs>
           </div>

@@ -192,7 +192,7 @@ const DashboardContent = ({ onTabChange }: DashboardContentProps) => {
             <DialogTrigger asChild>
               <Button size="lg" className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-8 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
                 <FileText className="w-6 h-6 mr-3" />
-                Generar Informe Final Completo
+                Generar Proyecto
                 <Download className="w-5 h-5 ml-3" />
               </Button>
             </DialogTrigger>
@@ -382,7 +382,7 @@ const DashboardContent = ({ onTabChange }: DashboardContentProps) => {
             <DialogHeader>
               <DialogTitle className="text-white flex items-center gap-2">
                 <FileText className="w-5 h-5 text-purple-400" />
-                Generar Informe Final Completo
+                Generar Proyecto
               </DialogTitle>
               <DialogDescription className="text-gray-400">
                 Selecciona el proyecto, pruebas y usuarios para generar un informe completo con análisis de rentabilidad y recomendaciones

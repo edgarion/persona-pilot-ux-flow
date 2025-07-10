@@ -52,16 +52,10 @@ const FixedNavigation = ({ activeTab, onTabChange, onLogout }: FixedNavigationPr
       tooltip: "Analizar documentación con IA"
     },
     {
-      id: "analytics",
-      label: "Analytics",
+      id: "informe-analytics",
+      label: "Informe & Analytics",
       icon: BarChart3,
-      tooltip: "Ver métricas y resultados detallados"
-    },
-    {
-      id: "final-report",
-      label: "Informe Final",
-      icon: FileText,
-      tooltip: "Ver métricas y resultados detallados"
+      tooltip: "Ver métricas, informes y resultados detallados"
     }
   ];
 
