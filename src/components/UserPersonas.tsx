@@ -20,6 +20,7 @@ interface UserPersona {
   frustrations: string[];
   techLevel: string;
   description: string;
+  avatar?: string;
 }
 
 const UserPersonas = () => {
@@ -34,7 +35,8 @@ const UserPersonas = () => {
       goals: ["Eficiencia en el trabajo", "Mantenerse actualizada", "Work-life balance"],
       frustrations: ["Interfaces complejas", "Procesos lentos", "Falta de integración"],
       techLevel: "Avanzado",
-      description: "Profesional tech-savvy que busca herramientas eficientes para su trabajo diario."
+      description: "Profesional tech-savvy que busca herramientas eficientes para su trabajo diario.",
+      avatar: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop"
     },
     {
       id: 2,
@@ -46,7 +48,8 @@ const UserPersonas = () => {
       goals: ["Ahorrar tiempo", "Facilidad de uso", "Precio accesible"],
       frustrations: ["Tiempo limitado", "Tecnología compleja", "Interrupciones constantes"],
       techLevel: "Intermedio",
-      description: "Padre ocupado que necesita soluciones rápidas y fáciles de usar."
+      description: "Padre ocupado que necesita soluciones rápidas y fáciles de usar.",
+      avatar: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop"
     },
     {
       id: 3,
@@ -58,7 +61,8 @@ const UserPersonas = () => {
       goals: ["Mejores precios", "Experiencias auténticas", "Personalización"],
       frustrations: ["Precios altos", "Falta de transparencia", "Experiencias genéricas"],
       techLevel: "Nativo digital",
-      description: "Joven profesional que valora la autenticidad y busca el mejor valor por su dinero."
+      description: "Joven profesional que valora la autenticidad y busca el mejor valor por su dinero.",
+      avatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop"
     }
   ]);
 
@@ -119,7 +123,7 @@ const UserPersonas = () => {
           </div>
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-105">
+              <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 rounded-xl transition-all duration-300 transform hover:scale-105">
                 <Plus className="w-4 h-4 mr-2" />
                 Nueva Persona
               </Button>
@@ -184,7 +188,7 @@ const UserPersonas = () => {
                     </Select>
                   </div>
                 </div>
-                <Button onClick={handleCreatePersona} className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-xl">
+                <Button onClick={handleCreatePersona} className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
                   Crear Persona
                 </Button>
               </div>
@@ -230,8 +234,18 @@ const UserPersonas = () => {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                      <User className="w-6 h-6 text-white" />
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-yellow-500/30">
+                      {persona.avatar ? (
+                        <img 
+                          src={persona.avatar} 
+                          alt={persona.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center justify-center">
+                          <User className="w-6 h-6 text-white" />
+                        </div>
+                      )}
                     </div>
                     <div>
                       <CardTitle className="text-lg text-white">{persona.name}</CardTitle>
@@ -249,7 +263,7 @@ const UserPersonas = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">{persona.category}</Badge>
+                  <Badge className="bg-yellow-500/20 text-yellow-300 border-yellow-500/30">{persona.category}</Badge>
                   <span className="text-sm text-gray-400">{persona.age} años</span>
                 </div>
                 

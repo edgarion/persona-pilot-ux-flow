@@ -20,6 +20,7 @@ interface GeneratedPersona {
   behaviors: string[];
   motivations: string[];
   preferredChannels: string[];
+  avatar?: string;
 }
 
 const PersonaGenerator = () => {
@@ -80,7 +81,8 @@ const PersonaGenerator = () => {
           description: "Profesional tech-savvy que busca constantemente innovar y mejorar procesos en su trabajo.",
           behaviors: ["Early adopter", "Investigación exhaustiva", "Comparte conocimiento"],
           motivations: ["Reconocimiento profesional", "Impacto positivo", "Crecimiento personal"],
-          preferredChannels: ["LinkedIn", "Newsletters tech", "Podcasts", "Webinars"]
+          preferredChannels: ["LinkedIn", "Newsletters tech", "Podcasts", "Webinars"],
+          avatar: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop"
         },
         {
           name: "Carlos Cuidador",
@@ -94,7 +96,8 @@ const PersonaGenerator = () => {
           description: "Profesional responsable que prioriza la seguridad y el bienestar de su equipo y organización.",
           behaviors: ["Análisis de riesgos", "Consulta con expertos", "Decisiones consensuadas"],
           motivations: ["Seguridad del equipo", "Estabilidad organizacional", "Cumplimiento"],
-          preferredChannels: ["Email", "Reuniones presenciales", "Informes técnicos"]
+          preferredChannels: ["Email", "Reuniones presenciales", "Informes técnicos"],
+          avatar: "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop"
         },
         {
           name: "Ana Exploradora",
@@ -108,7 +111,8 @@ const PersonaGenerator = () => {
           description: "Diseñadora joven que busca constantemente nuevas inspiraciones y experiencias.",
           behaviors: ["Exploración continua", "Experimentación", "Networking creativo"],
           motivations: ["Expresión creativa", "Nuevas experiencias", "Crecimiento profesional"],
-          preferredChannels: ["Instagram", "Behance", "Dribbble", "Meetups"]
+          preferredChannels: ["Instagram", "Behance", "Dribbble", "Meetups"],
+          avatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop"
         }
       ];
       
@@ -209,7 +213,7 @@ const PersonaGenerator = () => {
               <Button
                 onClick={generatePersonas}
                 disabled={!canGenerate || isGenerating}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white border-0 rounded-xl transition-all duration-300 transform hover:scale-105"
+                className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black border-0 rounded-xl transition-all duration-300 transform hover:scale-105"
               >
                 {isGenerating ? (
                   <>
@@ -260,7 +264,7 @@ const PersonaGenerator = () => {
                       <Badge className="px-3 py-1 bg-blue-500/20 text-blue-300 border-blue-500/30">
                         {generatedPersonas.length} personas generadas
                       </Badge>
-                      <Button size="sm" variant="outline" className="bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:text-white rounded-xl">
+                      <Button className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black rounded-xl">
                         <Download className="w-4 h-4 mr-2" />
                         Exportar Todas
                       </Button>
@@ -272,8 +276,25 @@ const PersonaGenerator = () => {
                           <CardHeader>
                             <div className="flex items-center justify-between">
                               <div>
-                                <CardTitle className="text-lg text-white">{persona.name}</CardTitle>
-                                <CardDescription className="text-gray-400">{persona.occupation} • {persona.age} años</CardDescription>
+                                <div className="flex items-center gap-3 mb-2">
+                                  <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-purple-500/30">
+                                    {persona.avatar ? (
+                                      <img 
+                                        src={persona.avatar} 
+                                        alt={persona.name}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    ) : (
+                                      <div className="w-full h-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
+                                        <User className="w-5 h-5 text-white" />
+                                      </div>
+                                    )}
+                                  </div>
+                                  <div>
+                                    <CardTitle className="text-lg text-white">{persona.name}</CardTitle>
+                                    <CardDescription className="text-gray-400">{persona.occupation} • {persona.age} años</CardDescription>
+                                  </div>
+                                </div>
                               </div>
                               <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30">{persona.category}</Badge>
                             </div>
